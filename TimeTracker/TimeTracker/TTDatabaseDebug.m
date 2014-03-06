@@ -28,4 +28,30 @@
     return nil;
 }
 
+- (TTTask *)insertTask:(TTTask *)newTask
+{
+    return nil;
+}
+- (TTTime *)insertTime:(TTTime *)newTime
+{
+    return nil;
+}
+- (TTProject *)insertProject:(TTProject *)newProject
+{
+    return nil;
+}
+
+- (TTTask *)updateTask:(TTTask *)updateTask
+{
+    return nil;
+}
+- (TTTime *)updateTime:(TTTime *)updateTime
+{
+    return nil;
+}
+- (TTProject *)updateProject:(TTProject *)updateProject
+{
+    return nil;
+}
+
 @end

@@ -18,4 +18,12 @@
 - (TTTime *)getTime:(int)identifier;
 - (TTProject *)getProject:(int)identifier;
 
+- (TTTask *)insertTask:(TTTask *)newTask;
+- (TTTime *)insertTime:(TTTime *)newTime;
+- (TTProject *)insertProject:(TTProject *)newProject;
+
+- (TTTask *)updateTask:(TTTask *)updateTask;
+- (TTTime *)updateTime:(TTTime *)updateTime;
+- (TTProject *)updateProject:(TTProject *)updateProject;
+
 @end
