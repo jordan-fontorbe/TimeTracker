@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TimeTrackerAppDelegate : UIResponder <UIApplicationDelegate>
+@interface TTAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

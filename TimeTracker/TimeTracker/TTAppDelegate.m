@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Jojeredamyn. All rights reserved.
 //
 
-#import "TimeTrackerAppDelegate.h"
+#import "TTAppDelegate.h"
 
-@implementation TimeTrackerAppDelegate
+@implementation TTAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
