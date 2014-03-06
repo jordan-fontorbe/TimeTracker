@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "TTDatabase.h"
+#import <sqlite3.h>
+
 
 @interface TTDatabaseCoreData : NSObject <TTDatabase>
+
+@property (strong, nonatomic) NSString *databasePath;
+@property (nonatomic) sqlite3 *timetrackerDB;
 
 @end

@@ -18,6 +18,7 @@
 		CE03CDCE18C8EAC3001B4C86 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE03CDCD18C8EAC3001B4C86 /* Default@2x.png */; };
 		CE03CDD018C8EAC3001B4C86 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE03CDCF18C8EAC3001B4C86 /* Default-568h@2x.png */; };
 		CE03CDD318C8EAC3001B4C86 /* TimeTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE03CDD118C8EAC3001B4C86 /* TimeTracker.xcdatamodeld */; };
+		CE4E9E2718C91A4500441431 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4E9E2618C91A4500441431 /* libsqlite3.dylib */; };
 		D0C5DB7018C8F0A3009E0BF7 /* TTTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB6F18C8F0A3009E0BF7 /* TTTask.m */; };
 		D0C5DB7318C8F0B9009E0BF7 /* TTTime.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB7218C8F0B9009E0BF7 /* TTTime.m */; };
 		D0C5DB7618C8F0F2009E0BF7 /* TTProject.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB7518C8F0F2009E0BF7 /* TTProject.m */; };
@@ -41,6 +42,7 @@
 		CE03CDCD18C8EAC3001B4C86 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		CE03CDCF18C8EAC3001B4C86 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		CE03CDD218C8EAC3001B4C86 /* TimeTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TimeTracker.xcdatamodel; sourceTree = "<group>"; };
+		CE4E9E2618C91A4500441431 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		D0C5DB6918C8EE9C009E0BF7 /* TTDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTDatabase.h; sourceTree = "<group>"; };
 		D0C5DB6E18C8F0A3009E0BF7 /* TTTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTask.h; sourceTree = "<group>"; };
 		D0C5DB6F18C8F0A3009E0BF7 /* TTTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTask.m; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4E9E2718C91A4500441431 /* libsqlite3.dylib in Frameworks */,
 				CE03CDB818C8EAC3001B4C86 /* UIKit.framework in Frameworks */,
 				CE03CDBA18C8EAC3001B4C86 /* Foundation.framework in Frameworks */,
 				CE03CDBC18C8EAC3001B4C86 /* CoreGraphics.framework in Frameworks */,
@@ -72,6 +75,7 @@
 		CE03CDAB18C8EAC3001B4C86 = {
 			isa = PBXGroup;
 			children = (
+				CE4E9E2618C91A4500441431 /* libsqlite3.dylib */,
 				CE03CDBF18C8EAC3001B4C86 /* TimeTracker */,
 				CE03CDB618C8EAC3001B4C86 /* Frameworks */,
 				CE03CDB518C8EAC3001B4C86 /* Products */,

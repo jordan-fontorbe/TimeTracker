@@ -11,5 +11,8 @@
 @interface TTTask : NSObject
 
 @property int identifier;
+@property int idProject;
+@property NSString *name;
+
 
 @end
