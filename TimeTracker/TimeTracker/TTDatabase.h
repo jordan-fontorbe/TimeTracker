@@ -26,4 +26,5 @@
 - (TTTime *)updateTime:(TTTime *)updateTime;
 - (TTProject *)updateProject:(TTProject *)updateProject;
 
+- (NSArray *)getTasksFrom:(NSDate *)from To:(NSDate *)to;
 @end

@@ -54,4 +54,9 @@
     return nil;
 }
 
+- (NSArray *)getTasksFrom:(NSDate *)from To:(NSDate *)to
+{
+    return nil;
+}
+
 @end
