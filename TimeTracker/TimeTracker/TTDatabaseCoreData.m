@@ -28,33 +28,51 @@
     return nil;
 }
 
-- (TTTask *)insertTask:(TTTask *)newTask
-{
-    return nil;
-}
-- (TTTime *)insertTime:(TTTime *)newTime
-{
-    return nil;
-}
-- (TTProject *)insertProject:(TTProject *)newProject
+- (NSArray *)getProjects
 {
     return nil;
 }
 
-- (TTTask *)updateTask:(TTTask *)updateTask
-{
-    return nil;
-}
-- (TTTime *)updateTime:(TTTime *)updateTime
-{
-    return nil;
-}
-- (TTProject *)updateProject:(TTProject *)updateProject
+- (NSArray *)getTasks
 {
     return nil;
 }
 
-- (NSArray *)getTasksFrom:(NSDate *)from To:(NSDate *)to
+- (void)insertTask:(TTTask *)newTask
+{
+}
+
+- (void)insertTime:(TTTime *)newTime
+{
+}
+
+- (void)insertProject:(TTProject *)newProject
+{
+}
+
+- (void)updateTask:(TTTask *)updateTask
+{
+}
+- (void)updateTime:(TTTime *)updateTime
+{
+}
+- (void)updateProject:(TTProject *)updateProject
+{
+}
+
+- (void)deleteProject:(TTProject *)project
+{
+}
+
+- (void)deleteTask:(TTTask *)task
+{
+}
+
+- (void)deleteTime:(TTTime *)time
+{
+}
+
+- (NSArray *)getTasksFrom:(NSDate *)from To:(NSDate *)to For:(TTProject *)project
 {
     return nil;
 }

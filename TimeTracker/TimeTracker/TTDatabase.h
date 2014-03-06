@@ -14,17 +14,24 @@
 
 @protocol TTDatabase <NSObject>
 
+- (TTProject *)getProject:(int)identifier;
 - (TTTask *)getTask:(int)identifier;
 - (TTTime *)getTime:(int)identifier;
-- (TTProject *)getProject:(int)identifier;
 
-- (TTTask *)insertTask:(TTTask *)newTask;
-- (TTTime *)insertTime:(TTTime *)newTime;
-- (TTProject *)insertProject:(TTProject *)newProject;
+- (NSArray *)getProjects;
+- (NSArray *)getTasks;
 
-- (TTTask *)updateTask:(TTTask *)updateTask;
-- (TTTime *)updateTime:(TTTime *)updateTime;
-- (TTProject *)updateProject:(TTProject *)updateProject;
+- (void)insertProject:(TTProject *)newProject;
+- (void)insertTask:(TTTask *)newTask;
+- (void)insertTime:(TTTime *)newTime;
 
-- (NSArray *)getTasksFrom:(NSDate *)from To:(NSDate *)to;
+- (void)updateProject:(TTProject *)updateProject;
+- (void)updateTask:(TTTask *)updateTask;
+- (void)updateTime:(TTTime *)updateTime;
+
+- (void)deleteProject:(TTProject *)project;
+- (void)deleteTask:(TTTask *)task;
+- (void)deleteTime:(TTTime *)time;
+
+- (NSArray *)getTasksFrom:(NSDate *)from To:(NSDate *)to For:(TTProject *)project;
 @end
