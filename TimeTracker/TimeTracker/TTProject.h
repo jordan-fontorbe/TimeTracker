@@ -11,5 +11,6 @@
 @interface TTProject : NSObject
 
 @property int identifier;
+@property (strong, nonatomic) NSString *name;
 
 @end

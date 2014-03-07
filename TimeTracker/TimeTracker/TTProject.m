@@ -11,5 +11,6 @@
 @implementation TTProject
 
 @synthesize identifier = _identifier;
+@synthesize name = _name;
 
 @end
