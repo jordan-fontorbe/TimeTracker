@@ -12,7 +12,7 @@
 
 @property int identifier;
 @property int idProject;
-@property NSString *name;
+@property (strong, nonatomic) NSString *name;
 
 
 @end

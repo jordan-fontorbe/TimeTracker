@@ -11,5 +11,7 @@
 @implementation TTTask
 
 @synthesize identifier = _identifier;
+@synthesize idProject = _idProject;
+@synthesize name = _name;
 
 @end

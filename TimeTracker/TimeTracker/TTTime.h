@@ -11,5 +11,8 @@
 @interface TTTime : NSObject
 
 @property int identifier;
+@property int idTask;
+@property (strong, nonatomic) NSDate *start;
+@property (strong, nonatomic) NSDate *end;
 
 @end

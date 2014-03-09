@@ -11,5 +11,8 @@
 @implementation TTTime
 
 @synthesize identifier = _identifier;
+@synthesize idTask = _idTask;
+@synthesize start = _start;
+@synthesize end = _end;
 
 @end
