@@ -29,6 +29,14 @@
     return self;
 }
 
+- (IBAction)onCancel:(id)sender {
+    NSLog(@"cancel");
+}
+
+- (IBAction)onSave:(id)sender {
+    NSLog(@"save");
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -55,11 +63,4 @@
     }
 }
 
-- (IBAction)onCancel:(id)sender {
-}
-
-- (IBAction)onSave:(id)sender {
-}
-- (IBAction)onUp:(id)sender {
-}
 @end
