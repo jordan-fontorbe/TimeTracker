@@ -12,7 +12,7 @@
 @class TTTime;
 @class TTProject;
 
-@protocol TTDatabase <NSObject>
+@protocol TTDatabaseProtocol <NSObject>
 
 - (TTProject *)getProject:(int)identifier;
 - (TTTask *)getTask:(int)identifier;

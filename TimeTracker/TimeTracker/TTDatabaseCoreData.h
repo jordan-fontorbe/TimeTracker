@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TTDatabase.h"
+#import "TTDatabaseProtocol.h"
 #import <sqlite3.h>
 
 
-@interface TTDatabaseCoreData : NSObject <TTDatabase>
+@interface TTDatabaseCoreData : NSObject <TTDatabaseProtocol>
 
 @property (strong, nonatomic) NSString *databasePath;
 @property (nonatomic) sqlite3 *timetrackerDB;

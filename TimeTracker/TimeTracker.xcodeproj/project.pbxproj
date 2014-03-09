@@ -29,7 +29,6 @@
 		D0C5DB7018C8F0A3009E0BF7 /* TTTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB6F18C8F0A3009E0BF7 /* TTTask.m */; };
 		D0C5DB7318C8F0B9009E0BF7 /* TTTime.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB7218C8F0B9009E0BF7 /* TTTime.m */; };
 		D0C5DB7618C8F0F2009E0BF7 /* TTProject.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB7518C8F0F2009E0BF7 /* TTProject.m */; };
-		D0C5DB7918C8F2A0009E0BF7 /* TTDatabaseDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB7818C8F2A0009E0BF7 /* TTDatabaseDebug.m */; };
 		D0C5DB7C18C8F2B1009E0BF7 /* TTDatabaseCoreData.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB7B18C8F2B1009E0BF7 /* TTDatabaseCoreData.m */; };
 		D0F1F02E18CA024100F07C28 /* TTEditTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F1F02C18CA024100F07C28 /* TTEditTaskController.m */; };
 		D0F1F02F18CA024100F07C28 /* TTEditTaskController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0F1F02D18CA024100F07C28 /* TTEditTaskController.xib */; };
@@ -60,15 +59,13 @@
 		D0BC2BD018CA0EC300E46F7F /* tasks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tasks.png; sourceTree = "<group>"; };
 		D0BC2BD718CA0F6200E46F7F /* TTImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTImageManager.h; sourceTree = "<group>"; };
 		D0BC2BD818CA0F6200E46F7F /* TTImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTImageManager.m; sourceTree = "<group>"; };
-		D0C5DB6918C8EE9C009E0BF7 /* TTDatabase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTDatabase.h; sourceTree = "<group>"; };
+		D0C5DB6918C8EE9C009E0BF7 /* TTDatabaseProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTDatabaseProtocol.h; sourceTree = "<group>"; };
 		D0C5DB6E18C8F0A3009E0BF7 /* TTTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTask.h; sourceTree = "<group>"; };
 		D0C5DB6F18C8F0A3009E0BF7 /* TTTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTask.m; sourceTree = "<group>"; };
 		D0C5DB7118C8F0B9009E0BF7 /* TTTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTime.h; sourceTree = "<group>"; };
 		D0C5DB7218C8F0B9009E0BF7 /* TTTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTime.m; sourceTree = "<group>"; };
 		D0C5DB7418C8F0F2009E0BF7 /* TTProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTProject.h; sourceTree = "<group>"; };
 		D0C5DB7518C8F0F2009E0BF7 /* TTProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTProject.m; sourceTree = "<group>"; };
-		D0C5DB7718C8F2A0009E0BF7 /* TTDatabaseDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTDatabaseDebug.h; sourceTree = "<group>"; };
-		D0C5DB7818C8F2A0009E0BF7 /* TTDatabaseDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTDatabaseDebug.m; sourceTree = "<group>"; };
 		D0C5DB7A18C8F2B1009E0BF7 /* TTDatabaseCoreData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTDatabaseCoreData.h; sourceTree = "<group>"; };
 		D0C5DB7B18C8F2B1009E0BF7 /* TTDatabaseCoreData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTDatabaseCoreData.m; sourceTree = "<group>"; };
 		D0F1F02B18CA024100F07C28 /* TTEditTaskController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTEditTaskController.h; sourceTree = "<group>"; };
@@ -181,9 +178,7 @@
 		D0C5DB7D18C8F6A1009E0BF7 /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				D0C5DB6918C8EE9C009E0BF7 /* TTDatabase.h */,
-				D0C5DB7718C8F2A0009E0BF7 /* TTDatabaseDebug.h */,
-				D0C5DB7818C8F2A0009E0BF7 /* TTDatabaseDebug.m */,
+				D0C5DB6918C8EE9C009E0BF7 /* TTDatabaseProtocol.h */,
 				D0C5DB7A18C8F2B1009E0BF7 /* TTDatabaseCoreData.h */,
 				D0C5DB7B18C8F2B1009E0BF7 /* TTDatabaseCoreData.m */,
 			);
@@ -273,7 +268,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0C5DB7918C8F2A0009E0BF7 /* TTDatabaseDebug.m in Sources */,
 				D0F1F02E18CA024100F07C28 /* TTEditTaskController.m in Sources */,
 				D0C5DB7318C8F0B9009E0BF7 /* TTTime.m in Sources */,
 				D0C5DB7018C8F0A3009E0BF7 /* TTTask.m in Sources */,
