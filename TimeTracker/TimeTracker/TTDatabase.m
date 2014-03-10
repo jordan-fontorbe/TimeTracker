@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 Jojeredamyn. All rights reserved.
 //
 
-#import "TTDatabaseCoreData.h"
+#import "TTDatabase.h"
 #import "TTProject.h"
 #import "TTTask.h"
 #import "TTTime.h"
 
-@implementation TTDatabaseCoreData
+@implementation TTDatabase
 
 - (void)createDatabase
 {
@@ -36,7 +36,7 @@
         {
             char *errMsg;
             const char *sql_stmt =
-            "CREATE TABLE IF NOT EXISTS PROJECT (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT); CREATE TABLE IF NOT EXISTS TASK (ID INTEGER PRIMARY KEY AUTOINCREMENT, ID_PROJECT INTEGER); CREATE TABLE IF NOT EXISTS TIME (ID INTEGER PRIMARY KEY AUTOINCREMENT, ID_TASK INTEGER, START DATETIME, END DATETIME);";
+            "CREATE TABLE IF NOT EXISTS PROJECT (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT); CREATE TABLE IF NOT EXISTS task (id INTEGER PRIMARY KEY AUTOINCREMENT, id_project INTEGER); CREATE TABLE IF NOT EXISTS TIME (id INTEGER PRIMARY KEY AUTOINCREMENT, id_task INTEGER, start DATETIME, end DATETIME FOREIGN KEY (id_task) REFERENCES task (id) ON DELETE CASCADE);";
             
             if (sqlite3_exec(_timetrackerDB, sql_stmt, NULL, NULL, &errMsg) != SQLITE_OK)
             {

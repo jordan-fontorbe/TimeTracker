@@ -11,7 +11,7 @@
 #import <sqlite3.h>
 
 
-@interface TTDatabaseCoreData : NSObject <TTDatabaseProtocol>
+@interface TTDatabase : NSObject <TTDatabaseProtocol>
 
 @property (strong, nonatomic) NSString *databasePath;
 @property (nonatomic) sqlite3 *timetrackerDB;
