@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class TTOverviewController;
+
 @interface TTAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property(nonatomic, retain) UIViewController *controller;
+@property (strong, nonatomic) UINavigationController * navigationController;
+@property (strong, nonatomic) TTOverviewController * overviewController;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
