@@ -8,7 +8,7 @@
 
 #import "TTAppDelegate.h"
 #import "TTImageManager.h"
-#import "TTEditTaskController.h"
+#import "TTOverviewController.h"
 
 @implementation TTAppDelegate
 
@@ -16,16 +16,15 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
-@synthesize controller;
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Initialize the ImageManager.
     [TTImageManager init];
     // Set the view.
-    UIViewController *cont=[[TTEditTaskController alloc]initWithNibName:@"TTEditTaskController" bundle:nil task:nil];
-    self.window.rootViewController = cont;
+    self.overviewController = [[TTOverviewController alloc]initWithNibName:@"TTOverviewController" bundle:nil];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.overviewController];
+    self.window.rootViewController = self.navigationController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
