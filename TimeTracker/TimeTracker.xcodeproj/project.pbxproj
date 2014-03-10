@@ -298,12 +298,8 @@
 				D0F1F02E18CA024100F07C28 /* TTEditTaskController.m in Sources */,
 				D0C5DB7318C8F0B9009E0BF7 /* TTTime.m in Sources */,
 				D0C5DB7018C8F0A3009E0BF7 /* TTTask.m in Sources */,
-<<<<<<< HEAD
 				D0C5DB7C18C8F2B1009E0BF7 /* TTDatabase.m in Sources */,
-=======
 				D0A5F23F18CDF35A0074CE33 /* TTOverviewController.m in Sources */,
-				D0C5DB7C18C8F2B1009E0BF7 /* TTDatabaseCoreData.m in Sources */,
->>>>>>> FETCH_HEAD
 				CE03CDC618C8EAC3001B4C86 /* main.m in Sources */,
 				D0A5F23A18CDF1EE0074CE33 /* TTSelectProjectController.m in Sources */,
 				D0C5DB7618C8F0F2009E0BF7 /* TTProject.m in Sources */,
