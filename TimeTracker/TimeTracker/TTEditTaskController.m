@@ -24,22 +24,16 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        [self setTitle:NSLocalizedString(@"Edit", "EditTask navigation title")];
         _task = task;
     }
     return self;
 }
 
-- (IBAction)onCancel:(id)sender {
-    NSLog(@"cancel");
-}
-
-- (IBAction)onSave:(id)sender {
-    NSLog(@"save");
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:nil]];
     [_projectTextField setLeftViewMode:UITextFieldViewModeAlways];
     [self onProjectSelected:nil];
 }
@@ -48,6 +42,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)onCancel:(id)sender {
+    NSLog(@"cancel");
+}
+
+- (IBAction)onSave:(id)sender {
+    NSLog(@"save");
 }
 
 - (void)onProjectSelected:(TTProject *)project

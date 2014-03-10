@@ -10,4 +10,6 @@
 
 @interface TTOverviewController : UIViewController
 
+- (IBAction)onEditTask:(id)sender;
+
 @end

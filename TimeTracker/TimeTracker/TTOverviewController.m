@@ -8,6 +8,7 @@
 
 #import "TTOverviewController.h"
 #import "TTAboutController.h"
+#import "TTEditTaskController.h"
 
 @interface TTOverviewController ()
 
@@ -44,6 +45,11 @@
 {
     TTAboutController *aboutController = [[TTAboutController alloc] initWithNibName:@"TTAboutController" bundle:nil];
     [[self navigationController] pushViewController:aboutController animated:YES];
+}
+
+- (IBAction)onEditTask:(id)sender {
+    TTEditTaskController *editTaskController = [[TTEditTaskController alloc] initWithNibName:@"TTEditTaskController" bundle:nil];
+    [[self navigationController] pushViewController:editTaskController animated:YES];
 }
 
 @end
