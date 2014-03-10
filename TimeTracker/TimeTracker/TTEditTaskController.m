@@ -7,12 +7,15 @@
 //
 
 #import "TTEditTaskController.h"
+#import "TTEditTaskDelegate.h"
 #import "TTImageManager.h"
 #import "TTProject.h"
 #import "TTTask.h"
 
 @interface TTEditTaskController ()
 
+- (void)onCancel:(UIBarButtonItem *)sender;
+- (void)onSave:(UIBarButtonItem *)sender;
 - (void)onProjectSelected:(TTProject *)project;
 @property (strong, nonatomic) TTTask *task;
 
@@ -20,11 +23,14 @@
 
 @implementation TTEditTaskController
 
+@synthesize delegate;
+@synthesize task = _task;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil task:(TTTask *)task
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self setTitle:NSLocalizedString(@"Edit", "EditTask navigation title")];
+        [self setTitle:NSLocalizedString(@"Edit", @"EditTask navigation title")];
         _task = task;
     }
     return self;
@@ -33,7 +39,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:nil]];
+    // Navigation bar.
+    [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(onCancel:)]];
+    [[self navigationItem] setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave:)]];
+    // Task informations.
     [_projectTextField setLeftViewMode:UITextFieldViewModeAlways];
     [self onProjectSelected:nil];
 }
@@ -44,12 +53,15 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)onCancel:(id)sender {
-    NSLog(@"cancel");
+- (void)onCancel:(UIBarButtonItem *)sender
+{
+    [delegate onCancel:self];
+    [[self navigationController] popViewControllerAnimated:YES];
 }
 
-- (IBAction)onSave:(id)sender {
-    NSLog(@"save");
+- (void)onSave:(UIBarButtonItem *)sender {
+    [delegate onCancel:self];
+    [[self navigationController] popViewControllerAnimated:YES];
 }
 
 - (void)onProjectSelected:(TTProject *)project

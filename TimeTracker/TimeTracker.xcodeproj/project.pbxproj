@@ -66,6 +66,7 @@
 		D0A5F24418CDF8F80074CE33 /* TTAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAboutController.h; sourceTree = "<group>"; };
 		D0A5F24518CDF8F90074CE33 /* TTAboutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAboutController.m; sourceTree = "<group>"; };
 		D0A5F24618CDF8F90074CE33 /* TTAboutController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTAboutController.xib; sourceTree = "<group>"; };
+		D0B7EFBA18CE063E00524870 /* TTEditTaskDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTEditTaskDelegate.h; sourceTree = "<group>"; };
 		D0BC2BCB18CA0EC300E46F7F /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
 		D0BC2BCC18CA0EC300E46F7F /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		D0BC2BCD18CA0EC300E46F7F /* project.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = project.png; sourceTree = "<group>"; };
@@ -179,6 +180,14 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
+		D0B7EFBB18CE0A7A00524870 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				D0B7EFBA18CE063E00524870 /* TTEditTaskDelegate.h */,
+			);
+			name = Delegate;
+			sourceTree = "<group>";
+		};
 		D0C5DB6A18C8EED3009E0BF7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +215,7 @@
 		D0F1F02A18CA01FE00F07C28 /* Dialog */ = {
 			isa = PBXGroup;
 			children = (
+				D0B7EFBB18CE0A7A00524870 /* Delegate */,
 				D0F1F02B18CA024100F07C28 /* TTEditTaskController.h */,
 				D0F1F02C18CA024100F07C28 /* TTEditTaskController.m */,
 				D0F1F02D18CA024100F07C28 /* TTEditTaskController.xib */,

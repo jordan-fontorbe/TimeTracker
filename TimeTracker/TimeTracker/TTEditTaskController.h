@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @class TTTask;
+@protocol TTEditTaskDelegate;
 
 @interface TTEditTaskController : UIViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil task:(TTTask *)task;
-- (IBAction)onCancel:(id)sender;
-- (IBAction)onSave:(id)sender;
+@property (nonatomic, assign) id<TTEditTaskDelegate> delegate;
+@property (nonatomic, readonly) TTTask *task;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *projectTextField;
 
