@@ -10,7 +10,10 @@
 #import "TTImageManager.h"
 #import "TTOverviewController.h"
 #import "TTDatabase.h"
+#import "TTDataManager.h"
 #import "TTProject.h"
+#import "TTTask.h"
+
 
 @implementation TTAppDelegate
 
@@ -23,14 +26,41 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Initialize the ImageManager.
     [TTImageManager init];
+    
+    // Initialize singleton
+    [[TTDatabase instance] createDatabase];
+    [[TTDataManager instance] initRunningTasks];
+    
+    //**** A RETIRER (SEULEMENT POUR TEST) ****//
+    NSMutableArray *lstRunningTask = [[TTDataManager instance] getRunningTasks];
+    TTTask *myTask = [[TTTask alloc] init];
+    [lstRunningTask addObject:myTask];
+    [[TTDataManager instance] setRunningTasks:lstRunningTask];
+    
+    TTProject *prj1 = [[TTProject alloc] init];
+    [prj1 setName:@"Développement iOS"];
+    [[TTDatabase instance] insertProject:prj1];
+    
+    TTProject *prj2 = [[TTProject alloc] init];
+    [prj2 setName:@"Analyse statique"];
+    [[TTDatabase instance] insertProject:prj2];
+    
+    TTProject *prj3 = [[TTProject alloc] init];
+    [prj3 setName:@"Sécurité réseau"];
+    [[TTDatabase instance] insertProject:prj3];
+    
+    //****************************************//
+    
     // Set the view.
     self.overviewController = [[TTOverviewController alloc]initWithNibName:@"TTOverviewController" bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.overviewController];
     self.window.rootViewController = self.navigationController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    [[TTDatabase instance] createDatabase];
+    
+    
 
+    
     return YES;
 }
 

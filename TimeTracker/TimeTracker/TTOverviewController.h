@@ -11,5 +11,7 @@
 @interface TTOverviewController : UIViewController
 
 - (IBAction)onEditTask:(id)sender;
+@property (weak, nonatomic) IBOutlet UITableView *tblView;
+@property (weak, nonatomic) IBOutlet UIButton *btnQuickStart;
 
 @end
