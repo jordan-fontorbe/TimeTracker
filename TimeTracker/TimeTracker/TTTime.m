@@ -15,4 +15,21 @@
 @synthesize start = _start;
 @synthesize end = _end;
 
+- (id)initWithIdentifier:(int)identifier start:(NSDate *)start end:(NSDate *)end task:(int)idTask
+{
+    self = [super init];
+    if(self) {
+        _identifier = identifier;
+        _idTask = idTask;
+        _start = start;
+        _end = end;
+    }
+    return nil;
+}
+
+- (id)initWithStart:(NSDate *)start end:(NSDate *)end task:(int)idTask
+{
+    return [self initWithIdentifier:0 start:start end:end task:idTask];
+}
+
 @end

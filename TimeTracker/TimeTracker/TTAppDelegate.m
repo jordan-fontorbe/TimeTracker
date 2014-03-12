@@ -57,8 +57,19 @@
     self.window.rootViewController = self.navigationController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+<<<<<<< HEAD
     
     
+=======
+    // Clear the database.
+    [[TTDatabase instance] clear];
+    
+    [[TTDatabase instance] createDatabase];
+    
+    // Populate (to remove).
+    [[TTDatabase instance] insertProject:[[TTProject alloc] initWithName:@"Struts"]];
+    [[TTDatabase instance] insertProject:[[TTProject alloc] initWithName:@"Développement iOS"]];
+>>>>>>> FETCH_HEAD
 
     
     return YES;

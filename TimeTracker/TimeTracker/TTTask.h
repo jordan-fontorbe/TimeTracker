@@ -13,6 +13,7 @@
 @property int identifier;
 @property int idProject;
 @property (strong, nonatomic) NSString *name;
-
+- (id)initWithIdentifier:(int)identifier name:(NSString *)name project:(int)idProject;
+- (id)initWithName:(NSString *)name project:(int)idProject;
 
 @end

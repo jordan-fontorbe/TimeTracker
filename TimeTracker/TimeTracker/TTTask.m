@@ -14,4 +14,20 @@
 @synthesize idProject = _idProject;
 @synthesize name = _name;
 
+- (id)initWithIdentifier:(int)identifier name:(NSString *)name project:(int)idProject
+{
+    self = [super init];
+    if(self) {
+        _identifier = identifier;
+        _name = name;
+        _idProject = idProject;
+    }
+    return self;
+}
+
+- (id)initWithName:(NSString *)name project:(int)idProject
+{
+    return [self initWithIdentifier:0 name:name project:idProject];
+}
+
 @end

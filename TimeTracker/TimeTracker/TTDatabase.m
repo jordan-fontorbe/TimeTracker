@@ -49,7 +49,13 @@ static TTDatabase* _sharedTTDatabase = nil;
 -(id)init {
 	self = [super init];
 	if (self != nil) {
-		// initialize stuff here
+        NSString *docsDir;
+        NSArray *dirPaths;
+        // Get the documents directory
+        dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        docsDir = dirPaths[0];
+        // Build the path to the database file
+        _databasePath = [[NSString alloc]initWithString: [docsDir stringByAppendingPathComponent:@"timetracker.db"]];
 	}
     
 	return self;
@@ -57,17 +63,6 @@ static TTDatabase* _sharedTTDatabase = nil;
 
 - (void)createDatabase
 {
-    NSString *docsDir;
-    NSArray *dirPaths;
-    
-    // Get the documents directory
-    dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    
-    docsDir = dirPaths[0];
-    
-    // Build the path to the database file
-    _databasePath = [[NSString alloc]initWithString: [docsDir stringByAppendingPathComponent:@"timetracker.db"]];
-    
     NSFileManager *filemgr = [NSFileManager defaultManager];
     
     if ([filemgr fileExistsAtPath: _databasePath ] == NO)
@@ -88,6 +83,14 @@ static TTDatabase* _sharedTTDatabase = nil;
         } else {
             NSLog(@"Failed to open/create database");
         }
+    }
+}
+
+- (void)clear
+{
+    NSFileManager *filemgr = [NSFileManager defaultManager];
+    if([filemgr fileExistsAtPath:_databasePath]) {
+        [filemgr removeItemAtPath:_databasePath error:nil];
     }
 }
 
@@ -236,7 +239,7 @@ static TTDatabase* _sharedTTDatabase = nil;
     return res;
 }
 
-- (void)insertTask:(TTTask *)newTask
+- (int)insertTask:(TTTask *)newTask
 {
     const char *dbpath = [_databasePath UTF8String];
     sqlite3_stmt *statement;
@@ -260,9 +263,10 @@ static TTDatabase* _sharedTTDatabase = nil;
         }
         sqlite3_close(_timetrackerDB);
     }
+    return nil;
 }
 
-- (void)insertTime:(TTTime *)newTime
+- (int)insertTime:(TTTime *)newTime
 {
     const char *dbpath = [_databasePath UTF8String];
     sqlite3_stmt *statement;
@@ -290,9 +294,10 @@ static TTDatabase* _sharedTTDatabase = nil;
         }
         sqlite3_close(_timetrackerDB);
     }
+    return nil;
 }
 
-- (void)insertProject:(TTProject *)newProject
+- (int)insertProject:(TTProject *)newProject
 {
     const char *dbpath = [_databasePath UTF8String];
     sqlite3_stmt *statement;
@@ -316,7 +321,7 @@ static TTDatabase* _sharedTTDatabase = nil;
         }
         sqlite3_close(_timetrackerDB);
     }
-
+    return nil;
 }
 
 - (void)updateTask:(TTTask *)updateTask

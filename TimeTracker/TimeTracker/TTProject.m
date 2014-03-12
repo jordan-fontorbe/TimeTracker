@@ -13,4 +13,19 @@
 @synthesize identifier = _identifier;
 @synthesize name = _name;
 
+- (id)initWithIdentifier:(int)identifier name:(NSString *)name
+{
+    self = [super init];
+    if(self) {
+        _identifier = identifier;
+        _name = name;
+    }
+    return self;
+}
+
+- (id)initWithName:(NSString *)name
+{
+    return [self initWithIdentifier:0 name:name];
+}
+
 @end
