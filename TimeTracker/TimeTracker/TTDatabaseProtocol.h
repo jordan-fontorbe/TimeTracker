@@ -15,6 +15,7 @@
 @protocol TTDatabaseProtocol <NSObject>
 
 - (void)createDatabase;
+- (void)clear;
 
 - (TTProject *)getProject:(int)identifier;
 - (TTTask *)getTask:(int)identifier;
@@ -23,9 +24,9 @@
 - (NSArray *)getProjects;
 - (NSArray *)getTasks;
 
-- (void)insertProject:(TTProject *)newProject;
-- (void)insertTask:(TTTask *)newTask;
-- (void)insertTime:(TTTime *)newTime;
+- (int)insertProject:(TTProject *)newProject;
+- (int)insertTask:(TTTask *)newTask;
+- (int)insertTime:(TTTime *)newTime;
 
 - (void)updateProject:(TTProject *)updateProject;
 - (void)updateTask:(TTTask *)updateTask;

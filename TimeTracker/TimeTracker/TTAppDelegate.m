@@ -30,6 +30,11 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     [[TTDatabase instance] createDatabase];
+    
+    // Populate (to remove).
+    [[TTDatabase instance] clear];
+    [[TTDatabase instance] insertProject:[[TTProject alloc] initWithName:@"Struts"]];
+    [[TTDatabase instance] insertProject:[[TTProject alloc] initWithName:@"Développement iOS"]];
 
     return YES;
 }

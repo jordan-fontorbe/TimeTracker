@@ -91,6 +91,11 @@ static TTDatabase* _sharedTTDatabase = nil;
     }
 }
 
+- (void)clear
+{
+    
+}
+
 - (TTTask *)getTask:(int)identifier
 {
     TTTask *res = nil;
@@ -236,7 +241,7 @@ static TTDatabase* _sharedTTDatabase = nil;
     return res;
 }
 
-- (void)insertTask:(TTTask *)newTask
+- (int)insertTask:(TTTask *)newTask
 {
     const char *dbpath = [_databasePath UTF8String];
     sqlite3_stmt *statement;
@@ -260,9 +265,10 @@ static TTDatabase* _sharedTTDatabase = nil;
         }
         sqlite3_close(_timetrackerDB);
     }
+    return nil;
 }
 
-- (void)insertTime:(TTTime *)newTime
+- (int)insertTime:(TTTime *)newTime
 {
     const char *dbpath = [_databasePath UTF8String];
     sqlite3_stmt *statement;
@@ -290,9 +296,10 @@ static TTDatabase* _sharedTTDatabase = nil;
         }
         sqlite3_close(_timetrackerDB);
     }
+    return nil;
 }
 
-- (void)insertProject:(TTProject *)newProject
+- (int)insertProject:(TTProject *)newProject
 {
     const char *dbpath = [_databasePath UTF8String];
     sqlite3_stmt *statement;
@@ -316,7 +323,7 @@ static TTDatabase* _sharedTTDatabase = nil;
         }
         sqlite3_close(_timetrackerDB);
     }
-
+    return nil;
 }
 
 - (void)updateTask:(TTTask *)updateTask

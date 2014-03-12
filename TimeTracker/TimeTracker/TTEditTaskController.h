@@ -11,12 +11,13 @@
 @class TTTask;
 @protocol TTEditTaskDelegate;
 
-@interface TTEditTaskController : UIViewController
+@interface TTEditTaskController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil task:(TTTask *)task;
 @property (nonatomic, assign) id<TTEditTaskDelegate> delegate;
 @property (nonatomic, readonly) TTTask *task;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *projectTextField;
+@property (weak, nonatomic) IBOutlet UITableView *table;
 
 @end

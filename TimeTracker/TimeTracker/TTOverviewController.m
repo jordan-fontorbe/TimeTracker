@@ -9,6 +9,7 @@
 #import "TTOverviewController.h"
 #import "TTAboutController.h"
 #import "TTEditTaskController.h"
+#import "TTSelectProjectController.h"
 
 @interface TTOverviewController ()
 
@@ -48,8 +49,11 @@
 }
 
 - (IBAction)onEditTask:(id)sender {
-    TTEditTaskController *editTaskController = [[TTEditTaskController alloc] initWithNibName:@"TTEditTaskController" bundle:nil task:nil];
+    TTSelectProjectController *editTaskController = [[TTSelectProjectController alloc] initWithProject:0];
     [[self navigationController] pushViewController:editTaskController animated:YES];
+    /*
+    TTEditTaskController *editTaskController = [[TTEditTaskController alloc] initWithNibName:@"TTEditTaskController" bundle:nil task:nil];
+    [[self navigationController] pushViewController:editTaskController animated:YES];*/
 }
 
 @end

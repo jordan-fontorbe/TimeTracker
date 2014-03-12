@@ -19,8 +19,6 @@
 		CE03CDD018C8EAC3001B4C86 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE03CDCF18C8EAC3001B4C86 /* Default-568h@2x.png */; };
 		CE03CDD318C8EAC3001B4C86 /* TimeTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE03CDD118C8EAC3001B4C86 /* TimeTracker.xcdatamodeld */; };
 		CE4E9E2718C91A4500441431 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4E9E2618C91A4500441431 /* libsqlite3.dylib */; };
-		D0A5F23A18CDF1EE0074CE33 /* TTSelectProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A5F23818CDF1EE0074CE33 /* TTSelectProjectController.m */; };
-		D0A5F23B18CDF1EE0074CE33 /* TTSelectProjectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A5F23918CDF1EE0074CE33 /* TTSelectProjectController.xib */; };
 		D0A5F23F18CDF35A0074CE33 /* TTOverviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A5F23D18CDF35A0074CE33 /* TTOverviewController.m */; };
 		D0A5F24018CDF35A0074CE33 /* TTOverviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A5F23E18CDF35A0074CE33 /* TTOverviewController.xib */; };
 		D0A5F24718CDF8F90074CE33 /* TTAboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A5F24518CDF8F90074CE33 /* TTAboutController.m */; };
@@ -32,6 +30,8 @@
 		D0BC2BD518CA0EC300E46F7F /* task.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BC2BCF18CA0EC300E46F7F /* task.png */; };
 		D0BC2BD618CA0EC300E46F7F /* tasks.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BC2BD018CA0EC300E46F7F /* tasks.png */; };
 		D0BC2BD918CA0F6200E46F7F /* TTImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC2BD818CA0F6200E46F7F /* TTImageManager.m */; };
+		D0BC908C18D0A12C0081D7A1 /* TTSelectProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC908A18D0A12C0081D7A1 /* TTSelectProjectController.m */; };
+		D0BC908D18D0A12C0081D7A1 /* TTSelectProjectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0BC908B18D0A12C0081D7A1 /* TTSelectProjectController.xib */; };
 		D0C5DB7018C8F0A3009E0BF7 /* TTTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB6F18C8F0A3009E0BF7 /* TTTask.m */; };
 		D0C5DB7318C8F0B9009E0BF7 /* TTTime.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB7218C8F0B9009E0BF7 /* TTTime.m */; };
 		D0C5DB7618C8F0F2009E0BF7 /* TTProject.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB7518C8F0F2009E0BF7 /* TTProject.m */; };
@@ -57,9 +57,6 @@
 		CE03CDCF18C8EAC3001B4C86 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		CE03CDD218C8EAC3001B4C86 /* TimeTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TimeTracker.xcdatamodel; sourceTree = "<group>"; };
 		CE4E9E2618C91A4500441431 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		D0A5F23718CDF1EE0074CE33 /* TTSelectProjectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTSelectProjectController.h; sourceTree = "<group>"; };
-		D0A5F23818CDF1EE0074CE33 /* TTSelectProjectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTSelectProjectController.m; sourceTree = "<group>"; };
-		D0A5F23918CDF1EE0074CE33 /* TTSelectProjectController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTSelectProjectController.xib; sourceTree = "<group>"; };
 		D0A5F23C18CDF35A0074CE33 /* TTOverviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTOverviewController.h; sourceTree = "<group>"; };
 		D0A5F23D18CDF35A0074CE33 /* TTOverviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTOverviewController.m; sourceTree = "<group>"; };
 		D0A5F23E18CDF35A0074CE33 /* TTOverviewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTOverviewController.xib; sourceTree = "<group>"; };
@@ -75,6 +72,10 @@
 		D0BC2BD018CA0EC300E46F7F /* tasks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tasks.png; sourceTree = "<group>"; };
 		D0BC2BD718CA0F6200E46F7F /* TTImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTImageManager.h; sourceTree = "<group>"; };
 		D0BC2BD818CA0F6200E46F7F /* TTImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTImageManager.m; sourceTree = "<group>"; };
+		D0BC908818D09F780081D7A1 /* TTSelectProjectDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTSelectProjectDelegate.h; sourceTree = "<group>"; };
+		D0BC908918D0A12C0081D7A1 /* TTSelectProjectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTSelectProjectController.h; sourceTree = "<group>"; };
+		D0BC908A18D0A12C0081D7A1 /* TTSelectProjectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTSelectProjectController.m; sourceTree = "<group>"; };
+		D0BC908B18D0A12C0081D7A1 /* TTSelectProjectController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTSelectProjectController.xib; sourceTree = "<group>"; };
 		D0C5DB6918C8EE9C009E0BF7 /* TTDatabaseProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTDatabaseProtocol.h; sourceTree = "<group>"; };
 		D0C5DB6E18C8F0A3009E0BF7 /* TTTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTask.h; sourceTree = "<group>"; };
 		D0C5DB6F18C8F0A3009E0BF7 /* TTTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTask.m; sourceTree = "<group>"; };
@@ -184,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				D0B7EFBA18CE063E00524870 /* TTEditTaskDelegate.h */,
+				D0BC908818D09F780081D7A1 /* TTSelectProjectDelegate.h */,
 			);
 			name = Delegate;
 			sourceTree = "<group>";
@@ -219,12 +221,12 @@
 				D0F1F02B18CA024100F07C28 /* TTEditTaskController.h */,
 				D0F1F02C18CA024100F07C28 /* TTEditTaskController.m */,
 				D0F1F02D18CA024100F07C28 /* TTEditTaskController.xib */,
-				D0A5F23718CDF1EE0074CE33 /* TTSelectProjectController.h */,
-				D0A5F23818CDF1EE0074CE33 /* TTSelectProjectController.m */,
-				D0A5F23918CDF1EE0074CE33 /* TTSelectProjectController.xib */,
 				D0A5F24418CDF8F80074CE33 /* TTAboutController.h */,
 				D0A5F24518CDF8F90074CE33 /* TTAboutController.m */,
 				D0A5F24618CDF8F90074CE33 /* TTAboutController.xib */,
+				D0BC908918D0A12C0081D7A1 /* TTSelectProjectController.h */,
+				D0BC908A18D0A12C0081D7A1 /* TTSelectProjectController.m */,
+				D0BC908B18D0A12C0081D7A1 /* TTSelectProjectController.xib */,
 			);
 			name = Dialog;
 			sourceTree = "<group>";
@@ -284,6 +286,7 @@
 				D0BC2BD218CA0EC300E46F7F /* play.png in Resources */,
 				CE03CDC418C8EAC3001B4C86 /* InfoPlist.strings in Resources */,
 				D0BC2BD618CA0EC300E46F7F /* tasks.png in Resources */,
+				D0BC908D18D0A12C0081D7A1 /* TTSelectProjectController.xib in Resources */,
 				CE03CDCC18C8EAC3001B4C86 /* Default.png in Resources */,
 				D0BC2BD118CA0EC300E46F7F /* pause.png in Resources */,
 				CE03CDCE18C8EAC3001B4C86 /* Default@2x.png in Resources */,
@@ -291,7 +294,6 @@
 				D0BC2BD518CA0EC300E46F7F /* task.png in Resources */,
 				CE03CDD018C8EAC3001B4C86 /* Default-568h@2x.png in Resources */,
 				D0A5F24818CDF8F90074CE33 /* TTAboutController.xib in Resources */,
-				D0A5F23B18CDF1EE0074CE33 /* TTSelectProjectController.xib in Resources */,
 				D0F1F02F18CA024100F07C28 /* TTEditTaskController.xib in Resources */,
 				D0A5F24018CDF35A0074CE33 /* TTOverviewController.xib in Resources */,
 				D0BC2BD418CA0EC300E46F7F /* quickstart.png in Resources */,
@@ -306,12 +308,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0F1F02E18CA024100F07C28 /* TTEditTaskController.m in Sources */,
+				D0BC908C18D0A12C0081D7A1 /* TTSelectProjectController.m in Sources */,
 				D0C5DB7318C8F0B9009E0BF7 /* TTTime.m in Sources */,
 				D0C5DB7018C8F0A3009E0BF7 /* TTTask.m in Sources */,
 				D0C5DB7C18C8F2B1009E0BF7 /* TTDatabase.m in Sources */,
 				D0A5F23F18CDF35A0074CE33 /* TTOverviewController.m in Sources */,
 				CE03CDC618C8EAC3001B4C86 /* main.m in Sources */,
-				D0A5F23A18CDF1EE0074CE33 /* TTSelectProjectController.m in Sources */,
 				D0C5DB7618C8F0F2009E0BF7 /* TTProject.m in Sources */,
 				D0BC2BD918CA0F6200E46F7F /* TTImageManager.m in Sources */,
 				D0A5F24718CDF8F90074CE33 /* TTAboutController.m in Sources */,

@@ -42,9 +42,20 @@
     // Navigation bar.
     [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(onCancel:)]];
     [[self navigationItem] setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave:)]];
-    // Task informations.
+    // Name field.
+    [_nameTextField setFont:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]];
+    [_nameTextField setRightViewMode:UITextFieldViewModeAlways];
+    [_table setDelegate:self];
+    [_table setDataSource:self];
+    [_table reloadData];
+    // Project field.
+    /*[_projectTextField setFont:[UIFont boldSystemFontOfSize:[UIFont systemFontSize]]];
+    [_projectTextField setEnabled:NO];
     [_projectTextField setLeftViewMode:UITextFieldViewModeAlways];
-    [self onProjectSelected:nil];
+    [_projectTextField setRightViewMode:UITextFieldViewModeAlways];
+    [_projectTextField setRightView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure]];
+    // Update selected project.
+    [self onProjectSelected:nil];*/
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,6 +73,27 @@
 - (void)onSave:(UIBarButtonItem *)sender {
     [delegate onCancel:self];
     [[self navigationController] popViewControllerAnimated:YES];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellId = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellId];
+    if(cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellId];
+    }
+    [[cell textLabel] setText:@"Single Project"];
+    return cell;
 }
 
 - (void)onProjectSelected:(TTProject *)project

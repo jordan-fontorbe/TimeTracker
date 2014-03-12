@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class TTTask;
 @class TTEditTaskController;
 
 @protocol TTEditTaskDelegate <NSObject>
