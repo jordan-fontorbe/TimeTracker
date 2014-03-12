@@ -9,6 +9,8 @@
 #import "TTAppDelegate.h"
 #import "TTImageManager.h"
 #import "TTOverviewController.h"
+#import "TTDatabase.h"
+#import "TTProject.h"
 
 @implementation TTAppDelegate
 
@@ -27,6 +29,8 @@
     self.window.rootViewController = self.navigationController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    [[TTDatabase sharedTTDatabase] createDatabase];
+
     return YES;
 }
 

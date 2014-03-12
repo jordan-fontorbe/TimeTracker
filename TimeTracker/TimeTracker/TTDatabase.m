@@ -13,6 +13,41 @@
 
 @implementation TTDatabase
 
+static TTDatabase* _sharedTTDatabase = nil;
+
++(TTDatabase*)sharedTTDatabase
+{
+    @synchronized([TTDatabase class])
+    {
+       if (!_sharedTTDatabase)
+           [[self alloc] init];
+        return _sharedTTDatabase;
+    }
+    return nil;
+}
+
++(id)alloc
+{
+	@synchronized([TTDatabase class])
+	{
+		NSAssert(_sharedTTDatabase == nil,
+                 @"Attempted to allocate a second instance of a singleton.");
+		_sharedTTDatabase = [super alloc];
+		return _sharedTTDatabase;
+	}
+    
+	return nil;
+}
+
+-(id)init {
+	self = [super init];
+	if (self != nil) {
+		// initialize stuff here
+	}
+    
+	return self;
+}
+
 - (void)createDatabase
 {
     NSString *docsDir;
@@ -36,7 +71,7 @@
         {
             char *errMsg;
             const char *sql_stmt =
-            "CREATE TABLE IF NOT EXISTS PROJECT (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT); CREATE TABLE IF NOT EXISTS task (id INTEGER PRIMARY KEY AUTOINCREMENT, id_project INTEGER); CREATE TABLE IF NOT EXISTS TIME (id INTEGER PRIMARY KEY AUTOINCREMENT, id_task INTEGER, start DATETIME, end DATETIME FOREIGN KEY (id_task) REFERENCES task (id) ON DELETE CASCADE);";
+            "CREATE TABLE IF NOT EXISTS PROJECT (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT); CREATE TABLE IF NOT EXISTS task (id INTEGER PRIMARY KEY AUTOINCREMENT, id_project INTEGER); CREATE TABLE IF NOT EXISTS TIME (id INTEGER PRIMARY KEY AUTOINCREMENT, id_task INTEGER, start DATETIME, end DATETIME, FOREIGN KEY (id_task) REFERENCES task (id) ON DELETE CASCADE);";
             
             if (sqlite3_exec(_timetrackerDB, sql_stmt, NULL, NULL, &errMsg) != SQLITE_OK)
             {
