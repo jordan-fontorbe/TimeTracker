@@ -49,11 +49,8 @@
 }
 
 - (IBAction)onEditTask:(id)sender {
-    TTSelectProjectController *editTaskController = [[TTSelectProjectController alloc] initWithProject:0];
+    TTEditTaskController *editTaskController = [[TTEditTaskController alloc] initWithTask:nil];
     [[self navigationController] pushViewController:editTaskController animated:YES];
-    /*
-    TTEditTaskController *editTaskController = [[TTEditTaskController alloc] initWithNibName:@"TTEditTaskController" bundle:nil task:nil];
-    [[self navigationController] pushViewController:editTaskController animated:YES];*/
 }
 
 @end
