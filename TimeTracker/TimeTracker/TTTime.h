@@ -14,5 +14,7 @@
 @property int idTask;
 @property (strong, nonatomic) NSDate *start;
 @property (strong, nonatomic) NSDate *end;
+- (id)initWithIdentifier:(int)identifier start:(NSDate *)start end:(NSDate *)end task:(int)idTask;
+- (id)initWithStart:(NSDate *)start end:(NSDate *)end task:(int)idTask;
 
 @end

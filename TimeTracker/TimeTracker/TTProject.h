@@ -12,5 +12,7 @@
 
 @property int identifier;
 @property (strong, nonatomic) NSString *name;
+- (id)initWithIdentifier:(int)identifier name:(NSString *)name;
+- (id)initWithName:(NSString *)name;
 
 @end
