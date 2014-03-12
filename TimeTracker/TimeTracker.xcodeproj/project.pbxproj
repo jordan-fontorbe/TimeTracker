@@ -36,6 +36,8 @@
 		D0BC908D18D0A12C0081D7A1 /* TTSelectProjectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0BC908B18D0A12C0081D7A1 /* TTSelectProjectController.xib */; };
 		D0BC909118D0B9F00081D7A1 /* TTEditTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC908F18D0B9F00081D7A1 /* TTEditTaskController.m */; };
 		D0BC909218D0B9F00081D7A1 /* TTEditTaskController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0BC909018D0B9F00081D7A1 /* TTEditTaskController.xib */; };
+		D0BC909618D0DA680081D7A1 /* TTEditProjectController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC909418D0DA680081D7A1 /* TTEditProjectController.m */; };
+		D0BC909718D0DA680081D7A1 /* TTEditProjectController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0BC909518D0DA680081D7A1 /* TTEditProjectController.xib */; };
 		D0C5DB7018C8F0A3009E0BF7 /* TTTask.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB6F18C8F0A3009E0BF7 /* TTTask.m */; };
 		D0C5DB7318C8F0B9009E0BF7 /* TTTime.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB7218C8F0B9009E0BF7 /* TTTime.m */; };
 		D0C5DB7618C8F0F2009E0BF7 /* TTProject.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB7518C8F0F2009E0BF7 /* TTProject.m */; };
@@ -84,6 +86,10 @@
 		D0BC908E18D0B9F00081D7A1 /* TTEditTaskController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTEditTaskController.h; sourceTree = "<group>"; };
 		D0BC908F18D0B9F00081D7A1 /* TTEditTaskController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTEditTaskController.m; sourceTree = "<group>"; };
 		D0BC909018D0B9F00081D7A1 /* TTEditTaskController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTEditTaskController.xib; sourceTree = "<group>"; };
+		D0BC909318D0DA680081D7A1 /* TTEditProjectController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTEditProjectController.h; sourceTree = "<group>"; };
+		D0BC909418D0DA680081D7A1 /* TTEditProjectController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTEditProjectController.m; sourceTree = "<group>"; };
+		D0BC909518D0DA680081D7A1 /* TTEditProjectController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTEditProjectController.xib; sourceTree = "<group>"; };
+		D0BC909818D0DA770081D7A1 /* TTEditProjectDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTEditProjectDelegate.h; sourceTree = "<group>"; };
 		D0C5DB6918C8EE9C009E0BF7 /* TTDatabaseProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTDatabaseProtocol.h; sourceTree = "<group>"; };
 		D0C5DB6E18C8F0A3009E0BF7 /* TTTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTask.h; sourceTree = "<group>"; };
 		D0C5DB6F18C8F0A3009E0BF7 /* TTTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTask.m; sourceTree = "<group>"; };
@@ -193,6 +199,7 @@
 			children = (
 				D0B7EFBA18CE063E00524870 /* TTEditTaskDelegate.h */,
 				D0BC908818D09F780081D7A1 /* TTSelectProjectDelegate.h */,
+				D0BC909818D0DA770081D7A1 /* TTEditProjectDelegate.h */,
 			);
 			name = Delegate;
 			sourceTree = "<group>";
@@ -236,6 +243,9 @@
 				D0BC908E18D0B9F00081D7A1 /* TTEditTaskController.h */,
 				D0BC908F18D0B9F00081D7A1 /* TTEditTaskController.m */,
 				D0BC909018D0B9F00081D7A1 /* TTEditTaskController.xib */,
+				D0BC909318D0DA680081D7A1 /* TTEditProjectController.h */,
+				D0BC909418D0DA680081D7A1 /* TTEditProjectController.m */,
+				D0BC909518D0DA680081D7A1 /* TTEditProjectController.xib */,
 			);
 			name = Dialog;
 			sourceTree = "<group>";
@@ -296,6 +306,7 @@
 				CE03CDC418C8EAC3001B4C86 /* InfoPlist.strings in Resources */,
 				D0BC2BD618CA0EC300E46F7F /* tasks.png in Resources */,
 				D0BC908D18D0A12C0081D7A1 /* TTSelectProjectController.xib in Resources */,
+				D0BC909718D0DA680081D7A1 /* TTEditProjectController.xib in Resources */,
 				CE03CDCC18C8EAC3001B4C86 /* Default.png in Resources */,
 				D0BC2BD118CA0EC300E46F7F /* pause.png in Resources */,
 				CE03CDCE18C8EAC3001B4C86 /* Default@2x.png in Resources */,
@@ -317,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0BC908C18D0A12C0081D7A1 /* TTSelectProjectController.m in Sources */,
+				D0BC909618D0DA680081D7A1 /* TTEditProjectController.m in Sources */,
 				D0C5DB7318C8F0B9009E0BF7 /* TTTime.m in Sources */,
 				D0C5DB7018C8F0A3009E0BF7 /* TTTask.m in Sources */,
 				D0C5DB7C18C8F2B1009E0BF7 /* TTDatabase.m in Sources */,

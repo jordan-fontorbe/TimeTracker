@@ -34,8 +34,10 @@
     if(self) {
         if(task) {
             _task = task;
+            [self setTitle:NSLocalizedString(@"Edit", @"EditTask navigation title")];
         } else {
             _task = [[TTTask alloc] initWithName:@"" project:0];
+            [self setTitle:NSLocalizedString(@"New Task", @"EditTask navigation title")];
         }
         if([_task idProject] != 0) {
             _project = [[TTDatabase instance] getProject:[task idProject]];
@@ -50,7 +52,6 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        [self setTitle:NSLocalizedString(@"Edit", @"EditTask navigation title")];
     }
     return self;
 }
@@ -142,7 +143,7 @@
             [_nameTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
             [_nameTextField setReturnKeyType:UIReturnKeyDone];
             [_nameTextField setRightViewMode:UITextFieldViewModeAlways];
-            [_nameTextField setText:@"pouet"];
+            [_nameTextField setText:[_task name]];
             [_nameTextField setDelegate:self];
         }
         [cell addSubview:_nameTextField];
