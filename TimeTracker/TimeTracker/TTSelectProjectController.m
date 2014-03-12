@@ -62,10 +62,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch(section) {
-        case 1:
+        case 0:
             return 1;
         default:
-            return 0;
+            return [_projects count];
     }
 }
 

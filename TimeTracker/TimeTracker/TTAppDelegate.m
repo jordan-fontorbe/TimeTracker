@@ -29,10 +29,12 @@
     self.window.rootViewController = self.navigationController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    // Clear the database.
+    [[TTDatabase instance] clear];
+    
     [[TTDatabase instance] createDatabase];
     
     // Populate (to remove).
-    [[TTDatabase instance] clear];
     [[TTDatabase instance] insertProject:[[TTProject alloc] initWithName:@"Struts"]];
     [[TTDatabase instance] insertProject:[[TTProject alloc] initWithName:@"Développement iOS"]];
 
