@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol TTSelectProjectDelegate;
+
 @interface TTSelectProjectController : UITableViewController
 
-- (id)initWithProject:(int)projectId;
+@property (nonatomic, assign) id<TTSelectProjectDelegate> delegate;
+- (id)initWithSelectedProject:(int)selectedProjectId;
 
 @end

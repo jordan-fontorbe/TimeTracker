@@ -7,21 +7,27 @@
 //
 
 #import "TTSelectProjectController.h"
+#import "TTSelectProjectDelegate.h"
 #import "TTDatabase.h"
+#import "TTProject.h"
+#import "TTImageManager.h"
 
 @interface TTSelectProjectController ()
 
+@property int selectedProjectId;
 @property (strong, nonatomic) NSArray *projects;
 
 @end
 
 @implementation TTSelectProjectController
 
-- (id)initWithProject:(int)projectId
+@synthesize delegate;
+
+- (id)initWithSelectedProject:(int)selectedProjectId
 {
     self = [self initWithStyle:UITableViewStyleGrouped];
     if(self) {
-        // Get the projects.
+        _selectedProjectId = selectedProjectId;
         _projects = [[TTDatabase instance] getProjects];
     }
     return self;
@@ -39,17 +45,11 @@
 {
     [super viewDidLoad];
     [[TTDatabase instance] getProjects];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
@@ -61,11 +61,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    switch(section) {
-        case 0:
-            return 1;
-        default:
-            return [_projects count];
+    if(section == 0) {
+        return 1;
+    } else {
+        return [_projects count];
     }
 }
 
@@ -77,66 +76,40 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    // Configure the cell...
-    
+    if([indexPath indexAtPosition:0] == 0) {
+        // Single tasks section.
+        [[cell textLabel] setText:NSLocalizedString(@"Single Tasks", @"Single tasks project name")];
+        [[cell imageView] setImage:[TTImageManager getIcon:Task]];
+        if(_selectedProjectId == 0) {
+            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        } else {
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+        }
+    } else {
+        // Project section.
+        TTProject *p = [_projects objectAtIndex:[indexPath indexAtPosition:1]];
+        [[cell textLabel] setText:[p name]];
+        [[cell imageView] setImage:[TTImageManager getIcon:Project]];
+        if(_selectedProjectId == [p identifier]) {
+            [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+        } else {
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
+        }
+    }
     return cell;
 }
 
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-/*
  #pragma mark - Table view delegate
  
- // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
  - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
  {
- // Navigation logic may go here, for example:
- // Create the next view controller.
- <#DetailViewController#> *detailViewController = [[DetailViewController alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
- 
- // Pass the selected object to the new view controller.
- 
- // Push the view controller.
- [self.navigationController pushViewController:detailViewController animated:YES];
+     if([indexPath indexAtPosition:0]) {
+         _selectedProjectId = 0;
+     } else {
+         _selectedProjectId = [indexPath indexAtPosition:1] + 1;
+     }
+     [delegate onProjectSelected:_selectedProjectId];
+     [[self navigationController] popViewControllerAnimated:YES];
  }
- 
- */
 
 @end
