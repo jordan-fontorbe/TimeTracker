@@ -13,9 +13,6 @@
 
 @interface TTDatabase : NSObject <TTDatabaseProtocol>
 
-@property (strong, nonatomic) NSString *databasePath;
-@property (nonatomic) sqlite3 *timetrackerDB;
-
-+(TTDatabase*)sharedTTDatabase;
++(TTDatabase*)instance;
 
 @end

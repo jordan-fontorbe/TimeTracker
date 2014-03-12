@@ -29,7 +29,7 @@
     self.window.rootViewController = self.navigationController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    [[TTDatabase sharedTTDatabase] createDatabase];
+    [[TTDatabase instance] createDatabase];
 
     return YES;
 }

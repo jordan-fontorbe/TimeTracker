@@ -11,11 +11,18 @@
 #import "TTTask.h"
 #import "TTTime.h"
 
+@interface TTDatabase ()
+
+@property (strong, nonatomic) NSString *databasePath;
+@property (nonatomic) sqlite3 *timetrackerDB;
+
+@end
+
 @implementation TTDatabase
 
 static TTDatabase* _sharedTTDatabase = nil;
 
-+(TTDatabase*)sharedTTDatabase
++(TTDatabase*)instance
 {
     @synchronized([TTDatabase class])
     {
