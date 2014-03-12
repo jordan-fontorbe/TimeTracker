@@ -50,6 +50,7 @@
 {
     self = [super initWithStyle:style];
     if (self) {
+        [self setTitle:NSLocalizedString(@"Edit", @"EditTask navigation title")];
     }
     return self;
 }
@@ -133,14 +134,15 @@
     
     if([indexPath indexAtPosition:0] == 0) {
         if(_nameTextField == nil) {
-            _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(120, 13, 375, 30)];
-            [_nameTextField setFont:[UIFont boldSystemFontOfSize:17.0]];
+            _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(24, 12, 282, 21)];            [_nameTextField setFont:[UIFont boldSystemFontOfSize:[UIFont labelFontSize]]];
+            [_nameTextField setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
             [_nameTextField setAdjustsFontSizeToFitWidth:NO];
             [_nameTextField setTextAlignment:NSTextAlignmentLeft];
             [_nameTextField setClearButtonMode:UITextFieldViewModeAlways];
             [_nameTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
             [_nameTextField setReturnKeyType:UIReturnKeyDone];
-            [_nameTextField setText:[_task name]];
+            [_nameTextField setRightViewMode:UITextFieldViewModeAlways];
+            [_nameTextField setText:@"pouet"];
             [_nameTextField setDelegate:self];
         }
         [cell addSubview:_nameTextField];
