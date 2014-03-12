@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class TTEditTaskController;
+@class TTTask;
 
 @protocol TTEditTaskDelegate <NSObject>
 
-- (void)onCancel:(TTEditTaskController *)sender;
-- (void)onSave:(TTEditTaskController *)sender;
+- (void)onCancel;
+- (void)onSave:(TTTask *)task;
 
 @end

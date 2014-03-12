@@ -13,6 +13,6 @@
 @interface TTSelectProjectController : UITableViewController
 
 @property (nonatomic, assign) id<TTSelectProjectDelegate> delegate;
-- (id)initWithSelectedProject:(int)selectedProjectId;
+- (id)initWithProject:(int)projectId;
 
 @end

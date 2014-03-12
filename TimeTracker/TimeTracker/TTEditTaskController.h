@@ -1,23 +1,20 @@
 //
-//  TTEditTaskViewController.h
+//  TTEditTaskController.h
 //  TimeTracker
 //
-//  Created by Jérémy Morosi on 07/03/2014.
+//  Created by Jérémy Morosi on 12/03/2014.
 //  Copyright (c) 2014 Jojeredamyn. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "TTSelectProjectDelegate.h"
 
 @class TTTask;
 @protocol TTEditTaskDelegate;
 
-@interface TTEditTaskController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface TTEditTaskController : UITableViewController <TTSelectProjectDelegate, UITextFieldDelegate>
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil task:(TTTask *)task;
 @property (nonatomic, assign) id<TTEditTaskDelegate> delegate;
-@property (nonatomic, readonly) TTTask *task;
-@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *projectTextField;
-@property (weak, nonatomic) IBOutlet UITableView *table;
+- (id)initWithTask:(TTTask *)task;
 
 @end

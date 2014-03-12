@@ -12,6 +12,6 @@
 
 @protocol TTSelectProjectDelegate <NSObject>
 
-- (void)onProjectSelected:(int)selectedProjectId;
+- (void)onProjectSelected:(int)projectId;
 
 @end

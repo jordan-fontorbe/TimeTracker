@@ -14,7 +14,7 @@
 
 @interface TTSelectProjectController ()
 
-@property int selectedProjectId;
+@property int projectId;
 @property (strong, nonatomic) NSArray *projects;
 
 @end
@@ -23,11 +23,11 @@
 
 @synthesize delegate;
 
-- (id)initWithSelectedProject:(int)selectedProjectId
+- (id)initWithProject:(int)projectId
 {
     self = [self initWithStyle:UITableViewStyleGrouped];
     if(self) {
-        _selectedProjectId = selectedProjectId;
+        _projectId = projectId;
         _projects = [[TTDatabase instance] getProjects];
     }
     return self;
@@ -80,7 +80,7 @@
         // Single tasks section.
         [[cell textLabel] setText:NSLocalizedString(@"Single Tasks", @"Single tasks project name")];
         [[cell imageView] setImage:[TTImageManager getIcon:Task]];
-        if(_selectedProjectId == 0) {
+        if(_projectId == 0) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         } else {
             [cell setAccessoryType:UITableViewCellAccessoryNone];
@@ -90,7 +90,7 @@
         TTProject *p = [_projects objectAtIndex:[indexPath indexAtPosition:1]];
         [[cell textLabel] setText:[p name]];
         [[cell imageView] setImage:[TTImageManager getIcon:Project]];
-        if(_selectedProjectId == [p identifier]) {
+        if(_projectId == [p identifier]) {
             [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
         } else {
             [cell setAccessoryType:UITableViewCellAccessoryNone];
@@ -103,12 +103,11 @@
  
  - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
  {
-     if([indexPath indexAtPosition:0]) {
-         _selectedProjectId = 0;
+     if([indexPath indexAtPosition:0] == 0) {
+         [delegate onProjectSelected:0];
      } else {
-         _selectedProjectId = [indexPath indexAtPosition:1] + 1;
+         [delegate onProjectSelected:[indexPath indexAtPosition:1] + 1];
      }
-     [delegate onProjectSelected:_selectedProjectId];
      [[self navigationController] popViewControllerAnimated:YES];
  }
 
