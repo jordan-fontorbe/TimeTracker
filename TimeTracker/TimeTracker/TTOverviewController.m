@@ -9,15 +9,12 @@
 #import "TTOverviewController.h"
 #import "TTAboutController.h"
 #import "TTEditTaskController.h"
-<<<<<<< HEAD
 #import "TTDataManager.h"
 #import "TTDatabase.h"
 #import "TTProject.h"
 #import "TTTask.h"
 #import "QuartzCore/QuartzCore.h"
-=======
 #import "TTSelectProjectController.h"
->>>>>>> FETCH_HEAD
 
 @interface TTOverviewController ()
 

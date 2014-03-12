@@ -27,6 +27,9 @@
     // Initialize the ImageManager.
     [TTImageManager init];
     
+    // Clear the database. (a retirer ensuite)
+    [[TTDatabase instance] clear];
+    
     // Initialize singleton
     [[TTDatabase instance] createDatabase];
     [[TTDataManager instance] initRunningTasks];
@@ -57,19 +60,6 @@
     self.window.rootViewController = self.navigationController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-<<<<<<< HEAD
-    
-    
-=======
-    // Clear the database.
-    [[TTDatabase instance] clear];
-    
-    [[TTDatabase instance] createDatabase];
-    
-    // Populate (to remove).
-    [[TTDatabase instance] insertProject:[[TTProject alloc] initWithName:@"Struts"]];
-    [[TTDatabase instance] insertProject:[[TTProject alloc] initWithName:@"Développement iOS"]];
->>>>>>> FETCH_HEAD
 
     
     return YES;
