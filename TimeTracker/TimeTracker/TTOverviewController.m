@@ -43,8 +43,9 @@
     self.btnQuickStart.layer.cornerRadius = 10;
     self.btnQuickStart.layer.borderWidth = 1;
     
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reloadTableView) userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reloadTableViewForTimer) userInfo:nil repeats:YES];
 }
+
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -120,14 +121,21 @@
     else if (indexPath.section == 1){
         UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
         [myImageView setTag:111];
+        UILabel *myTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 0, 50, 40)];
+        [myTimeLabel setTag:222];
+        [myTimeLabel setTextAlignment:NSTextAlignmentRight];
         if (indexPath.row == 0) {
             myImageView.image = [UIImage imageNamed:@"tasks"];
             cell.textLabel.text = @"All Tasks";
+            [myTimeLabel setText:[[TTDatabase instance] getTotalTimeStringFormatted]];
         }
         else if (indexPath.row == 1) {
             myImageView.image = [UIImage imageNamed:@"task"];
             cell.textLabel.text = @"Single Tasks";
+            [myTimeLabel setText:[[TTDatabase instance] getTotalProjectTimeStringFormatted:0]];
+            
         }
+        [[cell contentView] addSubview:myTimeLabel];
         [cell addSubview:myImageView];
         [cell setIndentationWidth:35];
         [cell setIndentationLevel:1];
@@ -136,6 +144,9 @@
         UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
         [myImageView setTag:111];
         myImageView.image = [UIImage imageNamed:@"project"];
+        UILabel *myTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 0, 50, 40)];
+        [myTimeLabel setTag:222];
+        [myTimeLabel setTextAlignment:NSTextAlignmentRight];
         [cell addSubview:myImageView];
         [cell setIndentationWidth:35];
         [cell setIndentationLevel:1];
@@ -145,7 +156,9 @@
         {
             TTProject *myProject = (TTProject *)[lstProject objectAtIndex:indexPath.row];
             cell.textLabel.text = [myProject name];
+            [myTimeLabel setText:[[TTDatabase instance] getTotalProjectTimeStringFormatted:[myProject identifier]]];
         }
+        [[cell contentView] addSubview:myTimeLabel];
         
     }
     return cell;
@@ -179,7 +192,9 @@
     [self.tblView reloadData];
 }
 
--(void)reloadTableView {
-    [self.tblView reloadData];
+-(void)reloadTableViewForTimer {
+
+    [self.tblView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+
 }
 @end

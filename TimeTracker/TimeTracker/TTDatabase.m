@@ -73,7 +73,7 @@ static TTDatabase* _sharedTTDatabase = nil;
         {
             char *errMsg;
             const char *sql_stmt =
-            "CREATE TABLE IF NOT EXISTS PROJECT (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT); CREATE TABLE IF NOT EXISTS task (id INTEGER PRIMARY KEY AUTOINCREMENT, id_project INTEGER); CREATE TABLE IF NOT EXISTS TIME (id INTEGER PRIMARY KEY AUTOINCREMENT, id_task INTEGER, start DATETIME, end DATETIME, FOREIGN KEY (id_task) REFERENCES task (id) ON DELETE CASCADE);";
+            "CREATE TABLE IF NOT EXISTS PROJECT (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT); CREATE TABLE IF NOT EXISTS task (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, id_project INTEGER); CREATE TABLE IF NOT EXISTS TIME (id INTEGER PRIMARY KEY AUTOINCREMENT, id_task INTEGER, start DATETIME, end DATETIME, FOREIGN KEY (id_task) REFERENCES task (id) ON DELETE CASCADE);";
             
             if (sqlite3_exec(_timetrackerDB, sql_stmt, NULL, NULL, &errMsg) != SQLITE_OK)
             {
@@ -144,6 +144,7 @@ static TTDatabase* _sharedTTDatabase = nil;
                 double dTime = sqlite3_column_double(statement, 2);
                 [res setStart:[NSDate dateWithTimeIntervalSince1970:dTime]];
                 dTime = sqlite3_column_double(statement, 3);
+                [res setEnd:[NSDate dateWithTimeIntervalSince1970:dTime]];
             }
             sqlite3_finalize(statement);
         }
@@ -517,7 +518,75 @@ static TTDatabase* _sharedTTDatabase = nil;
     }
     
     return res;
+}
 
+- (NSString *)getTotalTimeStringFormatted
+{
+    const char *dbpath = [_databasePath UTF8String];
+    sqlite3_stmt *statement;
+    NSDate *date = nil;
+    
+    if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
+    {
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT (julianday(SUM(julianday(ti.end) - julianday(ti.start)))) * 86400.0 FROM time ti "];
+        
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(_timetrackerDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            if (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                double dTime = sqlite3_column_double(statement, 0);
+                date = [NSDate dateWithTimeIntervalSince1970:dTime];
+
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(_timetrackerDB);
+    }
+    
+    if (date != nil){
+        NSUInteger seconds = (NSUInteger)round([date timeIntervalSince1970]);
+        return [NSString stringWithFormat:@"%02u:%02u", seconds / 3600, (seconds / 60) % 60];
+    }
+    else {
+        return @"00:00";
+    }
+
+}
+
+- (NSString *)getTotalProjectTimeStringFormatted:(NSInteger) idProject
+{
+    const char *dbpath = [_databasePath UTF8String];
+    sqlite3_stmt *statement;
+    NSDate *date = nil;
+    
+    if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
+    {
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT (julianday(SUM(julianday(ti.end) - julianday(ti.start)))) * 86400.0 FROM time ti JOIN task ta ON ta.id = ti.id_task WHERE ta.id_project = %d", idProject];
+        
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(_timetrackerDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            if (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                double dTime = sqlite3_column_double(statement, 0);
+                date = [NSDate dateWithTimeIntervalSince1970:dTime];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(_timetrackerDB);
+    }
+    
+    if (date != nil){
+        NSUInteger seconds = (NSUInteger)round([date timeIntervalSince1970]);
+        return [NSString stringWithFormat:@"%02u:%02u", seconds / 3600, (seconds / 60) % 60];
+    }
+    else {
+        return @"00:00";
+    }
+    
 }
 
 @end

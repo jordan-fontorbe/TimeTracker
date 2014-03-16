@@ -37,4 +37,7 @@
 - (void)deleteTime:(TTTime *)time;
 
 - (NSArray *)getTasksFrom:(NSDate *)from To:(NSDate *)to For:(TTProject *)project;
+
+- (NSString *)getTotalTimeStringFormatted;
+- (NSString *)getTotalProjectTimeStringFormatted:(NSInteger) idProject;
 @end

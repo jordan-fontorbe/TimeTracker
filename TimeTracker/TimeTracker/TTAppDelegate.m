@@ -13,6 +13,7 @@
 #import "TTDataManager.h"
 #import "TTProject.h"
 #import "TTTask.h"
+#import "TTTime.h"
 
 
 @implementation TTAppDelegate
@@ -47,6 +48,28 @@
     TTProject *prj3 = [[TTProject alloc] init];
     [prj3 setName:@"Sécurité réseau"];
     [[TTDatabase instance] insertProject:prj3];
+    
+    TTTask *task = [[TTTask alloc] initWithName:@"Projet" project:1];
+    [[TTDatabase instance] insertTask:task];
+    
+    task = [[TTTask alloc] initWithName:@"single task 1" project:0];
+    [[TTDatabase instance] insertTask:task];
+    
+    TTTime *time = [[TTTime alloc] init];
+    [time setIdTask:0];
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"dd/MM/yyyy HH:mm:ss"];
+    [time setStart:[dateFormat dateFromString:@"16/03/2014 14:00:30"]];
+    [time setEnd:[dateFormat dateFromString:@"16/03/2014 15:23:10"]];
+    [time setIdTask:2];
+    [[TTDatabase instance] insertTime:time];
+    time = [[TTTime alloc] init];
+    [time setIdTask:1];
+    [time setStart:[dateFormat dateFromString:@"16/03/2014 15:00:00"]];
+    [time setEnd:[dateFormat dateFromString:@"16/03/2014 17:00:00"]];
+    [[TTDatabase instance] insertTime:time];
+    
+    
     
     //****************************************//
     
