@@ -15,6 +15,7 @@
 #import "TTTask.h"
 #import "QuartzCore/QuartzCore.h"
 #import "TTSelectProjectController.h"
+#import "TTRunningTask.h"
 
 @interface TTOverviewController ()
 
@@ -41,6 +42,8 @@
     [[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
     self.btnQuickStart.layer.cornerRadius = 10;
     self.btnQuickStart.layer.borderWidth = 1;
+    
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reloadTableView) userInfo:nil repeats:YES];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -67,24 +70,31 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MiddleCell"];
-        
+    
     if (cell == nil){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"MiddleCell"];
-        if (indexPath.section != 0){
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
     }
+    if (indexPath.section != 0){
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
+    [[cell viewWithTag:111] removeFromSuperview];
+    [[cell viewWithTag:222] removeFromSuperview];
     
     if (indexPath.section == 0) {
         UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+        [myImageView setTag:111];
         NSMutableArray *lstRunningTasks = [[TTDataManager instance] getRunningTasks];
         if (lstRunningTasks.count > indexPath.row)
         {
-            TTTask *myTask = (TTTask *)[lstRunningTasks objectAtIndex:indexPath.row];
-            if ([myTask identifier] > 0){
+            TTRunningTask *myRunningTask = (TTRunningTask *)[lstRunningTasks objectAtIndex:indexPath.row];
+            if ([[myRunningTask task] identifier] > 0){
                 myImageView.image = [UIImage imageNamed:@"pause"];
-                cell.textLabel.text = [myTask name];
-                TTProject *myProject = [[TTDatabase instance] getProject:myTask.idProject];
+                cell.textLabel.text = [[myRunningTask task] name];
+                TTProject *myProject = [[TTDatabase instance] getProject:[[myRunningTask task] idProject]];
                 if (myProject != nil){
                     cell.detailTextLabel.text = [myProject name];
                 }
@@ -97,17 +107,25 @@
             [cell addSubview:myImageView];
             [cell setIndentationWidth:35];
             [cell setIndentationLevel:1];
+            
+            UILabel *myTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(210, 0, 80, 40)];
+            [myTimeLabel setTag:222];
+            [myTimeLabel setTextAlignment:NSTextAlignmentRight];
+            [myTimeLabel setText:[myRunningTask getRunningTaskTimeStringFormatted]];
+            [[cell contentView] addSubview:myTimeLabel];
+                                
         }
         
     }
     else if (indexPath.section == 1){
         UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+        [myImageView setTag:111];
         if (indexPath.row == 0) {
             myImageView.image = [UIImage imageNamed:@"tasks"];
             cell.textLabel.text = @"All Tasks";
         }
         else if (indexPath.row == 1) {
-              myImageView.image = [UIImage imageNamed:@"task"];
+            myImageView.image = [UIImage imageNamed:@"task"];
             cell.textLabel.text = @"Single Tasks";
         }
         [cell addSubview:myImageView];
@@ -116,6 +134,7 @@
     }
     else if (indexPath.section == 2) {
         UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
+        [myImageView setTag:111];
         myImageView.image = [UIImage imageNamed:@"project"];
         [cell addSubview:myImageView];
         [cell setIndentationWidth:35];
@@ -127,9 +146,8 @@
             TTProject *myProject = (TTProject *)[lstProject objectAtIndex:indexPath.row];
             cell.textLabel.text = [myProject name];
         }
-
+        
     }
-        //cell.textLabel.text = @"Some text";
     return cell;
 }
 
@@ -150,4 +168,18 @@
     [[self navigationController] pushViewController:editTaskController animated:YES];
 }
 
+- (IBAction)btnQuickStart_TouchDown:(id)sender {
+    TTTask *task = [[TTTask alloc]init];
+    NSMutableArray *lstRunningTasks = [[TTDataManager instance] getRunningTasks];
+    NSDate *now = [NSDate date];
+    TTRunningTask *runningTask = [[TTRunningTask alloc] initWithTask:task start:now];
+    [lstRunningTasks addObject:runningTask];
+    [[TTDataManager instance] setRunningTasks:lstRunningTasks];
+    
+    [self.tblView reloadData];
+}
+
+-(void)reloadTableView {
+    [self.tblView reloadData];
+}
 @end

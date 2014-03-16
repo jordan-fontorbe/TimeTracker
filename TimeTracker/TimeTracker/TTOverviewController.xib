@@ -77,7 +77,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{20, 12}, {280, 39}}</string>
 						<reference key="NSSuperview" ref="51845585"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -209,6 +208,15 @@
 					</object>
 					<string key="id">Spr-qe-fa0</string>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">btnQuickStart_TouchDown:</string>
+						<reference key="source" ref="433574007"/>
+						<reference key="destination" ref="1022481253"/>
+						<int key="IBEventType">1</int>
+					</object>
+					<string key="id">SKn-Vg-319</string>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -234,8 +242,8 @@
 						<reference key="object" ref="51845585"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="1058372544"/>
-							<reference ref="433574007"/>
 							<reference ref="798084958"/>
+							<reference ref="433574007"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>

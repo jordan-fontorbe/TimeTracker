@@ -13,5 +13,6 @@
 - (IBAction)onEditTask:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *tblView;
 @property (weak, nonatomic) IBOutlet UIButton *btnQuickStart;
+- (IBAction)btnQuickStart_TouchDown:(id)sender;
 
 @end

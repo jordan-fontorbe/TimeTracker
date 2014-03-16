@@ -35,10 +35,6 @@
     [[TTDataManager instance] initRunningTasks];
     
     //**** A RETIRER (SEULEMENT POUR TEST) ****//
-    NSMutableArray *lstRunningTask = [[TTDataManager instance] getRunningTasks];
-    TTTask *myTask = [[TTTask alloc] init];
-    [lstRunningTask addObject:myTask];
-    [[TTDataManager instance] setRunningTasks:lstRunningTask];
     
     TTProject *prj1 = [[TTProject alloc] init];
     [prj1 setName:@"Développement iOS"];
