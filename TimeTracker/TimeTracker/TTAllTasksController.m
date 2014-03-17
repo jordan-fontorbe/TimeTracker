@@ -8,6 +8,8 @@
 
 #import "TTAllTasksController.h"
 #import "TTDatabase.h"
+#import "TTTaskCell.h"
+#import "TTProject.h"
 
 @interface TTAllTasksController ()
 
@@ -30,14 +32,64 @@
     return self;
 }
 
-- (NSArray *)getProjects
+- (void)viewDidLoad
 {
-    return _projects;
+    [super viewDidLoad];
 }
 
-- (NSMutableDictionary *)getTasks
+- (void)didReceiveMemoryWarning
 {
-    return _tasks;
+    [super didReceiveMemoryWarning];
+}
+
+- (NSMutableArray *)getTasksFor:(int)section
+{
+    int index = 0;
+    if(section != 0) {
+        index = [(TTProject *)[_projects objectAtIndex:section-1] identifier];
+    }
+    NSNumber *n = [NSNumber numberWithInt:index];
+    NSMutableDictionary *t = _tasks;
+    NSMutableArray *a = [t objectForKey:n];
+    if(a == nil) {
+        a = [[NSMutableArray alloc] init];
+        [t setObject:a forKey:n];
+    }
+    return a;
+}
+
+- (TTTask *)getTaskFor:(int)section row:(int)row
+{
+    return [[self getTasksFor:section] objectAtIndex:row];
+}
+
+- (int)getProjectIdFor:(int)section
+{
+    if(section == 0) {
+        return 0;
+    } else {
+        return [(TTProject *)[_projects objectAtIndex:section-1] identifier];
+    }
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [_projects count] + 1;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return NSLocalizedString(@"Single Tasks", @"Single Tasks");
+    } else {
+        return [[_projects objectAtIndex:section-1] name];
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TTTaskCell *cell = (TTTaskCell *)[super tableView:tableView cellForRowAtIndexPath:indexPath];
+    return cell;
 }
 
 @end

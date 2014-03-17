@@ -9,11 +9,12 @@
 #import "TTProjectTasksController.h"
 #import "TTDatabase.h"
 #import "TTProject.h"
+#import "TTTaskCell.h"
 
 @interface TTProjectTasksController ()
 
-@property (strong, nonatomic) NSArray *projects;
-@property (strong, nonatomic) NSMutableDictionary *tasks;
+@property (strong, nonatomic) TTProject *project;
+@property (strong, nonatomic) NSMutableArray *tasks;
 
 @end
 
@@ -23,24 +24,58 @@
 {
     self = [super init];
     if (self) {
-        TTProject *p = [[TTDatabase instance] getProject:project];
-        _projects = [[NSMutableArray alloc] initWithObjects:p, nil];
-        NSArray *d = [[TTDatabase instance] getTasksFor: project];
-        _tasks = [[NSMutableDictionary alloc] init];
-        [_tasks setObject:d forKey:[NSNumber numberWithInt: project]];
-        [self setTitle:[p name]];
+        if(project == 0) {
+            _project = nil;
+            [self setTitle:NSLocalizedString(@"Single Tasks", @"Single Tasks")];
+        } else {
+            _project = [[TTDatabase instance] getProject: project];
+            [self setTitle:[_project name]];
+        }
+        NSArray *a = [[TTDatabase instance] getTasksFor: project];
+        _tasks = [[NSMutableArray alloc] initWithArray:a];
     }
     return self;
 }
 
-- (NSArray *)getProjects
+- (void)viewDidLoad
 {
-    return _projects;
+    [super viewDidLoad];
 }
 
-- (NSMutableDictionary *)getTasks
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+- (NSMutableArray *)getTasksFor:(int)section
 {
     return _tasks;
+}
+
+- (TTTask *)getTaskFor:(int)section row:(int)row
+{
+    return [[self getTasksFor:section] objectAtIndex:row];
+}
+
+- (int)getProjectIdFor:(int)section
+{
+    return [_project identifier];
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TTTaskCell *cell = (TTTaskCell *)[super tableView:tableView cellForRowAtIndexPath:indexPath];
+    return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
 }
 
 @end

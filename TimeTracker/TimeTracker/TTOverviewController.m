@@ -18,7 +18,8 @@
 #import "TTRunningTask.h"
 #import "TTImageManager.h"
 #import "TTTaskCell.h"
-#import "TTTasksListController.h"
+#import "TTAllTasksController.h"
+#import "TTProjectTasksController.h"
 
 @interface TTOverviewController ()
 
@@ -131,7 +132,7 @@
             cell.time.text = [[TTDatabase instance] getTotalProjectTimeStringFormatted:0];
             
         }
-       // [[cell contentView] addSubview:myTimeLabel];
+        // [[cell contentView] addSubview:myTimeLabel];
     }
     else if (indexPath.section == 2) {
         [[cell imageView] setImage:[TTImageManager getIcon:Project]];
@@ -142,7 +143,7 @@
             TTProject *myProject = (TTProject *)[lstProject objectAtIndex:indexPath.row];
             cell.label.text = [myProject name];
             cell.time.text = [[TTDatabase instance] getTotalProjectTimeStringFormatted:[myProject identifier]];
-        }        
+        }
     }
     return cell;
 }
@@ -151,11 +152,28 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([indexPath indexAtPosition:0] == 1) {
-        if([indexPath indexAtPosition:1] == 0) {
-            TTTasksListController *view = [[TTTasksListController alloc] init];
-            [[self navigationController] pushViewController:view animated:YES];
+    switch([indexPath indexAtPosition:0]) {
+        case 0:
+            break;
+        case 1:
+        {
+            if([indexPath indexAtPosition:1] == 0) {
+                TTAllTasksController *view = [[TTAllTasksController alloc] init];
+                [[self navigationController] pushViewController:view animated:YES];
+            } else {
+                TTProjectTasksController *view = [[TTProjectTasksController alloc] initWithProject:0];
+                [[self navigationController] pushViewController:view animated:YES];
+            }
+            break;
         }
+        case 2:
+        {
+            TTProject *p = [[TTDatabase instance] getProject:[indexPath indexAtPosition:1]+1];
+            TTProjectTasksController *view = [[TTProjectTasksController alloc] initWithProject:[p identifier]];
+            [[self navigationController] pushViewController:view animated:YES];
+            break;
+        }
+        default:;
     }
 }
 
@@ -188,8 +206,8 @@
 }
 
 -(void)reloadTableViewForTimer {
-
+    
     [self.tblView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-
+    
 }
 @end

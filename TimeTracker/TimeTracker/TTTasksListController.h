@@ -10,7 +10,4 @@
 
 @interface TTTasksListController : UITableViewController
 
-- (NSArray *)getProjects;
-- (NSMutableDictionary *)getTasks;
-
 @end

@@ -64,65 +64,26 @@
     [[self tableView] reloadData];
 }
 
-- (NSArray *)getProjects
-{
-    return nil;
-}
-
-- (NSMutableDictionary *)getTasks
-{
-    return nil;
-}
-
 #pragma mark - Table view data source
 
 - (NSMutableArray *)getTasksFor:(int)section
 {
-    int index = 0;
-    if(section != 0) {
-        index = [(TTProject *)[[self getProjects] objectAtIndex:section-1] identifier];
-    }
-    NSNumber *n = [NSNumber numberWithInt:index];
-    NSMutableDictionary *t = [self getTasks];
-    NSMutableArray *a = [t objectForKey:n];
-    if(a == nil) {
-        a = [[NSMutableArray alloc] init];
-        [t setObject:a forKey:n];
-    }
-    return a;
+    return nil;
 }
 
 - (TTTask *)getTaskFor:(int)section row:(int)row
 {
-    return [[self getTasksFor:section] objectAtIndex:row];
+    return nil;
 }
 
 - (int)getProjectIdFor:(int)section
 {
-    if(section == 0) {
-        return 0;
-    } else {
-        return [(TTProject *)[[self getProjects] objectAtIndex:section-1] identifier];
-    }
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return [[self getProjects] count] + 1;
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [[self getTasksFor:section] count];
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if (section == 0) {
-        return NSLocalizedString(@"Single Tasks", @"Single Tasks");
-    } else {
-        return [[[self getProjects] objectAtIndex:section-1] name];
-    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -138,10 +99,8 @@
     [[cell label] setText:[task name]];
     if (!tableView.editing) {
         [[cell imageView] setImage:[TTImageManager getIcon:Play]];
-        [cell setShowsReorderControl:NO];
     } else {
         [[cell imageView] setImage:nil];
-        [cell setShowsReorderControl:YES];
     }
     [cell setAccessoryType:UITableViewCellAccessoryDetailDisclosureButton];
     
