@@ -24,6 +24,8 @@
 		CE906D4718D0D4C700403C50 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE906D4618D0D4C700403C50 /* QuartzCore.framework */; };
 		D070166918D763E100A69D08 /* TTTaskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D070166818D763E100A69D08 /* TTTaskCell.xib */; };
 		D070166C18D7642000A69D08 /* TTTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D070166B18D7642000A69D08 /* TTTaskCell.m */; };
+		D070167018D7811300A69D08 /* TTAllTasksController.m in Sources */ = {isa = PBXBuildFile; fileRef = D070166E18D7811300A69D08 /* TTAllTasksController.m */; };
+		D070167118D7811300A69D08 /* TTAllTasksController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D070166F18D7811300A69D08 /* TTAllTasksController.xib */; };
 		D0A5F23F18CDF35A0074CE33 /* TTOverviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A5F23D18CDF35A0074CE33 /* TTOverviewController.m */; };
 		D0A5F24018CDF35A0074CE33 /* TTOverviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A5F23E18CDF35A0074CE33 /* TTOverviewController.xib */; };
 		D0A5F24718CDF8F90074CE33 /* TTAboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A5F24518CDF8F90074CE33 /* TTAboutController.m */; };
@@ -72,6 +74,9 @@
 		D070166818D763E100A69D08 /* TTTaskCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTTaskCell.xib; sourceTree = "<group>"; };
 		D070166A18D7642000A69D08 /* TTTaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTaskCell.h; sourceTree = "<group>"; };
 		D070166B18D7642000A69D08 /* TTTaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTaskCell.m; sourceTree = "<group>"; };
+		D070166D18D7811300A69D08 /* TTAllTasksController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAllTasksController.h; sourceTree = "<group>"; };
+		D070166E18D7811300A69D08 /* TTAllTasksController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAllTasksController.m; sourceTree = "<group>"; };
+		D070166F18D7811300A69D08 /* TTAllTasksController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTAllTasksController.xib; sourceTree = "<group>"; };
 		D0A5F23C18CDF35A0074CE33 /* TTOverviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTOverviewController.h; sourceTree = "<group>"; };
 		D0A5F23D18CDF35A0074CE33 /* TTOverviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTOverviewController.m; sourceTree = "<group>"; };
 		D0A5F23E18CDF35A0074CE33 /* TTOverviewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTOverviewController.xib; sourceTree = "<group>"; };
@@ -267,6 +272,9 @@
 				D0BC909318D0DA680081D7A1 /* TTEditProjectController.h */,
 				D0BC909418D0DA680081D7A1 /* TTEditProjectController.m */,
 				D0BC909518D0DA680081D7A1 /* TTEditProjectController.xib */,
+				D070166D18D7811300A69D08 /* TTAllTasksController.h */,
+				D070166E18D7811300A69D08 /* TTAllTasksController.m */,
+				D070166F18D7811300A69D08 /* TTAllTasksController.xib */,
 			);
 			name = Dialog;
 			sourceTree = "<group>";
@@ -323,6 +331,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D070167118D7811300A69D08 /* TTAllTasksController.xib in Resources */,
 				D0BC2BD218CA0EC300E46F7F /* play.png in Resources */,
 				CE03CDC418C8EAC3001B4C86 /* InfoPlist.strings in Resources */,
 				D0BC2BD618CA0EC300E46F7F /* tasks.png in Resources */,
@@ -353,6 +362,7 @@
 				D0BC909618D0DA680081D7A1 /* TTEditProjectController.m in Sources */,
 				D070166C18D7642000A69D08 /* TTTaskCell.m in Sources */,
 				D0C5DB7318C8F0B9009E0BF7 /* TTTime.m in Sources */,
+				D070167018D7811300A69D08 /* TTAllTasksController.m in Sources */,
 				D0C5DB7018C8F0A3009E0BF7 /* TTTask.m in Sources */,
 				D0C5DB7C18C8F2B1009E0BF7 /* TTDatabase.m in Sources */,
 				D0A5F23F18CDF35A0074CE33 /* TTOverviewController.m in Sources */,

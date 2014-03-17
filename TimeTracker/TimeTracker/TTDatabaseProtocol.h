@@ -22,7 +22,7 @@
 - (TTTime *)getTime:(int)identifier;
 
 - (NSArray *)getProjects;
-- (NSArray *)getTasks;
+- (NSDictionary *)getTasks;
 
 - (int)insertProject:(TTProject *)newProject;
 - (int)insertTask:(TTTask *)newTask;
@@ -36,7 +36,8 @@
 - (void)deleteTask:(TTTask *)task;
 - (void)deleteTime:(TTTime *)time;
 
-- (NSArray *)getTasksFrom:(NSDate *)from To:(NSDate *)to For:(TTProject *)project;
+- (NSArray *)getTasksFor:(int)project;
+- (NSArray *)getTasksFrom:(NSDate *)from To:(NSDate *)to For:(int)project;
 
 - (NSString *)getTotalTimeStringFormatted;
 - (NSString *)getTotalProjectTimeStringFormatted:(NSInteger) idProject;

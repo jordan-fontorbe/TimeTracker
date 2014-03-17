@@ -18,6 +18,7 @@
 #import "TTRunningTask.h"
 #import "TTImageManager.h"
 #import "TTTaskCell.h"
+#import "TTAllTasksController.h"
 
 @interface TTOverviewController ()
 
@@ -48,6 +49,15 @@
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reloadTableViewForTimer) userInfo:nil repeats:YES];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [[self navigationController] setToolbarHidden:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[self navigationController] setToolbarHidden:YES];
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -135,6 +145,18 @@
         }        
     }
     return cell;
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([indexPath indexAtPosition:0] == 1) {
+        if([indexPath indexAtPosition:1] == 0) {
+            TTAllTasksController *view = [[TTAllTasksController alloc] init];
+            [[self navigationController] pushViewController:view animated:YES];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning

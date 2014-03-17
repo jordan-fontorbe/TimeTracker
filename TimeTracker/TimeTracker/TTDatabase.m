@@ -210,9 +210,9 @@ static TTDatabase* _sharedTTDatabase = nil;
     return res;
 }
 
-- (NSArray *)getTasks
+- (NSDictionary *)getTasks
 {
-    NSMutableArray *res = [[NSMutableArray alloc] init];
+    NSMutableDictionary *res = [[NSMutableDictionary alloc] init];
     const char *dbpath = [_databasePath UTF8String];
     sqlite3_stmt *statement;
     
@@ -230,7 +230,13 @@ static TTDatabase* _sharedTTDatabase = nil;
                 [myTask setIdentifier: sqlite3_column_int(statement, 0)];
                 [myTask setIdProject: sqlite3_column_int(statement, 1)];
                 [myTask setName: [[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)]];
-                [res addObject:myTask];
+                NSNumber *idProject = [NSNumber numberWithInt:[myTask idProject]];
+                NSMutableArray *a = [res objectForKey:idProject];
+                if (a == nil) {
+                    a = [[NSMutableArray alloc] init];
+                    [res setObject:a forKey:idProject];
+                }
+                [a addObject:myTask];
             }
             sqlite3_finalize(statement);
         }
@@ -486,7 +492,34 @@ static TTDatabase* _sharedTTDatabase = nil;
 
 }
 
-- (NSArray *)getTasksFrom:(NSDate *)from To:(NSDate *)to For:(TTProject *)project
+- (NSArray *)getTasksFor:(int)project
+{
+    NSMutableArray *res = [[NSMutableArray alloc] init];
+    const char *dbpath = [_databasePath UTF8String];
+    sqlite3_stmt *statement;
+    
+    if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
+    {
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT id, id_project, name FROM task WHERE id_project = %d", project];
+        const char *query_stmt = [querySQL UTF8String];
+        if (sqlite3_prepare_v2(_timetrackerDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                TTTask *myTask = [[TTTask alloc] init];
+                [myTask setIdentifier: sqlite3_column_int(statement, 0)];
+                [myTask setIdProject: sqlite3_column_int(statement, 1)];
+                [myTask setName: [[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)]];
+                [res addObject:myTask];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(_timetrackerDB);
+    }
+    return res;
+}
+
+- (NSArray *)getTasksFrom:(NSDate *)from To:(NSDate *)to For:(int)project
 {
     NSMutableArray *res = [[NSMutableArray alloc] init];
     const char *dbpath = [_databasePath UTF8String];
@@ -498,7 +531,7 @@ static TTDatabase* _sharedTTDatabase = nil;
         [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         NSString *startString = [format stringFromDate:from];
         NSString *endString = [format stringFromDate:to];
-        NSString *querySQL = [NSString stringWithFormat:@"SELECT ta.id, ta.id_project, ta.name FROM task ta INNER JOIN time ti ON ti.id_task = ta.id WHERE ta.id_project = %d AND ti.start >= \"%@\" AND ti.end >= \"%@\"", [project identifier], startString, endString];
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT ta.id, ta.id_project, ta.name FROM task ta INNER JOIN time ti ON ti.id_task = ta.id WHERE ta.id_project = %d AND ti.start >= \"%@\" AND ti.end >= \"%@\"", project, startString, endString];
         
         const char *query_stmt = [querySQL UTF8String];
         
