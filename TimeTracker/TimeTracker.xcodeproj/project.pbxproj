@@ -22,6 +22,8 @@
 		CE4E9E2718C91A4500441431 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4E9E2618C91A4500441431 /* libsqlite3.dylib */; };
 		CE906D4518D0C3B000403C50 /* TTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE906D4418D0C3B000403C50 /* TTDataManager.m */; };
 		CE906D4718D0D4C700403C50 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE906D4618D0D4C700403C50 /* QuartzCore.framework */; };
+		D070166918D763E100A69D08 /* TTTaskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D070166818D763E100A69D08 /* TTTaskCell.xib */; };
+		D070166C18D7642000A69D08 /* TTTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D070166B18D7642000A69D08 /* TTTaskCell.m */; };
 		D0A5F23F18CDF35A0074CE33 /* TTOverviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A5F23D18CDF35A0074CE33 /* TTOverviewController.m */; };
 		D0A5F24018CDF35A0074CE33 /* TTOverviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A5F23E18CDF35A0074CE33 /* TTOverviewController.xib */; };
 		D0A5F24718CDF8F90074CE33 /* TTAboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A5F24518CDF8F90074CE33 /* TTAboutController.m */; };
@@ -67,6 +69,9 @@
 		CE906D4318D0C3B000403C50 /* TTDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTDataManager.h; sourceTree = "<group>"; };
 		CE906D4418D0C3B000403C50 /* TTDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTDataManager.m; sourceTree = "<group>"; };
 		CE906D4618D0D4C700403C50 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D070166818D763E100A69D08 /* TTTaskCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTTaskCell.xib; sourceTree = "<group>"; };
+		D070166A18D7642000A69D08 /* TTTaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTaskCell.h; sourceTree = "<group>"; };
+		D070166B18D7642000A69D08 /* TTTaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTaskCell.m; sourceTree = "<group>"; };
 		D0A5F23C18CDF35A0074CE33 /* TTOverviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTOverviewController.h; sourceTree = "<group>"; };
 		D0A5F23D18CDF35A0074CE33 /* TTOverviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTOverviewController.m; sourceTree = "<group>"; };
 		D0A5F23E18CDF35A0074CE33 /* TTOverviewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTOverviewController.xib; sourceTree = "<group>"; };
@@ -154,6 +159,7 @@
 		CE03CDBF18C8EAC3001B4C86 /* TimeTracker */ = {
 			isa = PBXGroup;
 			children = (
+				D070166518D7567300A69D08 /* UI */,
 				D0F1F02A18CA01FE00F07C28 /* Dialog */,
 				D0C5DB6A18C8EED3009E0BF7 /* Model */,
 				CE03CDD918C8EB2B001B4C86 /* Images */,
@@ -195,6 +201,16 @@
 				D0BC2BD018CA0EC300E46F7F /* tasks.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		D070166518D7567300A69D08 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				D070166818D763E100A69D08 /* TTTaskCell.xib */,
+				D070166A18D7642000A69D08 /* TTTaskCell.h */,
+				D070166B18D7642000A69D08 /* TTTaskCell.m */,
+			);
+			name = UI;
 			sourceTree = "<group>";
 		};
 		D0B7EFBB18CE0A7A00524870 /* Delegate */ = {
@@ -317,6 +333,7 @@
 				CE03CDCE18C8EAC3001B4C86 /* Default@2x.png in Resources */,
 				D0BC2BD318CA0EC300E46F7F /* project.png in Resources */,
 				D0BC2BD518CA0EC300E46F7F /* task.png in Resources */,
+				D070166918D763E100A69D08 /* TTTaskCell.xib in Resources */,
 				CE03CDD018C8EAC3001B4C86 /* Default-568h@2x.png in Resources */,
 				D0A5F24818CDF8F90074CE33 /* TTAboutController.xib in Resources */,
 				D0A5F24018CDF35A0074CE33 /* TTOverviewController.xib in Resources */,
@@ -334,6 +351,7 @@
 			files = (
 				D0BC908C18D0A12C0081D7A1 /* TTSelectProjectController.m in Sources */,
 				D0BC909618D0DA680081D7A1 /* TTEditProjectController.m in Sources */,
+				D070166C18D7642000A69D08 /* TTTaskCell.m in Sources */,
 				D0C5DB7318C8F0B9009E0BF7 /* TTTime.m in Sources */,
 				D0C5DB7018C8F0A3009E0BF7 /* TTTask.m in Sources */,
 				D0C5DB7C18C8F2B1009E0BF7 /* TTDatabase.m in Sources */,
