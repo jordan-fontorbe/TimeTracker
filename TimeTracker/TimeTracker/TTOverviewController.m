@@ -18,7 +18,7 @@
 #import "TTRunningTask.h"
 #import "TTImageManager.h"
 #import "TTTaskCell.h"
-#import "TTAllTasksController.h"
+#import "TTTasksListController.h"
 
 @interface TTOverviewController ()
 
@@ -153,7 +153,7 @@
 {
     if([indexPath indexAtPosition:0] == 1) {
         if([indexPath indexAtPosition:1] == 0) {
-            TTAllTasksController *view = [[TTAllTasksController alloc] init];
+            TTTasksListController *view = [[TTTasksListController alloc] init];
             [[self navigationController] pushViewController:view animated:YES];
         }
     }

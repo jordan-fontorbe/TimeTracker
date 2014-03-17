@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TTTasksListController.h"
 
-@interface TTAllTasksController : TTTasksListController
+@interface TTTasksListController : UITableViewController
+
+- (NSArray *)getProjects;
+- (NSMutableDictionary *)getTasks;
 
 @end

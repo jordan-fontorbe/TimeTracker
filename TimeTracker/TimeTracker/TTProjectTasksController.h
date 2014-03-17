@@ -1,5 +1,5 @@
 //
-//  TTAllTasksController.h
+//  TTProjectTasksController.h
 //  TimeTracker
 //
 //  Created by Jérémy Morosi on 17/03/2014.
@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "TTTasksListController.h"
 
-@interface TTAllTasksController : TTTasksListController
+@interface TTProjectTasksController : TTTasksListController
+
+- (id)initWithProject:(int)project;
 
 @end
