@@ -72,10 +72,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MiddleCell"];
+    static NSString *CellId = @"TTTaskCell";
+    TTTaskCell *cell = [tableView dequeueReusableCellWithIdentifier:CellId];
     
     if (cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"MiddleCell"];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"TTTaskCell" owner:self options:nil] objectAtIndex:0];
     }
     if (indexPath.section != 0){
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -84,7 +85,6 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    [[cell viewWithTag:111] removeFromSuperview];
     [[cell viewWithTag:222] removeFromSuperview];
     
     if (indexPath.section == 0) {
@@ -94,7 +94,7 @@
             TTRunningTask *myRunningTask = (TTRunningTask *)[lstRunningTasks objectAtIndex:indexPath.row];
             if ([[myRunningTask task] identifier] > 0){
                 [[cell imageView] setImage:[TTImageManager getIcon:Pause]];
-                cell.textLabel.text = [[myRunningTask task] name];
+                cell.label.text = [[myRunningTask task] name];
                 TTProject *myProject = [[TTDatabase instance] getProject:[[myRunningTask task] idProject]];
                 if (myProject != nil){
                     cell.detailTextLabel.text = [myProject name];
@@ -102,50 +102,37 @@
             }
             else {
                 [[cell imageView] setImage:[TTImageManager getIcon:QuickStart]];
-                cell.textLabel.text = @"Quick Task";
+                cell.label.text = @"Quick Task";
             }
             
-            UILabel *myTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(210, 0, 80, 40)];
-            [myTimeLabel setTag:222];
-            [myTimeLabel setTextAlignment:NSTextAlignmentRight];
-            [myTimeLabel setText:[myRunningTask getRunningTaskTimeStringFormatted]];
-            [[cell contentView] addSubview:myTimeLabel];
-                                
+            cell.time.text = [myRunningTask getRunningTaskTimeStringFormatted];
         }
         
     }
     else if (indexPath.section == 1){
-        UILabel *myTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 0, 50, 40)];
-        [myTimeLabel setTag:222];
-        [myTimeLabel setTextAlignment:NSTextAlignmentRight];
         if (indexPath.row == 0) {
             [[cell imageView] setImage:[TTImageManager getIcon:Tasks]];
-            cell.textLabel.text = @"All Tasks";
-            [myTimeLabel setText:[[TTDatabase instance] getTotalTimeStringFormatted]];
+            cell.label.text = @"All Tasks";
+            cell.time.text = [[TTDatabase instance] getTotalTimeStringFormatted];
         }
         else if (indexPath.row == 1) {
             [[cell imageView] setImage:[TTImageManager getIcon:Task]];
-            cell.textLabel.text = @"Single Tasks";
-            [myTimeLabel setText:[[TTDatabase instance] getTotalProjectTimeStringFormatted:0]];
+            cell.label.text = @"Single Tasks";
+            cell.time.text = [[TTDatabase instance] getTotalProjectTimeStringFormatted:0];
             
         }
-        [[cell contentView] addSubview:myTimeLabel];
+       // [[cell contentView] addSubview:myTimeLabel];
     }
     else if (indexPath.section == 2) {
-        UILabel *myTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 0, 50, 40)];
-        [myTimeLabel setTag:222];
-        [myTimeLabel setTextAlignment:NSTextAlignmentRight];
         [[cell imageView] setImage:[TTImageManager getIcon:Project]];
         
         NSMutableArray *lstProject = [NSMutableArray arrayWithArray:[[TTDatabase instance] getProjects]];
         if (lstProject.count > indexPath.row)
         {
             TTProject *myProject = (TTProject *)[lstProject objectAtIndex:indexPath.row];
-            cell.textLabel.text = [myProject name];
-            [myTimeLabel setText:[[TTDatabase instance] getTotalProjectTimeStringFormatted:[myProject identifier]]];
-        }
-        [[cell contentView] addSubview:myTimeLabel];
-        
+            cell.label.text = [myProject name];
+            cell.time.text = [[TTDatabase instance] getTotalProjectTimeStringFormatted:[myProject identifier]];
+        }        
     }
     return cell;
 }
