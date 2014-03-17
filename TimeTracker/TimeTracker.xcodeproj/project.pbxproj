@@ -28,6 +28,8 @@
 		D070167118D7811300A69D08 /* TTTasksListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D070166F18D7811300A69D08 /* TTTasksListController.xib */; };
 		D070167418D79E6C00A69D08 /* TTProjectTasksController.m in Sources */ = {isa = PBXBuildFile; fileRef = D070167318D79E6C00A69D08 /* TTProjectTasksController.m */; };
 		D070167718D79E7B00A69D08 /* TTAllTasksController.m in Sources */ = {isa = PBXBuildFile; fileRef = D070167618D79E7B00A69D08 /* TTAllTasksController.m */; };
+		D070167D18D7B00600A69D08 /* TTTextFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D070167C18D7B00600A69D08 /* TTTextFieldCell.m */; };
+		D070167F18D7B01900A69D08 /* TTTextFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D070167E18D7B01900A69D08 /* TTTextFieldCell.xib */; };
 		D0A5F23F18CDF35A0074CE33 /* TTOverviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A5F23D18CDF35A0074CE33 /* TTOverviewController.m */; };
 		D0A5F24018CDF35A0074CE33 /* TTOverviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A5F23E18CDF35A0074CE33 /* TTOverviewController.xib */; };
 		D0A5F24718CDF8F90074CE33 /* TTAboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A5F24518CDF8F90074CE33 /* TTAboutController.m */; };
@@ -83,6 +85,9 @@
 		D070167318D79E6C00A69D08 /* TTProjectTasksController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTProjectTasksController.m; sourceTree = "<group>"; };
 		D070167518D79E7B00A69D08 /* TTAllTasksController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAllTasksController.h; sourceTree = "<group>"; };
 		D070167618D79E7B00A69D08 /* TTAllTasksController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAllTasksController.m; sourceTree = "<group>"; };
+		D070167B18D7B00600A69D08 /* TTTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTextFieldCell.h; sourceTree = "<group>"; };
+		D070167C18D7B00600A69D08 /* TTTextFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTextFieldCell.m; sourceTree = "<group>"; };
+		D070167E18D7B01900A69D08 /* TTTextFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTTextFieldCell.xib; sourceTree = "<group>"; };
 		D0A5F23C18CDF35A0074CE33 /* TTOverviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTOverviewController.h; sourceTree = "<group>"; };
 		D0A5F23D18CDF35A0074CE33 /* TTOverviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTOverviewController.m; sourceTree = "<group>"; };
 		D0A5F23E18CDF35A0074CE33 /* TTOverviewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTOverviewController.xib; sourceTree = "<group>"; };
@@ -220,6 +225,9 @@
 				D070166818D763E100A69D08 /* TTTaskCell.xib */,
 				D070166A18D7642000A69D08 /* TTTaskCell.h */,
 				D070166B18D7642000A69D08 /* TTTaskCell.m */,
+				D070167B18D7B00600A69D08 /* TTTextFieldCell.h */,
+				D070167C18D7B00600A69D08 /* TTTextFieldCell.m */,
+				D070167E18D7B01900A69D08 /* TTTextFieldCell.xib */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -342,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D070167118D7811300A69D08 /* TTTasksListController.xib in Resources */,
+				D070167F18D7B01900A69D08 /* TTTextFieldCell.xib in Resources */,
 				D0BC2BD218CA0EC300E46F7F /* play.png in Resources */,
 				CE03CDC418C8EAC3001B4C86 /* InfoPlist.strings in Resources */,
 				D0BC2BD618CA0EC300E46F7F /* tasks.png in Resources */,
@@ -373,6 +382,7 @@
 				D070166C18D7642000A69D08 /* TTTaskCell.m in Sources */,
 				D0C5DB7318C8F0B9009E0BF7 /* TTTime.m in Sources */,
 				D070167018D7811300A69D08 /* TTTasksListController.m in Sources */,
+				D070167D18D7B00600A69D08 /* TTTextFieldCell.m in Sources */,
 				D0C5DB7018C8F0A3009E0BF7 /* TTTask.m in Sources */,
 				D0C5DB7C18C8F2B1009E0BF7 /* TTDatabase.m in Sources */,
 				D0A5F23F18CDF35A0074CE33 /* TTOverviewController.m in Sources */,

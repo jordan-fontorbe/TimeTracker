@@ -20,6 +20,7 @@
 #import "TTTaskCell.h"
 #import "TTAllTasksController.h"
 #import "TTProjectTasksController.h"
+#import "TTEditProjectController.h"
 
 @interface TTOverviewController ()
 

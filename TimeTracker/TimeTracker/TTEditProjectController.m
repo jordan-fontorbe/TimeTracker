@@ -10,11 +10,12 @@
 #import "TTEditProjectDelegate.h"
 #import "TTDatabase.h"
 #import "TTProject.h"
+#import "TTTextFieldCell.h"
 
 @interface TTEditProjectController ()
 
 @property (strong, nonatomic) TTProject *project;
-@property (strong, nonatomic) UITextField *nameTextField;
+@property (weak, nonatomic) TTTextFieldCell *name;
 - (void)onCancel:(UIBarButtonItem *)sender;
 - (void)onSave:(UIBarButtonItem *)sender;
 
@@ -80,7 +81,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [_nameTextField resignFirstResponder];
+    [_name.textField resignFirstResponder];
     return YES;
 }
 
@@ -98,30 +99,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    if(_name == nil) {
+        _name = [[[NSBundle mainBundle] loadNibNamed:@"TTTextFieldCell" owner:self options:nil] objectAtIndex:0];
+        UITextField *text = [_name textField];
+        [text setRightViewMode:UITextFieldViewModeAlways];
+        [text setText:[_project name]];
+        [text setDelegate:self];
     }
-    
-    if(_nameTextField == nil) {
-        _nameTextField = [[UITextField alloc] initWithFrame:CGRectMake(24, 12, 282, 21)];            [_nameTextField setFont:[UIFont boldSystemFontOfSize:[UIFont labelFontSize]]];
-        [_nameTextField setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-        [_nameTextField setAdjustsFontSizeToFitWidth:NO];
-        [_nameTextField setTextAlignment:NSTextAlignmentLeft];
-        [_nameTextField setClearButtonMode:UITextFieldViewModeAlways];
-        [_nameTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
-        [_nameTextField setReturnKeyType:UIReturnKeyDone];
-        [_nameTextField setRightViewMode:UITextFieldViewModeAlways];
-        [_nameTextField setText:[_project name]];
-        [_nameTextField setDelegate:self];
-    }
-    [cell addSubview:_nameTextField];
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    [cell setAccessoryType:UITableViewCellAccessoryNone];
-    
-    return cell;
-}
+    [_name setSelectionStyle:UITableViewCellSelectionStyleNone];
+    [_name setAccessoryType:UITableViewCellAccessoryNone];
+    return _name;}
 
 #pragma mark - Table view delegate
 
