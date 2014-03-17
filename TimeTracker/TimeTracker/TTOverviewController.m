@@ -16,6 +16,8 @@
 #import "QuartzCore/QuartzCore.h"
 #import "TTSelectProjectController.h"
 #import "TTRunningTask.h"
+#import "TTImageManager.h"
+#import "TTTaskCell.h"
 
 @interface TTOverviewController ()
 
@@ -86,14 +88,12 @@
     [[cell viewWithTag:222] removeFromSuperview];
     
     if (indexPath.section == 0) {
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
-        [myImageView setTag:111];
         NSMutableArray *lstRunningTasks = [[TTDataManager instance] getRunningTasks];
         if (lstRunningTasks.count > indexPath.row)
         {
             TTRunningTask *myRunningTask = (TTRunningTask *)[lstRunningTasks objectAtIndex:indexPath.row];
             if ([[myRunningTask task] identifier] > 0){
-                myImageView.image = [UIImage imageNamed:@"pause"];
+                [[cell imageView] setImage:[TTImageManager getIcon:Pause]];
                 cell.textLabel.text = [[myRunningTask task] name];
                 TTProject *myProject = [[TTDatabase instance] getProject:[[myRunningTask task] idProject]];
                 if (myProject != nil){
@@ -101,13 +101,9 @@
                 }
             }
             else {
-                myImageView.image = [UIImage imageNamed:@"quickstart"];
+                [[cell imageView] setImage:[TTImageManager getIcon:QuickStart]];
                 cell.textLabel.text = @"Quick Task";
             }
-            
-            [cell addSubview:myImageView];
-            [cell setIndentationWidth:35];
-            [cell setIndentationLevel:1];
             
             UILabel *myTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(210, 0, 80, 40)];
             [myTimeLabel setTag:222];
@@ -119,37 +115,27 @@
         
     }
     else if (indexPath.section == 1){
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
-        [myImageView setTag:111];
         UILabel *myTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 0, 50, 40)];
         [myTimeLabel setTag:222];
         [myTimeLabel setTextAlignment:NSTextAlignmentRight];
         if (indexPath.row == 0) {
-            myImageView.image = [UIImage imageNamed:@"tasks"];
+            [[cell imageView] setImage:[TTImageManager getIcon:Tasks]];
             cell.textLabel.text = @"All Tasks";
             [myTimeLabel setText:[[TTDatabase instance] getTotalTimeStringFormatted]];
         }
         else if (indexPath.row == 1) {
-            myImageView.image = [UIImage imageNamed:@"task"];
+            [[cell imageView] setImage:[TTImageManager getIcon:Task]];
             cell.textLabel.text = @"Single Tasks";
             [myTimeLabel setText:[[TTDatabase instance] getTotalProjectTimeStringFormatted:0]];
             
         }
         [[cell contentView] addSubview:myTimeLabel];
-        [cell addSubview:myImageView];
-        [cell setIndentationWidth:35];
-        [cell setIndentationLevel:1];
     }
     else if (indexPath.section == 2) {
-        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 5, 35, 35)];
-        [myImageView setTag:111];
-        myImageView.image = [UIImage imageNamed:@"project"];
         UILabel *myTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 0, 50, 40)];
         [myTimeLabel setTag:222];
         [myTimeLabel setTextAlignment:NSTextAlignmentRight];
-        [cell addSubview:myImageView];
-        [cell setIndentationWidth:35];
-        [cell setIndentationLevel:1];
+        [[cell imageView] setImage:[TTImageManager getIcon:Project]];
         
         NSMutableArray *lstProject = [NSMutableArray arrayWithArray:[[TTDatabase instance] getProjects]];
         if (lstProject.count > indexPath.row)
