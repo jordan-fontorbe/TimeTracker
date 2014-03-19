@@ -49,11 +49,25 @@
     self.btnQuickStart.layer.borderWidth = 1;
     
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reloadTableViewForTimer) userInfo:nil repeats:YES];
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [[self navigationController] setToolbarHidden:NO];
+    
+    
+    UIBarButtonItem *newProjectButtonItem = [[UIBarButtonItem alloc]
+                                             initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(onNewProject:)];
+    
+    UIBarButtonItem *totalTimeButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"Total : %@", [[TTDatabase instance] getTotalTimeStringFormatted]] style:UIBarButtonItemStylePlain target:self action:nil];
+    
+    UIBarButtonItem *flexibleSpace =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    UIBarButtonItem *newMailButtonItem = [[UIBarButtonItem alloc] initWithImage:[TTImageManager getIcon:Mail] style:UIBarButtonItemStylePlain target:self action:nil];
+    
+    [self setToolbarItems:[NSArray arrayWithObjects: newProjectButtonItem, flexibleSpace, totalTimeButtonItem, flexibleSpace, newMailButtonItem, nil]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -188,6 +202,12 @@
 {
     TTAboutController *aboutController = [[TTAboutController alloc] initWithNibName:@"TTAboutController" bundle:nil];
     [[self navigationController] pushViewController:aboutController animated:YES];
+}
+
+- (void)onNewProject:(UIBarButtonItem *)sender
+{
+    TTEditProjectController *editController = [[TTEditProjectController alloc] initWithProject:nil];
+    [[self navigationController] pushViewController:editController animated:YES];
 }
 
 - (IBAction)onEditTask:(id)sender {

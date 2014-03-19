@@ -14,7 +14,8 @@ typedef enum {
     Project,
     QuickStart,
     Task,
-    Tasks
+    Tasks,
+    Mail
 } Icon;
 
 @interface TTImageManager : NSObject

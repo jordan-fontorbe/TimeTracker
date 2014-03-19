@@ -19,6 +19,7 @@
 		CE03CDD018C8EAC3001B4C86 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE03CDCF18C8EAC3001B4C86 /* Default-568h@2x.png */; };
 		CE03CDD318C8EAC3001B4C86 /* TimeTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE03CDD118C8EAC3001B4C86 /* TimeTracker.xcdatamodeld */; };
 		CE16082618D5B6A400F07777 /* TTRunningTask.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16082518D5B6A400F07777 /* TTRunningTask.m */; };
+		CE3F81CF18D9DC9700508875 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3F81CE18D9DC9700508875 /* mail.png */; };
 		CE4E9E2718C91A4500441431 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4E9E2618C91A4500441431 /* libsqlite3.dylib */; };
 		CE906D4518D0C3B000403C50 /* TTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE906D4418D0C3B000403C50 /* TTDataManager.m */; };
 		CE906D4718D0D4C700403C50 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE906D4618D0D4C700403C50 /* QuartzCore.framework */; };
@@ -71,6 +72,7 @@
 		CE03CDD218C8EAC3001B4C86 /* TimeTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TimeTracker.xcdatamodel; sourceTree = "<group>"; };
 		CE16082418D5B6A400F07777 /* TTRunningTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRunningTask.h; sourceTree = "<group>"; };
 		CE16082518D5B6A400F07777 /* TTRunningTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRunningTask.m; sourceTree = "<group>"; };
+		CE3F81CE18D9DC9700508875 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mail.png; sourceTree = "<group>"; };
 		CE4E9E2618C91A4500441431 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		CE906D4318D0C3B000403C50 /* TTDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTDataManager.h; sourceTree = "<group>"; };
 		CE906D4418D0C3B000403C50 /* TTDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTDataManager.m; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 		CE03CDD918C8EB2B001B4C86 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CE3F81CE18D9DC9700508875 /* mail.png */,
 				D0BC2BCB18CA0EC300E46F7F /* pause.png */,
 				D0BC2BCC18CA0EC300E46F7F /* play.png */,
 				D0BC2BCD18CA0EC300E46F7F /* project.png */,
@@ -367,6 +370,7 @@
 				D0A5F24018CDF35A0074CE33 /* TTOverviewController.xib in Resources */,
 				D0BC909218D0B9F00081D7A1 /* TTEditTaskController.xib in Resources */,
 				D0BC2BD418CA0EC300E46F7F /* quickstart.png in Resources */,
+				CE3F81CF18D9DC9700508875 /* mail.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

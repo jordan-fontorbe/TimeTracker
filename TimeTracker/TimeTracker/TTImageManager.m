@@ -33,6 +33,7 @@ static NSDictionary *_icons;
     [self loadIcon:QuickStart from:@"quickstart" to:d];
     [self loadIcon:Task from:@"task" to:d];
     [self loadIcon:Tasks from:@"tasks" to:d];
+    [self loadIcon:Mail from:@"mail" to:d];
     return d;
 }
 
