@@ -13,6 +13,6 @@
 @protocol TTEditTaskDelegate <NSObject>
 
 - (void)onCancel;
-- (void)onSave:(TTTask *)task;
+- (void)onSave:(TTTask *)original :(TTTask *)modified;
 
 @end

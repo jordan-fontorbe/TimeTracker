@@ -18,6 +18,7 @@
 @interface TTEditTaskController ()
 
 @property (strong, nonatomic) TTTask *task;
+@property (strong, nonatomic) TTTask *taskTmp;
 @property (strong, nonatomic) TTProject *project;
 @property (weak, nonatomic) TTTextFieldCell *name;
 - (void)onCancel:(UIBarButtonItem *)sender;
@@ -35,9 +36,11 @@
     if(self) {
         if(task) {
             _task = task;
+            _taskTmp = [[TTTask alloc] initWithTask:task];
             [self setTitle:NSLocalizedString(@"Edit", @"EditTask navigation title")];
         } else {
-            _task = [[TTTask alloc] initWithName:@"" project:0];
+            _task = nil;
+            _taskTmp = [[TTTask alloc] initWithName:@"" project:0];
             [self setTitle:NSLocalizedString(@"New Task", @"EditTask navigation title")];
         }
         if([_task idProject] != 0) {
@@ -77,13 +80,13 @@
 }
 
 - (void)onSave:(UIBarButtonItem *)sender {
-    [delegate onSave:_task];
+    [delegate onSave:_task :_taskTmp];
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
 - (void)onProjectSelected:(int)projectId
 {
-    [_task setIdProject:projectId];
+    [_taskTmp setIdProject:projectId];
     if(projectId == 0) {
         _project = nil;
     } else {
@@ -96,7 +99,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    [_task setName:[textField text]];
+    [_taskTmp setName:[textField text]];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -133,7 +136,7 @@
             _name = [[[NSBundle mainBundle] loadNibNamed:@"TTTextFieldCell" owner:self options:nil] objectAtIndex:0];
             UITextField *text = [_name textField];
             [text setRightViewMode:UITextFieldViewModeAlways];
-            [text setText:[_task name]];
+            [text setText:[_taskTmp name]];
             [text setDelegate:self];
         }
         [_name setSelectionStyle:UITableViewCellSelectionStyleNone];
@@ -162,7 +165,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if([indexPath indexAtPosition:0] == 1) {
-        TTSelectProjectController *selectProjectController = [[TTSelectProjectController alloc] initWithProject:[_task idProject]];
+        TTSelectProjectController *selectProjectController = [[TTSelectProjectController alloc] initWithProject:[_taskTmp idProject]];
         [selectProjectController setDelegate:self];
         [[self navigationController] pushViewController:selectProjectController animated:YES];
     }

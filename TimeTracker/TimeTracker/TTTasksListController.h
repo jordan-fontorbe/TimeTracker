@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TTEditTaskDelegate.h"
 
-@interface TTTasksListController : UITableViewController
+@interface TTTasksListController : UITableViewController <TTEditTaskDelegate>
 
 @end

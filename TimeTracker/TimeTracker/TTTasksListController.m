@@ -12,6 +12,7 @@
 #import "TTProject.h"
 #import "TTTask.h"
 #import "TTImageManager.h"
+#import "TTEditTaskController.h"
 
 @interface TTTasksListController ()
 
@@ -19,6 +20,10 @@
 - (NSMutableArray *)getTasksFor:(int)section;
 - (TTTask *)getTaskFor:(int)section row:(int)row;
 - (int)getProjectIdFor:(int)section;
+- (void)removeTask:(TTTask *)task;
+- (void)addTask:(TTTask *)task;
+- (void)replaceTask:(TTTask *)original :(TTTask *)modified;
+- (void)onNewTask:(UIBarButtonItem *)sender;
 
 @end
 
@@ -40,7 +45,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[self tableView] setAllowsSelectionDuringEditing:YES];
     [[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
+    UIBarButtonItem *newTaskButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(onNewTask:)];
+    [self setToolbarItems:[NSArray arrayWithObjects:newTaskButton, nil]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -64,7 +72,48 @@
     [[self tableView] reloadData];
 }
 
+#pragma mark - Bar button items
+
+- (void)onNewTask:(UIBarButtonItem *)sender
+{
+    TTEditTaskController *view = [[TTEditTaskController alloc] initWithTask:nil];
+    [view setDelegate:self];
+    [[self navigationController] pushViewController:view animated:YES];
+}
+
+#pragma mark - Edit task view delegate
+
+- (void)onCancel
+{
+    // Nothing modified.
+}
+
+- (void)onSave:(TTTask *)original :(TTTask *)modified
+{
+    // Task changed, insert/update and reload the table.
+    if(original) {
+        [self replaceTask:original :modified];
+        [[TTDatabase instance] updateTask:modified];
+    } else {
+        [self addTask:modified];
+        [[TTDatabase instance] insertTask:modified];
+    }
+    [[self tableView] reloadData];
+}
+
 #pragma mark - Table view data source
+
+- (void)removeTask:(TTTask *)task
+{
+}
+
+- (void)addTask:(TTTask *)task
+{
+}
+
+- (void)replaceTask:(TTTask *)original :(TTTask *)modified
+{
+}
 
 - (NSMutableArray *)getTasksFor:(int)section
 {
@@ -108,38 +157,34 @@
 }
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
-/*
-// Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
+        TTTask *task = [self getTaskFor:[indexPath indexAtPosition:0] row:[indexPath indexAtPosition:1]];
+        [self removeTask:task];
+        [[TTDatabase instance] deleteTask:task];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
+    else if (editingStyle == UITableViewCellEditingStyleInsert) {    }
 }
-*/
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
     // Remove the task from the project array.
-    NSMutableArray *a = [self getTasksFor:[fromIndexPath indexAtPosition:0]];
-    TTTask *task = [a objectAtIndex:[fromIndexPath indexAtPosition:1]];
-    [a removeObjectAtIndex:[fromIndexPath indexAtPosition:1]];
+    TTTask *task = [self getTaskFor:[fromIndexPath indexAtPosition:0] row:[fromIndexPath indexAtPosition:1]];
+    [self removeTask:task];
     // Change the project identifier.
     [task setIdProject:[self getProjectIdFor:[toIndexPath indexAtPosition:0]]];
     // Add the task to the project array.
-    a = [self getTasksFor:[toIndexPath indexAtPosition:0]];
+    NSMutableArray *a = [self getTasksFor:[toIndexPath indexAtPosition:0]];
     [a insertObject:task atIndex:[toIndexPath indexAtPosition:1]];
     // Update database.
     [[TTDatabase instance] updateTask:task];
@@ -150,22 +195,19 @@
     return YES;
 }
 
-/*
 #pragma mark - Table view delegate
 
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    TTTask *task = [self getTaskFor:[indexPath indexAtPosition:0] row:[indexPath indexAtPosition:1]];
+    if(!tableView.editing) {
+        // Show task informations.
+    } else {
+        // Edit the task.
+        TTEditTaskController *view = [[TTEditTaskController alloc] initWithTask:task];
+        [view setDelegate:self];
+        [[self navigationController] pushViewController:view animated:YES];
+    }
 }
- 
- */
 
 @end

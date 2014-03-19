@@ -250,6 +250,7 @@ static TTDatabase* _sharedTTDatabase = nil;
 {
     const char *dbpath = [_databasePath UTF8String];
     sqlite3_stmt *statement;
+    int insertedId = 0;
     
     if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
     {
@@ -261,6 +262,8 @@ static TTDatabase* _sharedTTDatabase = nil;
         {
             if (sqlite3_step(statement) == SQLITE_DONE)
             {
+                insertedId = sqlite3_last_insert_rowid(_timetrackerDB);
+                [newTask setIdentifier:insertedId];
                 NSLog(@"Insert Task : OK");
             }
             else {
@@ -270,13 +273,14 @@ static TTDatabase* _sharedTTDatabase = nil;
         }
         sqlite3_close(_timetrackerDB);
     }
-    return nil;
+    return insertedId;
 }
 
 - (int)insertTime:(TTTime *)newTime
 {
     const char *dbpath = [_databasePath UTF8String];
     sqlite3_stmt *statement;
+    int insertedId = 0;
     
     if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
     {
@@ -292,6 +296,8 @@ static TTDatabase* _sharedTTDatabase = nil;
         {
             if (sqlite3_step(statement) == SQLITE_DONE)
             {
+                insertedId = sqlite3_last_insert_rowid(_timetrackerDB);
+                [newTime setIdentifier:insertedId];
                 NSLog(@"Insert Time : OK");
             }
             else {
@@ -301,13 +307,14 @@ static TTDatabase* _sharedTTDatabase = nil;
         }
         sqlite3_close(_timetrackerDB);
     }
-    return nil;
+    return insertedId;
 }
 
 - (int)insertProject:(TTProject *)newProject
 {
     const char *dbpath = [_databasePath UTF8String];
     sqlite3_stmt *statement;
+    int insertedId = 0;
     
     if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
     {
@@ -319,6 +326,8 @@ static TTDatabase* _sharedTTDatabase = nil;
         {
             if (sqlite3_step(statement) == SQLITE_DONE)
             {
+                insertedId = sqlite3_last_insert_rowid(_timetrackerDB);
+                [newProject setIdentifier:insertedId];
                 NSLog(@"Insert Project : OK");
             }
             else {
@@ -328,7 +337,7 @@ static TTDatabase* _sharedTTDatabase = nil;
         }
         sqlite3_close(_timetrackerDB);
     }
-    return nil;
+    return insertedId;
 }
 
 - (void)updateTask:(TTTask *)updateTask

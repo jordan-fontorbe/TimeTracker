@@ -10,6 +10,7 @@
 #import "TTDatabase.h"
 #import "TTTaskCell.h"
 #import "TTProject.h"
+#import "TTTask.h"
 
 @interface TTAllTasksController ()
 
@@ -42,20 +43,49 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)removeTask:(TTTask *)task
+{
+    NSMutableArray *a = [_tasks objectForKey:[NSNumber numberWithInt:[task idProject]]];
+    [a removeObject:task];
+}
+
+- (void)addTask:(TTTask *)task
+{
+    NSMutableArray *a = [_tasks objectForKey:[NSNumber numberWithInt:[task idProject]]];
+    [a addObject:task];
+}
+
+- (void)replaceTask:(TTTask *)original :(TTTask *)modified
+{
+    NSMutableArray *a = [_tasks objectForKey:[NSNumber numberWithInt:[original idProject]]];
+    int index = [a indexOfObject:original];
+    [a removeObjectAtIndex:index];
+    if([modified idProject] == [original idProject]) {
+        [a insertObject:modified atIndex:index];
+    } else {
+        a = [_tasks objectForKey:[NSNumber numberWithInt:[modified idProject]]];
+        [a addObject:modified];
+    }
+}
+
+- (NSMutableArray *)getTasksForProject:(int)project
+{
+    NSNumber *n = [NSNumber numberWithInt:project];
+    NSMutableArray *a = [_tasks objectForKey:n];
+    if(a == nil) {
+        a = [[NSMutableArray alloc] init];
+        [_tasks setObject:a forKey:n];
+    }
+    return a;
+}
+
 - (NSMutableArray *)getTasksFor:(int)section
 {
     int index = 0;
     if(section != 0) {
         index = [(TTProject *)[_projects objectAtIndex:section-1] identifier];
     }
-    NSNumber *n = [NSNumber numberWithInt:index];
-    NSMutableDictionary *t = _tasks;
-    NSMutableArray *a = [t objectForKey:n];
-    if(a == nil) {
-        a = [[NSMutableArray alloc] init];
-        [t setObject:a forKey:n];
-    }
-    return a;
+    return [self getTasksForProject:index];
 }
 
 - (TTTask *)getTaskFor:(int)section row:(int)row

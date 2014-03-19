@@ -30,4 +30,9 @@
     return [self initWithIdentifier:0 name:name project:idProject];
 }
 
+- (id)initWithTask:(TTTask *)task
+{
+    return [self initWithIdentifier:[task identifier] name:[task name] project:[task idProject]];
+}
+
 @end

@@ -9,6 +9,7 @@
 #import "TTProjectTasksController.h"
 #import "TTDatabase.h"
 #import "TTProject.h"
+#import "TTTask.h"
 #import "TTTaskCell.h"
 
 @interface TTProjectTasksController ()
@@ -45,6 +46,30 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (void)removeTask:(TTTask *)task
+{
+    [_tasks removeObject:task];
+}
+
+- (void)addTask:(TTTask *)task
+{
+    [_tasks addObject:task];
+}
+
+- (void)replaceTask:(TTTask *)original :(TTTask *)modified
+{
+    int index = [_tasks indexOfObject:original];
+    [_tasks removeObjectAtIndex:index];
+    if([modified idProject] == [original idProject]) {
+        [_tasks insertObject:modified atIndex:index];
+    }
+}
+
+- (NSMutableArray *)getTasksForProject:(int)project
+{
+    return _tasks;
 }
 
 - (NSMutableArray *)getTasksFor:(int)section
