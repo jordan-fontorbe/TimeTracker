@@ -18,4 +18,6 @@
 
 -(void)setRunningTasks:(NSMutableArray*)newRunningTasks;
 
+-(NSInteger)getNumberOfQuickRunningTasks;
+
 @end

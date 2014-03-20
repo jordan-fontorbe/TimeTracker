@@ -21,6 +21,7 @@
 @property (strong, nonatomic) TTTask *taskTmp;
 @property (strong, nonatomic) TTProject *project;
 @property (weak, nonatomic) TTTextFieldCell *name;
+@property (strong, nonatomic) TTRunningTask *runningTask;
 - (void)onCancel:(UIBarButtonItem *)sender;
 - (void)onSave:(UIBarButtonItem *)sender;
 
@@ -33,6 +34,7 @@
 - (id)initWithTask:(TTTask *)task
 {
     self = [self initWithStyle:UITableViewStyleGrouped];
+    _runningTask = nil;
     if(self) {
         if(task) {
             _task = task;
@@ -51,6 +53,24 @@
     }
     return self;
 }
+
+- (id)initWithRunningTask:(TTRunningTask *)runningTask
+{
+    self = [self initWithStyle:UITableViewStyleGrouped];
+    if(self) {
+        _task = nil;
+        _taskTmp = [[TTTask alloc] initWithTask:[runningTask task]];
+        _runningTask = runningTask;
+        if ([[runningTask task] idProject] > 0) {
+            _project = [[TTDatabase instance] getProject:[[runningTask task] idProject]];
+        } else {
+            _project = nil;
+        }
+        [self setTitle:NSLocalizedString(@"Edit", @"EditTask navigation title")];
+    }
+    return self;
+}
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -75,12 +95,23 @@
 
 - (void)onCancel:(UIBarButtonItem *)sender
 {
-    [delegate onCancel];
+    
+    if (_runningTask != nil) {
+        [delegate onCancel:_runningTask];
+    }
+    else {
+        [delegate onCancel];
+    }
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
 - (void)onSave:(UIBarButtonItem *)sender {
-    [delegate onSave:_task :_taskTmp];
+    if (_runningTask != nil) {
+        [_runningTask setTask:_taskTmp];
+        [delegate onSave:_runningTask];
+    } else {
+        [delegate onSave:_task :_taskTmp];
+    }
     [[self navigationController] popViewControllerAnimated:YES];
 }
 

@@ -13,9 +13,11 @@
 
 @property TTTask *task;
 @property NSDate *start;
+@property NSDate *end;
 
 - (id)initWithTask:(TTTask*)task start:(NSDate *)start;
 
 - (NSString *)getRunningTaskTimeStringFormatted;
+- (void)save;
 
 @end

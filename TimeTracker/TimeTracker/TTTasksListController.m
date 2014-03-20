@@ -146,6 +146,7 @@
     TTTask *task = [self getTaskFor:[indexPath indexAtPosition:0] row:[indexPath indexAtPosition:1]];
     
     [[cell label] setText:[task name]];
+    [[cell time] setText:[[TTDatabase instance] getTotalTaskTimeStringFormatted:[task identifier]]];
     if (!tableView.editing) {
         [[cell imageView] setImage:[TTImageManager getIcon:Play]];
     } else {

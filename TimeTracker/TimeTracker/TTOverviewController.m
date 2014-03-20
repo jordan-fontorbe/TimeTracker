@@ -25,10 +25,13 @@
 @interface TTOverviewController ()
 
 - (void)onAbout:(UIBarButtonItem *)sender;
+- (void)showActionSheet:(id)sender; // method to show action sheet
 
 @end
 
 @implementation TTOverviewController
+
+NSTimer	* _tableViewTimer;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,15 +51,15 @@
     self.btnQuickStart.layer.cornerRadius = 10;
     self.btnQuickStart.layer.borderWidth = 1;
     
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reloadTableViewForTimer) userInfo:nil repeats:YES];
-    
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [[self navigationController] setToolbarHidden:NO];
     
+    [self.tblView reloadData];
+    
+    [self activateTimer];
     
     UIBarButtonItem *newProjectButtonItem = [[UIBarButtonItem alloc]
                                              initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(onNewProject:)];
@@ -73,6 +76,18 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [[self navigationController] setToolbarHidden:YES];
+    [self deactivateTimer];
+}
+
+- (void)activateTimer
+{
+    _tableViewTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reloadTableViewForTimer) userInfo:nil repeats:YES];
+}
+
+- (void)deactivateTimer
+{
+    [_tableViewTimer invalidate];
+    _tableViewTimer = nil;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -128,7 +143,7 @@
             }
             else {
                 [[cell imageView] setImage:[TTImageManager getIcon:QuickStart]];
-                cell.label.text = @"Quick Task";
+                cell.label.text = [[myRunningTask task] name];
             }
             
             cell.time.text = [myRunningTask getRunningTaskTimeStringFormatted];
@@ -169,6 +184,7 @@
 {
     switch([indexPath indexAtPosition:0]) {
         case 0:
+            [self showActionSheet:indexPath];
             break;
         case 1:
         {
@@ -217,6 +233,7 @@
 
 - (IBAction)btnQuickStart_TouchDown:(id)sender {
     TTTask *task = [[TTTask alloc]init];
+    [task setName:[NSString stringWithFormat:@"Quick Task %d", [[TTDataManager instance] getNumberOfQuickRunningTasks] + 1]];
     NSMutableArray *lstRunningTasks = [[TTDataManager instance] getRunningTasks];
     NSDate *now = [NSDate date];
     TTRunningTask *runningTask = [[TTRunningTask alloc] initWithTask:task start:now];
@@ -231,4 +248,64 @@
     [self.tblView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
     
 }
+
+/** ActionSheet methods **/
+
+// called when button inside actionsheet is clicked
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
+    
+    if  ([buttonTitle isEqualToString:@"Supprimer"]) {
+        [[[TTDataManager instance] getRunningTasks] removeObjectAtIndex:[actionSheet tag]];
+    }
+    else if ([buttonTitle isEqualToString:@"Créer une nouvelle tâche"]) {
+        TTRunningTask *runningTask = [[[TTDataManager instance] getRunningTasks] objectAtIndex:[actionSheet tag]];
+        TTEditTaskController *editTaskController = [[TTEditTaskController alloc] initWithRunningTask:runningTask];
+        [editTaskController setDelegate:self];
+        [[self navigationController] pushViewController:editTaskController animated:YES];
+    }
+    else if ([buttonTitle isEqualToString:@"Other Button 2"]) {
+        NSLog(@"Other 2 pressed");
+    }
+    else if ([buttonTitle isEqualToString:@"Other Button 3"]) {
+        NSLog(@"Other 3 pressed");
+    }
+    else if ([buttonTitle isEqualToString:@"Annuler"]) {
+        // On remet le end à nil puiqu'on continue la tache
+        [[[[TTDataManager instance] getRunningTasks] objectAtIndex:[actionSheet tag]] setEnd:nil];
+    }
+}
+
+// show actionsheet popup
+- (void)showActionSheet:(id)sender
+{
+    NSDate *now = [NSDate date];
+    NSIndexPath *indexPath = (NSIndexPath *)sender;
+    [[[[TTDataManager instance] getRunningTasks] objectAtIndex:[indexPath row]] setEnd:now];
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:nil
+                                  delegate:self
+                                  cancelButtonTitle:@"Annuler"
+                                  destructiveButtonTitle:@"Créer une nouvelle tâche"
+                                  otherButtonTitles:@"Ajouter à une tâche",@"Supprimer", nil];
+    [actionSheet setDestructiveButtonIndex:2];
+    [actionSheet setTag:indexPath.row];
+    
+    [actionSheet showInView:self.view];
+}
+
+- (void)onSave:(id)runningTask
+{
+    TTRunningTask *myRunningTask = (TTRunningTask *)runningTask;
+    [myRunningTask save];
+    [[[TTDataManager instance] getRunningTasks] removeObject:runningTask];
+}
+
+-(void)onCancel:(TTRunningTask *)runningTask
+{
+    [runningTask setEnd:nil];
+}
+
 @end

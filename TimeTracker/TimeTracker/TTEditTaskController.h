@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TTSelectProjectDelegate.h"
+#import "TTRunningTask.h"
 
 @class TTTask;
 @protocol TTEditTaskDelegate;
@@ -16,5 +17,6 @@
 
 @property (nonatomic, assign) id<TTEditTaskDelegate> delegate;
 - (id)initWithTask:(TTTask *)task;
+- (id)initWithRunningTask:(TTRunningTask *)runningTask;
 
 @end

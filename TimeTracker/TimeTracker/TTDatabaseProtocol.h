@@ -41,4 +41,5 @@
 
 - (NSString *)getTotalTimeStringFormatted;
 - (NSString *)getTotalProjectTimeStringFormatted:(NSInteger) idProject;
+- (NSString *)getTotalTaskTimeStringFormatted:(NSInteger) idTask;
 @end

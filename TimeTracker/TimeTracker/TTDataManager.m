@@ -7,6 +7,8 @@
 //
 
 #import "TTDataManager.h"
+#import "TTRunningTask.h"
+#import "TTTask.h"
 
 @interface TTDataManager ()
 
@@ -67,6 +69,22 @@ static TTDataManager* _instance = nil;
 -(void)setRunningTasks:(NSMutableArray*)newRunningTasks
 {
     _lstRunningTasks = [NSMutableArray arrayWithArray:newRunningTasks];
+}
+
+-(NSInteger)getNumberOfQuickRunningTasks
+{
+    NSInteger res = 0;
+    if (_lstRunningTasks != nil)
+    {
+        for (NSInteger i = 0; i < _lstRunningTasks.count; i++) {
+            TTRunningTask *runnningTask = (TTRunningTask *)[_lstRunningTasks objectAtIndex:i];
+            TTTask *task = [runnningTask task];
+            if ([task identifier] == 0){
+                ++res;
+            }
+        }
+    }
+    return res;
 }
 
 @end
