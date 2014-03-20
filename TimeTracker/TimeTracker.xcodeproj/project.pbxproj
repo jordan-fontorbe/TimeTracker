@@ -54,8 +54,8 @@
 		D0C5DB7C18C8F2B1009E0BF7 /* TTDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C5DB7B18C8F2B1009E0BF7 /* TTDatabase.m */; };
 		D0CDB1B718DB27EC00A0301C /* TTHistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CDB1B518DB27EC00A0301C /* TTHistoryController.m */; };
 		D0CDB1B818DB27EC00A0301C /* TTHistoryController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0CDB1B618DB27EC00A0301C /* TTHistoryController.xib */; };
-		D0CDB1BC18DB472900A0301C /* TTEditTimeController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CDB1BA18DB472900A0301C /* TTEditTimeController.m */; };
-		D0CDB1BD18DB472900A0301C /* TTEditTimeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0CDB1BB18DB472900A0301C /* TTEditTimeController.xib */; };
+		D0CDB1C218DB58DD00A0301C /* TTEditTimeController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CDB1C018DB58DD00A0301C /* TTEditTimeController.m */; };
+		D0CDB1C318DB58DD00A0301C /* TTEditTimeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0CDB1C118DB58DD00A0301C /* TTEditTimeController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -132,10 +132,10 @@
 		D0CDB1B418DB27EC00A0301C /* TTHistoryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTHistoryController.h; sourceTree = "<group>"; };
 		D0CDB1B518DB27EC00A0301C /* TTHistoryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTHistoryController.m; sourceTree = "<group>"; };
 		D0CDB1B618DB27EC00A0301C /* TTHistoryController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTHistoryController.xib; sourceTree = "<group>"; };
-		D0CDB1B918DB472900A0301C /* TTEditTimeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTEditTimeController.h; sourceTree = "<group>"; };
-		D0CDB1BA18DB472900A0301C /* TTEditTimeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTEditTimeController.m; sourceTree = "<group>"; };
-		D0CDB1BB18DB472900A0301C /* TTEditTimeController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTEditTimeController.xib; sourceTree = "<group>"; };
 		D0CDB1BE18DB475900A0301C /* TTEditTimeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTEditTimeDelegate.h; sourceTree = "<group>"; };
+		D0CDB1BF18DB58DD00A0301C /* TTEditTimeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTEditTimeController.h; sourceTree = "<group>"; };
+		D0CDB1C018DB58DD00A0301C /* TTEditTimeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTEditTimeController.m; sourceTree = "<group>"; };
+		D0CDB1C118DB58DD00A0301C /* TTEditTimeController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTEditTimeController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -311,9 +311,9 @@
 				D0CDB1B418DB27EC00A0301C /* TTHistoryController.h */,
 				D0CDB1B518DB27EC00A0301C /* TTHistoryController.m */,
 				D0CDB1B618DB27EC00A0301C /* TTHistoryController.xib */,
-				D0CDB1B918DB472900A0301C /* TTEditTimeController.h */,
-				D0CDB1BA18DB472900A0301C /* TTEditTimeController.m */,
-				D0CDB1BB18DB472900A0301C /* TTEditTimeController.xib */,
+				D0CDB1BF18DB58DD00A0301C /* TTEditTimeController.h */,
+				D0CDB1C018DB58DD00A0301C /* TTEditTimeController.m */,
+				D0CDB1C118DB58DD00A0301C /* TTEditTimeController.xib */,
 			);
 			name = Dialog;
 			sourceTree = "<group>";
@@ -376,6 +376,7 @@
 				CE03CDC418C8EAC3001B4C86 /* InfoPlist.strings in Resources */,
 				D0BC2BD618CA0EC300E46F7F /* tasks.png in Resources */,
 				D0BC908D18D0A12C0081D7A1 /* TTSelectProjectController.xib in Resources */,
+				D0CDB1C318DB58DD00A0301C /* TTEditTimeController.xib in Resources */,
 				D0BC909718D0DA680081D7A1 /* TTEditProjectController.xib in Resources */,
 				CE03CDCC18C8EAC3001B4C86 /* Default.png in Resources */,
 				D0BC2BD118CA0EC300E46F7F /* pause.png in Resources */,
@@ -386,7 +387,6 @@
 				CE03CDD018C8EAC3001B4C86 /* Default-568h@2x.png in Resources */,
 				D0A5F24818CDF8F90074CE33 /* TTAboutController.xib in Resources */,
 				D0A5F24018CDF35A0074CE33 /* TTOverviewController.xib in Resources */,
-				D0CDB1BD18DB472900A0301C /* TTEditTimeController.xib in Resources */,
 				D0BC909218D0B9F00081D7A1 /* TTEditTaskController.xib in Resources */,
 				D0BC2BD418CA0EC300E46F7F /* quickstart.png in Resources */,
 				D0CDB1B818DB27EC00A0301C /* TTHistoryController.xib in Resources */,
@@ -410,6 +410,7 @@
 				D0C5DB7018C8F0A3009E0BF7 /* TTTask.m in Sources */,
 				D0C5DB7C18C8F2B1009E0BF7 /* TTDatabase.m in Sources */,
 				D0A5F23F18CDF35A0074CE33 /* TTOverviewController.m in Sources */,
+				D0CDB1C218DB58DD00A0301C /* TTEditTimeController.m in Sources */,
 				CE03CDC618C8EAC3001B4C86 /* main.m in Sources */,
 				D0C5DB7618C8F0F2009E0BF7 /* TTProject.m in Sources */,
 				D0BC2BD918CA0F6200E46F7F /* TTImageManager.m in Sources */,
@@ -421,7 +422,6 @@
 				D0CDB1B718DB27EC00A0301C /* TTHistoryController.m in Sources */,
 				CE03CDD318C8EAC3001B4C86 /* TimeTracker.xcdatamodeld in Sources */,
 				CE906D4518D0C3B000403C50 /* TTDataManager.m in Sources */,
-				D0CDB1BC18DB472900A0301C /* TTEditTimeController.m in Sources */,
 				CE16082618D5B6A400F07777 /* TTRunningTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

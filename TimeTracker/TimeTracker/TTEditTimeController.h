@@ -11,7 +11,7 @@
 @class TTTime;
 @protocol TTEditTimeDelegate;
 
-@interface TTEditTimeController : UITableViewController
+@interface TTEditTimeController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, assign) id<TTEditTimeDelegate> delegate;
 - (id)initWithTime:(TTTime *)time forTask:(int)task;

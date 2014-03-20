@@ -7,17 +7,21 @@
 //
 
 #import "TTEditTimeController.h"
+#import "TTEditTimeDelegate.h"
 #import "TTTask.h"
 #import "TTTime.h"
 #import "TTDatabase.h"
-#import "TTEditTimeDelegate.h"
 
 @interface TTEditTimeController ()
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (strong, nonatomic) TTTime *time;
 @property (strong, nonatomic) TTTime *timeTmp;
+@property int selection;
 - (void)onCancel:(UIBarButtonItem *)sender;
 - (void)onSave:(UIBarButtonItem *)sender;
+- (void)onSelected:(int)index;
 
 @end
 
@@ -27,7 +31,7 @@
 
 - (id)initWithTime:(TTTime *)time forTask:(int)task
 {
-    self = [self initWithStyle:UITableViewStyleGrouped];
+    self = [self initWithNibName:@"TTEditTimeController" bundle:nil];
     if(self) {
         if(time) {
             _time = time;
@@ -50,9 +54,9 @@
     return self;
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
     }
     return self;
@@ -61,9 +65,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // Table.
+    [[self tableView] setDataSource:self];
+    [[self tableView] setDelegate:self];
     // Navigation bar.
     [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(onCancel:)]];
     [[self navigationItem] setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave:)]];
+    [[self datePicker] setEnabled:YES];
+    [[self datePicker] setHidden:NO];
+    [self onSelected:0];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -86,6 +96,25 @@
 {
     [[self delegate] onSave:_time :_timeTmp];
     [[self navigationController] popViewControllerAnimated:YES];
+}
+
+- (void)onSelected:(int)index
+{
+    _selection = index;
+    switch(index) {
+        case 0:
+            [[self datePicker] setDatePickerMode:UIDatePickerModeDateAndTime];
+            [[self datePicker] setDate:[_timeTmp start]];
+            break;
+        case 1:
+            [[self datePicker] setDatePickerMode:UIDatePickerModeDateAndTime];
+            [[self datePicker] setDate:[_timeTmp end]];
+            break;
+        case 2:
+            [[self datePicker] setDatePickerMode:UIDatePickerModeTime];
+            break;
+        default:;
+    }
 }
 
 #pragma mark - Table view data source
@@ -163,22 +192,11 @@
  }
  */
 
-/*
- #pragma mark - Table view delegate
- 
- // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
- - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Navigation logic may go here, for example:
- // Create the next view controller.
- <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
- 
- // Pass the selected object to the new view controller.
- 
- // Push the view controller.
- [self.navigationController pushViewController:detailViewController animated:YES];
- }
- 
- */
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self onSelected:[indexPath indexAtPosition:1]];
+}
 
 @end

@@ -38,7 +38,7 @@
         [self setStart:start];
         [self setEnd:end];
     }
-    return nil;
+    return self;
 }
 
 - (id)initWithStart:(NSDate *)start end:(NSDate *)end task:(int)idTask
