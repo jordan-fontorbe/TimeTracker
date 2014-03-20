@@ -8,6 +8,10 @@
 
 #import "TTTime.h"
 
+static NSDateFormatter *dayFormat = nil;
+static NSDateFormatter *intervalFormat = nil;
+static NSDateFormatter *startFormat = nil;
+
 @interface TTTime ()
 
 - (void)duration;
@@ -70,23 +74,41 @@
 
 - (NSString *)formatDay
 {
-    NSDateFormatter *f = [[NSDateFormatter alloc] init];
-    [f setDateFormat:NSLocalizedString(@"dd/MM/YY", @"Date format")];
-    return [f stringFromDate:_start];
+    if(dayFormat == nil) {
+    dayFormat = [[NSDateFormatter alloc] init];
+    [dayFormat setDateFormat:NSLocalizedString(@"dd/MM/YY", @"Date format")];
+    }
+    return [dayFormat stringFromDate:_start];
 }
 
 - (NSString *)formatInterval
 {
-    NSDateFormatter *f = [[NSDateFormatter alloc] init];
-    [f setDateFormat:@"HH:mm"];
-    NSString *s1 = [f stringFromDate:_start];
-    NSString *s2 = _end == nil ? NSLocalizedString(@"Now", @"Now") : [f stringFromDate:_end];
+    if(intervalFormat == nil) {
+        intervalFormat = [[NSDateFormatter alloc] init];
+        [intervalFormat setDateFormat:NSLocalizedString(@"HH:mm", @"Hour")];
+    }
+    NSString *s1 = [intervalFormat stringFromDate:_start];
+    NSString *s2 = _end == nil ? NSLocalizedString(@"Now", @"Now") : [intervalFormat stringFromDate:_end];
     return [NSString stringWithFormat:@"%@ - %@", s1, s2];
 }
 
 - (NSString *)formatDuration
 {
     return [NSString stringWithFormat:NSLocalizedString(@"%02d:%02d:%02d", @"Duration"), [_durationComponents hour], [_durationComponents minute], [_durationComponents second]];
+}
+
+- (NSString *)formatHourEnd
+{
+    return [NSString stringWithFormat:NSLocalizedString(@"%02d:%02d", @"Hour"), [_endComponents hour], [_endComponents minute]];
+}
+
+- (NSString *)formatStart
+{
+    if(startFormat == nil) {
+        startFormat = [[NSDateFormatter alloc] init];
+        [startFormat setDateFormat:NSLocalizedString(@"EEE dd. MMMM MM yyyy HH:mm", @"Complete date")];
+    }
+    return [startFormat stringFromDate:_start];
 }
 
 - (void)duration

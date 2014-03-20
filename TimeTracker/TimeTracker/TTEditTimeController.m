@@ -65,6 +65,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // Picker.
     // Table.
     [[self tableView] setDataSource:self];
     [[self tableView] setDelegate:self];
@@ -140,12 +141,15 @@
     switch([indexPath indexAtPosition:1]) {
         case 0:
             [[cell textLabel] setText:NSLocalizedString(@"Start", @"Start")];
+            [[cell detailTextLabel] setText:[_timeTmp formatStart]];
             break;
         case 1:
             [[cell textLabel] setText:NSLocalizedString(@"End", @"End")];
+            [[cell detailTextLabel] setText:[_timeTmp formatHourEnd]];
             break;
         case 2:
             [[cell textLabel] setText:NSLocalizedString(@"Duration", @"Duration")];
+            [[cell detailTextLabel] setText:[_timeTmp formatDuration]];
             break;
         default:;
     }

@@ -23,5 +23,7 @@
 - (NSString *)formatDay;
 - (NSString *)formatInterval;
 - (NSString *)formatDuration;
+- (NSString *)formatHourEnd;
+- (NSString *)formatStart;
 
 @end
