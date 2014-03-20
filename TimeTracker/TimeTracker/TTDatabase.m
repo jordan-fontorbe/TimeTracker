@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) NSString *databasePath;
 @property (nonatomic) sqlite3 *timetrackerDB;
+@property (nonatomic) NSDateFormatter *format;
 
 @end
 
@@ -56,6 +57,9 @@ static TTDatabase* _sharedTTDatabase = nil;
         docsDir = dirPaths[0];
         // Build the path to the database file
         _databasePath = [[NSString alloc]initWithString: [docsDir stringByAppendingPathComponent:@"timetracker.db"]];
+        // Date format.
+        _format = [[NSDateFormatter alloc] init];
+        [_format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 	}
     
 	return self;
@@ -102,7 +106,7 @@ static TTDatabase* _sharedTTDatabase = nil;
     
     if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
     {
-        NSString *querySQL = [NSString stringWithFormat:@"SELECT id, id_project, name FROM tasks WHERE id=%d", identifier];
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT id, id_project, name FROM task WHERE id=%d", identifier];
         
         const char *query_stmt = [querySQL UTF8String];
         
@@ -147,6 +151,39 @@ static TTDatabase* _sharedTTDatabase = nil;
                 [res setEnd:[NSDate dateWithTimeIntervalSince1970:dTime]];
             }
             sqlite3_finalize(statement);
+        }
+        sqlite3_close(_timetrackerDB);
+    }
+    return res;
+
+}
+
+- (NSArray *)getTimesFor:(int)task
+{
+    NSMutableArray *res = [[NSMutableArray alloc] init];
+    const char *dbpath = [_databasePath UTF8String];
+    sqlite3_stmt *statement;
+    
+    if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
+    {
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT id, id_task, start, end FROM time WHERE id_task=%d", task];
+        
+        const char *query_stmt = [querySQL UTF8String];
+        
+        if (sqlite3_prepare_v2(_timetrackerDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                TTTime *time = [[TTTime alloc] init];
+                [time setIdentifier: sqlite3_column_int(statement, 0)];
+                [time setIdTask:task];
+                NSString *s = [[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
+                [time setStart:[_format dateFromString:s]];
+                s = [[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
+                [time setEnd:[_format dateFromString:s]];
+                [res addObject:time];
+            }
+            sqlite3_finalize(statement);            sqlite3_finalize(statement);
         }
         sqlite3_close(_timetrackerDB);
     }
@@ -284,10 +321,8 @@ static TTDatabase* _sharedTTDatabase = nil;
     
     if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
     {
-        NSDateFormatter *format = [[NSDateFormatter alloc] init];
-        [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSString *startString = [format stringFromDate:[newTime start]];
-        NSString *endString = [format stringFromDate:[newTime end]];
+        NSString *startString = [_format stringFromDate:[newTime start]];
+        NSString *endString = [_format stringFromDate:[newTime end]];
         NSString *querySQL = [NSString stringWithFormat:@"INSERT INTO time(id_task, start, end) VALUES (\"%d\", \"%@\", \"%@\")", [newTime idTask], startString, endString];
         
         const char *query_stmt = [querySQL UTF8String];
@@ -373,10 +408,8 @@ static TTDatabase* _sharedTTDatabase = nil;
     
     if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
     {
-        NSDateFormatter *format = [[NSDateFormatter alloc] init];
-        [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSString *startString = [format stringFromDate:[updateTime start]];
-        NSString *endString = [format stringFromDate:[updateTime end]];
+        NSString *startString = [_format stringFromDate:[updateTime start]];
+        NSString *endString = [_format stringFromDate:[updateTime end]];
         NSString *querySQL = [NSString stringWithFormat:@"UPDATE time SET id_task = %d, start = \"%@\", end = \"%@\" WHERE id = %d", [updateTime idTask], startString, endString, [updateTime identifier]];
         
         const char *query_stmt = [querySQL UTF8String];
@@ -536,10 +569,8 @@ static TTDatabase* _sharedTTDatabase = nil;
     
     if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
     {
-        NSDateFormatter *format = [[NSDateFormatter alloc] init];
-        [format setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        NSString *startString = [format stringFromDate:from];
-        NSString *endString = [format stringFromDate:to];
+        NSString *startString = [_format stringFromDate:from];
+        NSString *endString = [_format stringFromDate:to];
         NSString *querySQL = [NSString stringWithFormat:@"SELECT ta.id, ta.id_project, ta.name FROM task ta INNER JOIN time ti ON ti.id_task = ta.id WHERE ta.id_project = %d AND ti.start >= \"%@\" AND ti.end >= \"%@\"", project, startString, endString];
         
         const char *query_stmt = [querySQL UTF8String];

@@ -11,6 +11,7 @@
 #import "TTSelectProjectController.h"
 #import "TTDatabase.h"
 #import "TTTask.h"
+#import "TTRunningTask.h"
 #import "TTProject.h"
 #import "TTImageManager.h"
 #import "TTTextFieldCell.h"

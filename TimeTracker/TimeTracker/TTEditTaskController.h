@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "TTSelectProjectDelegate.h"
-#import "TTRunningTask.h"
 
 @class TTTask;
+@class TTRunningTask;
 @protocol TTEditTaskDelegate;
 
 @interface TTEditTaskController : UITableViewController <TTSelectProjectDelegate, UITextFieldDelegate>

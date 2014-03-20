@@ -14,7 +14,14 @@
 @property int idTask;
 @property (strong, nonatomic) NSDate *start;
 @property (strong, nonatomic) NSDate *end;
+@property (strong, nonatomic) NSDateComponents *startComponents;
+@property (strong, nonatomic) NSDateComponents *endComponents;
+@property (strong, nonatomic) NSDateComponents *durationComponents;
+- (id)initWithTime:(TTTime *)time;
 - (id)initWithIdentifier:(int)identifier start:(NSDate *)start end:(NSDate *)end task:(int)idTask;
 - (id)initWithStart:(NSDate *)start end:(NSDate *)end task:(int)idTask;
+- (NSString *)formatDay;
+- (NSString *)formatInterval;
+- (NSString *)formatDuration;
 
 @end

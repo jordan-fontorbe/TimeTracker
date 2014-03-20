@@ -13,6 +13,7 @@
 #import "TTTask.h"
 #import "TTImageManager.h"
 #import "TTEditTaskController.h"
+#import "TTHistoryController.h"
 
 @interface TTTasksListController ()
 
@@ -203,6 +204,8 @@
     TTTask *task = [self getTaskFor:[indexPath indexAtPosition:0] row:[indexPath indexAtPosition:1]];
     if(!tableView.editing) {
         // Show task informations.
+        TTHistoryController *view = [[TTHistoryController alloc] initWithTask:[task identifier]];
+        [[self navigationController] pushViewController:view animated:YES];
     } else {
         // Edit the task.
         TTEditTaskController *view = [[TTEditTaskController alloc] initWithTask:task];

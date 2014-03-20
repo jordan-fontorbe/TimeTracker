@@ -39,6 +39,8 @@
 - (NSArray *)getTasksFor:(int)project;
 - (NSArray *)getTasksFrom:(NSDate *)from To:(NSDate *)to For:(int)project;
 
+- (NSArray *)getTimesFor:(int)task;
+
 - (NSString *)getTotalTimeStringFormatted;
 - (NSString *)getTotalProjectTimeStringFormatted:(NSInteger) idProject;
 - (NSString *)getTotalTaskTimeStringFormatted:(NSInteger) idTask;
