@@ -61,6 +61,17 @@ NSTimer	* _tableViewTimer;
     
     [self activateTimer];
     
+    [self setTooBar];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[self navigationController] setToolbarHidden:YES];
+    [self deactivateTimer];
+}
+
+- (void) setTooBar
+{
     UIBarButtonItem *newProjectButtonItem = [[UIBarButtonItem alloc]
                                              initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(onNewProject:)];
     
@@ -71,12 +82,6 @@ NSTimer	* _tableViewTimer;
     UIBarButtonItem *newMailButtonItem = [[UIBarButtonItem alloc] initWithImage:[TTImageManager getIcon:Mail] style:UIBarButtonItemStylePlain target:self action:nil];
     
     [self setToolbarItems:[NSArray arrayWithObjects: newProjectButtonItem, flexibleSpace, totalTimeButtonItem, flexibleSpace, newMailButtonItem, nil]];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [[self navigationController] setToolbarHidden:YES];
-    [self deactivateTimer];
 }
 
 - (void)activateTimer
@@ -265,11 +270,15 @@ NSTimer	* _tableViewTimer;
         [editTaskController setDelegate:self];
         [[self navigationController] pushViewController:editTaskController animated:YES];
     }
-    else if ([buttonTitle isEqualToString:@"Other Button 2"]) {
-        NSLog(@"Other 2 pressed");
+    else if ([buttonTitle isEqualToString:@"Ajouter à une tâche"]) {
+        
     }
-    else if ([buttonTitle isEqualToString:@"Other Button 3"]) {
-        NSLog(@"Other 3 pressed");
+    else if ([buttonTitle isEqualToString:@"Ajouter à la tâche"]) {
+        TTRunningTask *runningTask = [[[TTDataManager instance] getRunningTasks] objectAtIndex:[actionSheet tag]];
+        [runningTask save];
+         [[[TTDataManager instance] getRunningTasks] removeObject:runningTask];
+        [self.tblView reloadData];
+        [self setTooBar];
     }
     else if ([buttonTitle isEqualToString:@"Annuler"]) {
         // On remet le end à nil puiqu'on continue la tache
@@ -282,17 +291,30 @@ NSTimer	* _tableViewTimer;
 {
     NSDate *now = [NSDate date];
     NSIndexPath *indexPath = (NSIndexPath *)sender;
-    [[[[TTDataManager instance] getRunningTasks] objectAtIndex:[indexPath row]] setEnd:now];
+    TTRunningTask *runningTask = [[[TTDataManager instance] getRunningTasks] objectAtIndex:[indexPath row]];
+    [runningTask setEnd:now];
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                  initWithTitle:nil
-                                  delegate:self
-                                  cancelButtonTitle:@"Annuler"
-                                  destructiveButtonTitle:@"Créer une nouvelle tâche"
-                                  otherButtonTitles:@"Ajouter à une tâche",@"Supprimer", nil];
-    [actionSheet setDestructiveButtonIndex:2];
+    UIActionSheet *actionSheet = nil;
+    if ([[runningTask task] identifier] > 0) {
+        actionSheet = [[UIActionSheet alloc]
+                       initWithTitle:nil
+                       delegate:self
+                       cancelButtonTitle:@"Annuler"
+                       destructiveButtonTitle:@"Ajouter à la tâche"
+                       otherButtonTitles:@"Supprimer",nil];
+        [actionSheet setDestructiveButtonIndex:1];
+    }
+    else {
+        actionSheet = [[UIActionSheet alloc]
+                       initWithTitle:nil
+                       delegate:self
+                       cancelButtonTitle:@"Annuler"
+                       destructiveButtonTitle:@"Créer une nouvelle tâche"
+                       otherButtonTitles:@"Ajouter à une tâche",@"Supprimer", nil];
+         [actionSheet setDestructiveButtonIndex:2];
+        
+    }
     [actionSheet setTag:indexPath.row];
-    
     [actionSheet showInView:self.view];
 }
 

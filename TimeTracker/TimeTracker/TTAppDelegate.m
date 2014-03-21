@@ -68,8 +68,8 @@
     [time setStart:[dateFormat dateFromString:@"16/03/2014 15:00:00"]];
     [time setEnd:[dateFormat dateFromString:@"16/03/2014 17:00:00"]];
     [[TTDatabase instance] insertTime:time];
-    
-    
+    TTRunningTask *runningTask = [[TTRunningTask alloc] initWithTask:task start:[dateFormat dateFromString:@"21/03/2014 06:00:30"]];
+    [[[TTDataManager instance] getRunningTasks] addObject:runningTask];
     
     //****************************************//
     

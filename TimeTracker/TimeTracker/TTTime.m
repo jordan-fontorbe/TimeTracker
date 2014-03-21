@@ -54,7 +54,7 @@ static NSDateFormatter *startFormat = nil;
 {
     _start = start;
     if(start != nil) {
-    _startComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond fromDate:start];
+    _startComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:start];
     } else {
         _startComponents = nil;
     }
@@ -65,7 +65,7 @@ static NSDateFormatter *startFormat = nil;
 {
     _end = end;
     if(end != nil) {
-    _endComponents = [[NSCalendar currentCalendar] components:NSCalendarUnitDay|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitSecond fromDate:end];
+    _endComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:end];
     } else {
         _endComponents = nil;
     }
