@@ -166,7 +166,7 @@ static TTDatabase* _sharedTTDatabase = nil;
     
     if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
     {
-        NSString *querySQL = [NSString stringWithFormat:@"SELECT id, id_task, start, end FROM time WHERE id_task=%d", task];
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT id, id_task, start, end FROM time WHERE id_task=%d ORDER BY start, end ASC", task];
         
         const char *query_stmt = [querySQL UTF8String];
         

@@ -72,6 +72,11 @@ static NSDateFormatter *startFormat = nil;
     [self duration];
 }
 
+- (void)setDurationComponents:(NSDateComponents *)durationComponents
+{
+    [self setEnd:[[NSCalendar currentCalendar] dateByAddingComponents:durationComponents toDate:_start options:0]];
+}
+
 - (NSString *)formatDay
 {
     if(dayFormat == nil) {
