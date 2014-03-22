@@ -7,12 +7,12 @@
 //
 
 #import "TTTasksListController.h"
+#import "TTEditTaskController.h"
 #import "TTDatabase.h"
 #import "TTTaskCell.h"
 #import "TTProject.h"
 #import "TTTask.h"
 #import "TTImageManager.h"
-#import "TTEditTaskController.h"
 #import "TTHistoryController.h"
 
 @interface TTTasksListController ()
@@ -27,6 +27,7 @@
 - (TTTask *)getTaskFor:(int)section row:(int)row;
 - (int)getProjectIdFor:(int)section;
 - (void)onNewTask:(UIBarButtonItem *)sender;
+- (TTEditTaskController *)newTaskView:(TTTask *)task;
 
 @end
 
@@ -117,9 +118,14 @@
 
 - (void)onNewTask:(UIBarButtonItem *)sender
 {
-    TTEditTaskController *view = [[TTEditTaskController alloc] initWithTask:nil];
+    TTEditTaskController *view = [self newTaskView:nil];
     [view setDelegate:self];
     [[self navigationController] pushViewController:view animated:YES];
+}
+
+- (TTEditTaskController *)newTaskView:(TTTask *)task
+{
+    return nil;
 }
 
 #pragma mark - Edit task view delegate
@@ -138,9 +144,10 @@
 {
     // Task changed, insert/update and reload the table.
     if(original) {
-        [[TTDatabase instance] deleteTask:original];
+        [[TTDatabase instance] updateTask:modified];
+    } else {
+        [[TTDatabase instance] insertTask:modified];
     }
-    [[TTDatabase instance] insertTask:modified];
     [self reloadData];
 }
 

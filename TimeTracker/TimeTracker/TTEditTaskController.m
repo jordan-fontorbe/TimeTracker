@@ -34,20 +34,25 @@
 
 - (id)initWithTask:(TTTask *)task
 {
+    return [self initWithTask:task forProject:0];
+}
+
+- (id)initWithTask:(TTTask *)task forProject:(int)project
+{
     self = [self initWithStyle:UITableViewStyleGrouped];
-    _runningTask = nil;
     if(self) {
+        _runningTask = nil;
         if(task) {
             _task = task;
             _taskTmp = [[TTTask alloc] initWithTask:task];
             [self setTitle:NSLocalizedString(@"Edit", @"EditTask navigation title")];
         } else {
             _task = nil;
-            _taskTmp = [[TTTask alloc] initWithName:@"" project:0];
+            _taskTmp = [[TTTask alloc] initWithName:@"" project:project];
             [self setTitle:NSLocalizedString(@"New Task", @"EditTask navigation title")];
         }
-        if([_task idProject] != 0) {
-            _project = [[TTDatabase instance] getProject:[task idProject]];
+        if([_taskTmp idProject] != 0) {
+            _project = [[TTDatabase instance] getProject:[_taskTmp idProject]];
         } else {
             _project = nil;
         }

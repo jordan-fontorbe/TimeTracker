@@ -7,6 +7,7 @@
 //
 
 #import "TTAllTasksController.h"
+#import "TTEditTaskController.h"
 #import "TTDatabase.h"
 #import "TTTaskCell.h"
 #import "TTProject.h"
@@ -38,6 +39,11 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (TTEditTaskController *)newTaskView:(TTTask *)task
+{
+    return [[TTEditTaskController alloc] initWithTask:task forProject:0];
 }
 
 - (void)reloadData

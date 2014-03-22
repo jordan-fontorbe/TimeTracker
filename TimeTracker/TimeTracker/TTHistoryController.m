@@ -147,9 +147,10 @@
 - (void)onSave:(TTTime *)original :(TTTime *)modified
 {
     if(original) {
-        [[TTDatabase instance] deleteTime:original];
+        [[TTDatabase instance] updateTime:modified];
+    } else {
+        [[TTDatabase instance] insertTime:modified];
     }
-    [[TTDatabase instance] insertTime:modified];
     [self reloadData];
 }
 
