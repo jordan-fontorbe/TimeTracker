@@ -83,7 +83,9 @@
 - (void)activateTimer
 {
     [self reloadData];
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reloadData) userInfo:nil repeats:YES];
+    if(![self isEditing]) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reloadData) userInfo:nil repeats:YES];
+    }
 }
 
 - (void)deactivateTimer
@@ -223,6 +225,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         TTTask *task = [self getTaskFor:[indexPath indexAtPosition:0] row:[indexPath indexAtPosition:1]];
         [[TTDatabase instance] deleteTask:task];
+        [self reloadData];
     }
 }
 

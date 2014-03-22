@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSString *databasePath;
 @property (nonatomic) sqlite3 *timetrackerDB;
 @property (nonatomic) NSDateFormatter *format;
+- (TTTime *)parseTime:(sqlite3_stmt *)stmt withEnd:(bool)end;
 
 @end
 
@@ -98,6 +99,20 @@ static TTDatabase* _sharedTTDatabase = nil;
     }
 }
 
+- (TTTime *)parseTime:(sqlite3_stmt *)stmt withEnd:(bool)end
+{
+    TTTime *t = [[TTTime alloc] init];
+    [t setIdentifier: sqlite3_column_int(stmt, 0)];
+    [t setIdTask: sqlite3_column_int(stmt, 1)];
+    NSString *s = [[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(stmt, 2)];
+    [t setStart:[_format dateFromString:s]];
+    if(end) {
+        s = [[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(stmt, 3)];
+        [t setEnd:[_format dateFromString:s]];
+    }
+    return t;
+}
+
 - (TTTask *)getTask:(int)identifier
 {
     TTTask *res = nil;
@@ -142,13 +157,7 @@ static TTDatabase* _sharedTTDatabase = nil;
         {
             if (sqlite3_step(statement) == SQLITE_ROW)
             {
-                res = [[TTTime alloc] init];
-                [res setIdentifier: sqlite3_column_int(statement, 0)];
-                [res setIdTask: sqlite3_column_int(statement, 1)];
-                NSString *s = [[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
-                [res setStart:[_format dateFromString:s]];
-                s = [[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
-                [res setEnd:[_format dateFromString:s]];
+                res = [self parseTime:statement withEnd:YES];
             }
             sqlite3_finalize(statement);
         }
@@ -174,13 +183,7 @@ static TTDatabase* _sharedTTDatabase = nil;
         {
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
-                TTTime *time = [[TTTime alloc] init];
-                [time setIdentifier: sqlite3_column_int(statement, 0)];
-                [time setIdTask:task];
-                NSString *s = [[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
-                [time setStart:[_format dateFromString:s]];
-                s = [[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)];
-                [time setEnd:[_format dateFromString:s]];
+                TTTime *time = [self parseTime:statement withEnd:YES];
                 [res addObject:time];
             }
             sqlite3_finalize(statement);            sqlite3_finalize(statement);
@@ -465,7 +468,7 @@ static TTDatabase* _sharedTTDatabase = nil;
         
         const char *query_stmt = [querySQL UTF8String];
         
-        if (sqlite3_prepare_v2(_timetrackerDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        while (strlen(query_stmt) > 0 && sqlite3_prepare_v2(_timetrackerDB, query_stmt, -1, &statement, &query_stmt) == SQLITE_OK)
         {
             if (sqlite3_step(statement) == SQLITE_DONE)
             {
@@ -491,7 +494,7 @@ static TTDatabase* _sharedTTDatabase = nil;
         
         const char *query_stmt = [querySQL UTF8String];
         
-        if (sqlite3_prepare_v2(_timetrackerDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        while (strlen(query_stmt) > 0 && sqlite3_prepare_v2(_timetrackerDB, query_stmt, -1, &statement, &query_stmt) == SQLITE_OK)
         {
             if (sqlite3_step(statement) == SQLITE_DONE)
             {
@@ -619,6 +622,11 @@ static TTDatabase* _sharedTTDatabase = nil;
     }
     
     if (date != nil){
+        // Add running times.
+        NSArray *a = [self getRunningTimes];
+        for(TTTime *t in a) {
+            date = [[NSCalendar currentCalendar] dateByAddingComponents:[t durationComponentsFromStartToNow] toDate:date options:0];
+        }
         NSUInteger seconds = (NSUInteger)round([date timeIntervalSince1970]);
         return [NSString stringWithFormat:@"%02u:%02u", seconds / 3600, (seconds / 60) % 60];
     }
@@ -705,6 +713,31 @@ static TTDatabase* _sharedTTDatabase = nil;
     }
 }
 
+- (NSArray *)getRunningTimes
+{
+    const char *dbpath = [_databasePath UTF8String];
+    sqlite3_stmt *statement;
+    NSMutableArray *a = [[NSMutableArray alloc] init];
+    
+    if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
+    {
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT id, id_task, start FROM time WHERE end = '(null)'"];
+        const char *query_stmt = [querySQL UTF8String];
+        if (sqlite3_prepare_v2(_timetrackerDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                TTTime *t = [self parseTime:statement withEnd:NO];
+                [a addObject:t];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(_timetrackerDB);
+    }
+    
+    return a;
+}
+
 - (NSArray *)getRunningTimesFor:(int)project
 {
     const char *dbpath = [_databasePath UTF8String];
@@ -719,11 +752,7 @@ static TTDatabase* _sharedTTDatabase = nil;
         {
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
-                TTTime *t = [[TTTime alloc] init];
-                [t setIdentifier: sqlite3_column_int(statement, 0)];
-                [t setIdTask: sqlite3_column_int(statement, 1)];
-                NSString *s = [[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
-                [t setStart:[_format dateFromString:s]];
+                TTTime *t = [self parseTime:statement withEnd:NO];
                 [a addObject:t];
             }
             sqlite3_finalize(statement);
@@ -748,11 +777,7 @@ static TTDatabase* _sharedTTDatabase = nil;
         {
             if (sqlite3_step(statement) == SQLITE_ROW)
             {
-                t = [[TTTime alloc] init];
-                [t setIdentifier: sqlite3_column_int(statement, 0)];
-                [t setIdTask: sqlite3_column_int(statement, 1)];
-                NSString *s = [[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)];
-                [t setStart:[_format dateFromString:s]];
+                t = [self parseTime:statement withEnd:NO];
             }
             sqlite3_finalize(statement);
         }
