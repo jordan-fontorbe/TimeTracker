@@ -61,7 +61,6 @@ NSTimer	* _tableViewTimer;
 {
     [[self navigationController] setToolbarHidden:NO];
     [self setTooBar];
-    [self.tblView reloadData];
     [self activateTimer];
 }
 
@@ -88,7 +87,7 @@ NSTimer	* _tableViewTimer;
 {
     [self reloadData];
     if(![self isEditing]) {
-        _tableViewTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reloadTableViewForTimer) userInfo:nil repeats:YES];
+        _tableViewTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reloadData) userInfo:nil repeats:YES];
     }
 }
 
@@ -100,13 +99,13 @@ NSTimer	* _tableViewTimer;
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
+    [super setEditing:editing animated:animated];
     if(editing) {
         [self deactivateTimer];
     } else {
         [self activateTimer];
     }
     [[self tblView] setEditing:editing animated:animated];
-    [super setEditing:editing animated:animated];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -133,11 +132,16 @@ NSTimer	* _tableViewTimer;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellId = @"TTTaskCell";
+    static UIColor *defaultColor = nil;
     TTTaskCell *cell = [tableView dequeueReusableCellWithIdentifier:CellId];
     
     if (cell == nil){
         cell = [[[NSBundle mainBundle] loadNibNamed:@"TTTaskCell" owner:self options:nil] objectAtIndex:0];
     }
+    if(defaultColor == nil) {
+        defaultColor = [[cell textLabel] textColor];
+    }
+    
     if (indexPath.section != 0){
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
@@ -166,6 +170,7 @@ NSTimer	* _tableViewTimer;
             }
             
             cell.time.text = [myRunningTask getRunningTaskTimeStringFormatted];
+            [[cell time] setTextColor:[UIColor redColor]];
         }
         
     }
@@ -181,6 +186,7 @@ NSTimer	* _tableViewTimer;
             cell.time.text = [[TTDatabase instance] getTotalProjectTimeStringFormatted:0];
             
         }
+        [[cell time] setTextColor:defaultColor];
         // [[cell contentView] addSubview:myTimeLabel];
     }
     else if (indexPath.section == 2) {
@@ -188,6 +194,7 @@ NSTimer	* _tableViewTimer;
         TTProject *myProject = (TTProject *)[_projects objectAtIndex:[indexPath row]];
         cell.label.text = [myProject name];
         cell.time.text = [[TTDatabase instance] getTotalProjectTimeStringFormatted:[myProject identifier]];
+        [[cell time] setTextColor:defaultColor];
     }
     return cell;
 }
@@ -307,6 +314,7 @@ NSTimer	* _tableViewTimer;
 {
     _projects = [[TTDatabase instance] getProjects];
     [[self tblView] reloadData];
+    [_totalTimeButtonItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"Total : %@", @"Total time"), [[TTDatabase instance] getTotalTimeStringFormatted]]];
 }
 
 /** ActionSheet methods **/

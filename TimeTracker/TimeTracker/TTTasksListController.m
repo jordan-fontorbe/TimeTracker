@@ -107,12 +107,12 @@
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
+    [super setEditing:editing animated:animated];
     if(editing) {
         [self deactivateTimer];
     } else {
         [self activateTimer];
     }
-    [super setEditing:editing animated:animated];
     [[self tableView] reloadData];
 }
 
