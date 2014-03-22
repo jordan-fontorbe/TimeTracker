@@ -66,7 +66,6 @@ NSTimer	* _tableViewTimer;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [[self navigationController] setToolbarHidden:YES];
     [self deactivateTimer];
 }
 

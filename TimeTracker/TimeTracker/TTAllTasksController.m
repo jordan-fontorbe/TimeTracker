@@ -26,9 +26,6 @@
     self = [super init];
     if (self) {
         [self setTitle:NSLocalizedString(@"All Tasks", @"AllTasks navigation title")];
-        _projects = [[TTDatabase instance] getProjects];
-        NSDictionary *d = [[TTDatabase instance] getTasks];
-        _tasks = [[NSMutableDictionary alloc] initWithDictionary: d];
     }
     return self;
 }
@@ -43,29 +40,17 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)removeTask:(TTTask *)task
+- (void)reloadData
 {
-    NSMutableArray *a = [_tasks objectForKey:[NSNumber numberWithInt:[task idProject]]];
-    [a removeObject:task];
+    _projects = [[TTDatabase instance] getProjects];
+    NSDictionary *d = [[TTDatabase instance] getTasks];
+    _tasks = [[NSMutableDictionary alloc] initWithDictionary: d];
+    [super reloadData];
 }
 
-- (void)addTask:(TTTask *)task
+- (NSString *)getTotalTime
 {
-    NSMutableArray *a = [_tasks objectForKey:[NSNumber numberWithInt:[task idProject]]];
-    [a addObject:task];
-}
-
-- (void)replaceTask:(TTTask *)original :(TTTask *)modified
-{
-    NSMutableArray *a = [_tasks objectForKey:[NSNumber numberWithInt:[original idProject]]];
-    int index = [a indexOfObject:original];
-    [a removeObjectAtIndex:index];
-    if([modified idProject] == [original idProject]) {
-        [a insertObject:modified atIndex:index];
-    } else {
-        a = [_tasks objectForKey:[NSNumber numberWithInt:[modified idProject]]];
-        [a addObject:modified];
-    }
+    return [[TTDatabase instance] getTotalTimeStringFormatted];
 }
 
 - (NSMutableArray *)getTasksForProject:(int)project

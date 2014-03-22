@@ -44,4 +44,10 @@
 - (NSString *)getTotalTimeStringFormatted;
 - (NSString *)getTotalProjectTimeStringFormatted:(NSInteger) idProject;
 - (NSString *)getTotalTaskTimeStringFormatted:(NSInteger) idTask;
+
+- (NSArray *)getRunningTimesFor:(int)project;
+- (TTTime *)getRunningTimeFor:(int)task;
+- (bool)isTaskRunning:(int)task;
+- (void)runTask:(int)task;
+
 @end
