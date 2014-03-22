@@ -24,6 +24,7 @@
 
 @interface TTOverviewController ()
 
+@property (strong, nonatomic) UIBarButtonItem *totalTimeButtonItem;
 - (void)onAbout:(UIBarButtonItem *)sender;
 - (void)showActionSheet:(id)sender; // method to show action sheet
 
@@ -45,6 +46,7 @@ NSTimer	* _tableViewTimer;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[self tblView] setAllowsSelectionDuringEditing:YES];
     UIBarButtonItem *aboutButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"About", @"Overview navigation left button title") style:UIBarButtonSystemItemAdd target:self action:@selector(onAbout:)];
     [[self navigationItem] setLeftBarButtonItem:aboutButtonItem];
     [[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
@@ -56,12 +58,9 @@ NSTimer	* _tableViewTimer;
 - (void)viewWillAppear:(BOOL)animated
 {
     [[self navigationController] setToolbarHidden:NO];
-    
-    [self.tblView reloadData];
-    
-    [self activateTimer];
-    
     [self setTooBar];
+    [self.tblView reloadData];
+    [self activateTimer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -74,24 +73,37 @@ NSTimer	* _tableViewTimer;
     UIBarButtonItem *newProjectButtonItem = [[UIBarButtonItem alloc]
                                              initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(onNewProject:)];
     
-    UIBarButtonItem *totalTimeButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"Total : %@", [[TTDatabase instance] getTotalTimeStringFormatted]] style:UIBarButtonItemStylePlain target:self action:nil];
+    _totalTimeButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     
     UIBarButtonItem *flexibleSpace =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     UIBarButtonItem *newMailButtonItem = [[UIBarButtonItem alloc] initWithImage:[TTImageManager getIcon:Mail] style:UIBarButtonItemStylePlain target:self action:nil];
     
-    [self setToolbarItems:[NSArray arrayWithObjects: newProjectButtonItem, flexibleSpace, totalTimeButtonItem, flexibleSpace, newMailButtonItem, nil]];
+    [self setToolbarItems:[NSArray arrayWithObjects: newProjectButtonItem, flexibleSpace, _totalTimeButtonItem, flexibleSpace, newMailButtonItem, nil]];
 }
 
 - (void)activateTimer
 {
-    _tableViewTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reloadTableViewForTimer) userInfo:nil repeats:YES];
+    if(![self isEditing]) {
+        _tableViewTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reloadTableViewForTimer) userInfo:nil repeats:YES];
+    }
 }
 
 - (void)deactivateTimer
 {
     [_tableViewTimer invalidate];
     _tableViewTimer = nil;
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    if(editing) {
+        [self deactivateTimer];
+    } else {
+        [self activateTimer];
+    }
+    [[self tblView] setEditing:editing animated:animated];
+    [super setEditing:editing animated:animated];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -204,8 +216,16 @@ NSTimer	* _tableViewTimer;
         case 2:
         {
             TTProject *p = [[TTDatabase instance] getProject:[indexPath indexAtPosition:1]+1];
-            TTProjectTasksController *view = [[TTProjectTasksController alloc] initWithProject:[p identifier]];
-            [[self navigationController] pushViewController:view animated:YES];
+            if(!tableView.editing) {
+                // Show project tasks.
+                TTProjectTasksController *view = [[TTProjectTasksController alloc] initWithProject:[p identifier]];
+                [[self navigationController] pushViewController:view animated:YES];
+            } else {
+                // Edit project name.
+                TTEditProjectController *view = [[TTEditProjectController alloc] initWithProject:p];
+                [view setDelegate:self];
+                [[self navigationController] pushViewController:view animated:YES];
+            }
             break;
         }
         default:;
@@ -227,6 +247,7 @@ NSTimer	* _tableViewTimer;
 - (void)onNewProject:(UIBarButtonItem *)sender
 {
     TTEditProjectController *editController = [[TTEditProjectController alloc] initWithProject:nil];
+    [editController setDelegate:self];
     [[self navigationController] pushViewController:editController animated:YES];
 }
 
@@ -275,7 +296,7 @@ NSTimer	* _tableViewTimer;
     else if ([buttonTitle isEqualToString:@"Ajouter à la tâche"]) {
         TTRunningTask *runningTask = [[[TTDataManager instance] getRunningTasks] objectAtIndex:[actionSheet tag]];
         [runningTask save];
-         [[[TTDataManager instance] getRunningTasks] removeObject:runningTask];
+        [[[TTDataManager instance] getRunningTasks] removeObject:runningTask];
         [self.tblView reloadData];
         [self setTooBar];
     }
@@ -310,7 +331,7 @@ NSTimer	* _tableViewTimer;
                        cancelButtonTitle:@"Annuler"
                        destructiveButtonTitle:@"Créer une nouvelle tâche"
                        otherButtonTitles:@"Ajouter à une tâche",@"Supprimer", nil];
-         [actionSheet setDestructiveButtonIndex:2];
+        [actionSheet setDestructiveButtonIndex:2];
         
     }
     [actionSheet setTag:indexPath.row];
@@ -324,9 +345,22 @@ NSTimer	* _tableViewTimer;
     [[[TTDataManager instance] getRunningTasks] removeObject:runningTask];
 }
 
--(void)onCancel:(TTRunningTask *)runningTask
+- (void)onCancel:(TTRunningTask *)runningTask
 {
     [runningTask setEnd:nil];
+}
+
+- (void)onSave:(TTProject *)original :(TTProject *)modified
+{
+    if(original) {
+        [[TTDatabase instance] updateProject:modified];
+    } else {
+        [[TTDatabase instance] insertProject:modified];
+    }
+}
+
+- (void)onCancel
+{
 }
 
 @end

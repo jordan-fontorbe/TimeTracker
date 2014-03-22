@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "TTEditTaskDelegate.h"
+#import "TTEditProjectDelegate.h"
 
-@interface TTOverviewController : UIViewController <UIActionSheetDelegate, TTEditTaskDelegate>
+@interface TTOverviewController : UIViewController <UIActionSheetDelegate, TTEditTaskDelegate, TTEditProjectDelegate>
 
 - (IBAction)onEditTask:(id)sender;
 @property (weak, nonatomic) IBOutlet UITableView *tblView;

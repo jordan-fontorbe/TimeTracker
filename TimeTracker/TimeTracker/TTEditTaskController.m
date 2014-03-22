@@ -117,6 +117,7 @@
 }
 
 - (void)onSave:(UIBarButtonItem *)sender {
+    [_taskTmp setName:[[_name textField] text]];
     if (_runningTask != nil) {
         [_runningTask setTask:_taskTmp];
         [delegate onSave:_runningTask];
