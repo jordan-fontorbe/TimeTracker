@@ -402,6 +402,7 @@ NSTimer	* _tableViewTimer;
     [runningTask setTask:[[TTDatabase instance] getTask:taskId]];
     [runningTask save];
     [[[TTDataManager instance] getRunningTasks] removeObject:runningTask];
+}
 
 - (void)onSave:(TTProject *)original :(TTProject *)modified
 {
