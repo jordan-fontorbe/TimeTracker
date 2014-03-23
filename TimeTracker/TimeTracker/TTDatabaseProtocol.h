@@ -51,4 +51,6 @@
 - (bool)isTaskRunning:(int)task;
 - (void)runTask:(int)task;
 
+- (NSString *)getAllTimesCSVFormat;
+
 @end

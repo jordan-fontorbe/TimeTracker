@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import "TTEditTaskDelegate.h"
 #import "TTSelectTaskDelegate.h"
 #import "TTEditProjectDelegate.h"
 
-@interface TTOverviewController : UIViewController <UIActionSheetDelegate, TTEditTaskDelegate, TTSelectTaskDelegate, TTEditProjectDelegate>
+@interface TTOverviewController : UIViewController <UIActionSheetDelegate, TTEditTaskDelegate, TTSelectTaskDelegate, TTEditProjectDelegate, MFMailComposeViewControllerDelegate>
 
 
 - (IBAction)onEditTask:(id)sender;

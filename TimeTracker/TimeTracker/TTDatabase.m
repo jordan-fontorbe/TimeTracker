@@ -803,4 +803,42 @@ static TTDatabase* _sharedTTDatabase = nil;
     }
 }
 
+- (NSString *)getAllTimesCSVFormat;
+{
+    NSString *res = @"Project;Task;Start;End";
+    const char *dbpath = [_databasePath UTF8String];
+    sqlite3_stmt *statement;
+    
+    if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
+    {
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT p.name, ta.name, ti.start, ti.end FROM time ti JOIN task ta ON ti.id_task = ta.id LEFT OUTER JOIN project p ON p.id = ta.id_project "];
+        const char *query_stmt = [querySQL UTF8String];
+        if (sqlite3_prepare_v2(_timetrackerDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                res = [res stringByAppendingString:@"\n\r"];
+                char *projectName = sqlite3_column_text(statement, 0);
+                if (projectName == nil) {
+                    res = [res stringByAppendingString:@"Single Tasks"];
+                }
+                else {
+                    res = [res stringByAppendingString:[[NSString alloc]initWithUTF8String:(const char *) projectName]];
+                }
+                
+                res = [res stringByAppendingString:@";"];
+                res = [res stringByAppendingString:[[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(statement, 1)]];
+                res = [res stringByAppendingString:@";"];
+                res = [res stringByAppendingString:[[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(statement, 2)]];
+                res = [res stringByAppendingString:@";"];
+                res = [res stringByAppendingString:[[NSString alloc]initWithUTF8String:(const char *) sqlite3_column_text(statement, 3)]];
+            }
+            sqlite3_finalize(statement);
+        }
+        sqlite3_close(_timetrackerDB);
+    }
+    return res;
+
+}
+
 @end

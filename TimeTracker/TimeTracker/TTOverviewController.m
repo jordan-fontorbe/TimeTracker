@@ -79,7 +79,7 @@ NSTimer	* _tableViewTimer;
     
     UIBarButtonItem *flexibleSpace =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    UIBarButtonItem *newMailButtonItem = [[UIBarButtonItem alloc] initWithImage:[TTImageManager getIcon:Mail] style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *newMailButtonItem = [[UIBarButtonItem alloc] initWithImage:[TTImageManager getIcon:Mail] style:UIBarButtonItemStylePlain target:self action:@selector(showEmail:)];
     
     [self setToolbarItems:[NSArray arrayWithObjects: newProjectButtonItem, flexibleSpace, _totalTimeButtonItem, flexibleSpace, newMailButtonItem, nil]];
 }
@@ -418,5 +418,42 @@ NSTimer	* _tableViewTimer;
 {
 
 }
+
+- (IBAction)showEmail:(UIBarButtonItem *)sender {
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:NSLocalizedString(@"Export TimeTracker",@"Export email subject")];
+    [mc addAttachmentData:[[[TTDatabase instance] getAllTimesCSVFormat] dataUsingEncoding:NSUTF8StringEncoding] mimeType:@"text/plain" fileName:@"export_timetracker.csv"];
+    
+    // Present mail view controller on screen
+    [self presentViewController:mc animated:YES completion:NULL];
+    
+}
+
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail sent");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+            break;
+        default:
+            break;
+    }
+    
+    // Close the Mail Interface
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+
 
 @end

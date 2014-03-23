@@ -25,6 +25,7 @@
 		CE7C307418DC192C0027E4A4 /* TTSelectTaskController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE7C307218DC192B0027E4A4 /* TTSelectTaskController.xib */; };
 		CE906D4518D0C3B000403C50 /* TTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE906D4418D0C3B000403C50 /* TTDataManager.m */; };
 		CE906D4718D0D4C700403C50 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE906D4618D0D4C700403C50 /* QuartzCore.framework */; };
+		CEBE560418DEE2D9007946E9 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBE560318DEE2D9007946E9 /* MessageUI.framework */; };
 		D070166918D763E100A69D08 /* TTTaskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D070166818D763E100A69D08 /* TTTaskCell.xib */; };
 		D070166C18D7642000A69D08 /* TTTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D070166B18D7642000A69D08 /* TTTaskCell.m */; };
 		D070167018D7811300A69D08 /* TTTasksListController.m in Sources */ = {isa = PBXBuildFile; fileRef = D070166E18D7811300A69D08 /* TTTasksListController.m */; };
@@ -87,6 +88,7 @@
 		CE906D4318D0C3B000403C50 /* TTDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTDataManager.h; sourceTree = "<group>"; };
 		CE906D4418D0C3B000403C50 /* TTDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTDataManager.m; sourceTree = "<group>"; };
 		CE906D4618D0D4C700403C50 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CEBE560318DEE2D9007946E9 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		D070166818D763E100A69D08 /* TTTaskCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTTaskCell.xib; sourceTree = "<group>"; };
 		D070166A18D7642000A69D08 /* TTTaskCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTTaskCell.h; sourceTree = "<group>"; };
 		D070166B18D7642000A69D08 /* TTTaskCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTTaskCell.m; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEBE560418DEE2D9007946E9 /* MessageUI.framework in Frameworks */,
 				CE906D4718D0D4C700403C50 /* QuartzCore.framework in Frameworks */,
 				CE4E9E2718C91A4500441431 /* libsqlite3.dylib in Frameworks */,
 				CE03CDB818C8EAC3001B4C86 /* UIKit.framework in Frameworks */,
@@ -164,6 +167,7 @@
 		CE03CDAB18C8EAC3001B4C86 = {
 			isa = PBXGroup;
 			children = (
+				CEBE560318DEE2D9007946E9 /* MessageUI.framework */,
 				CE906D4618D0D4C700403C50 /* QuartzCore.framework */,
 				CE4E9E2618C91A4500441431 /* libsqlite3.dylib */,
 				CE03CDBF18C8EAC3001B4C86 /* TimeTracker */,
