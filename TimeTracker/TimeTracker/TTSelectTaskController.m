@@ -48,6 +48,12 @@
     [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(onCancel:)]];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [[self navigationController] setToolbarHidden:YES];
+    [super viewWillAppear:animated];
+}
+
 - (void)onCancel:(UIBarButtonItem *)sender
 {
     [delegate onCancel:_runningTask];
