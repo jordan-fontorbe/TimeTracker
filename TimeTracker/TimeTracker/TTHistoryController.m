@@ -116,7 +116,23 @@
 {
     [_daysString removeAllObjects];
     [_times removeAllObjects];
+    // Get the times for the task.
     NSArray *a = [[TTDatabase instance] getTimesFor:[_task identifier]];
+    // Sort the times.
+    a = [a sortedArrayUsingComparator:^(TTTime *time1, TTTime *time2) {
+        NSComparisonResult r = [[time2 start] compare:[time1 start]];
+        if(r != NSOrderedSame)
+            return r;
+        else if([time1 end] == nil && [time2 end] == nil)
+            return NSOrderedSame;
+        else if([time1 end] == nil)
+            return NSOrderedAscending;
+        else if([time2 end] == nil)
+            return NSOrderedDescending;
+        else
+            return [[time2 end] compare:[time1 end]];
+    }];
+    //
     for(TTTime *t in a) {
         NSString *s = [_format stringFromDate:[t start]];
         if(![_daysString containsObject:s]) {
