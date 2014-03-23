@@ -45,12 +45,6 @@
 - (NSString *)getTotalProjectTimeStringFormatted:(NSInteger) idProject;
 - (NSString *)getTotalTaskTimeStringFormatted:(NSInteger) idTask;
 
-- (NSArray *)getRunningTimes;
-- (NSArray *)getRunningTimesFor:(int)project;
-- (TTTime *)getRunningTimeFor:(int)task;
-- (bool)isTaskRunning:(int)task;
-- (void)runTask:(int)task;
-
 - (NSString *)getAllTimesCSVFormat;
 
 @end

@@ -629,9 +629,9 @@ static TTDatabase* _sharedTTDatabase = nil;
     }
     
     if (date != nil){
-        // Add running times.
-        NSArray *a = [self getRunningTimes];
-        for(TTTime *t in a) {
+        // Add running tasks.
+        NSArray *a = [[TTDataManager instance] getRunningTasks];
+        for(TTRunningTask *t in a) {
             date = [[NSCalendar currentCalendar] dateByAddingComponents:[t durationComponentsFromStartToNow] toDate:date options:0];
         }
         NSUInteger seconds = (NSUInteger)round([date timeIntervalSince1970]);
@@ -668,9 +668,9 @@ static TTDatabase* _sharedTTDatabase = nil;
     }
     
     if (date != nil){
-        // Add running times.
-        NSArray *a = [self getRunningTimesFor:idProject];
-        for(TTTime *t in a) {
+        // Add running tasks.
+        NSArray *a = [[TTDataManager instance] getRunningTasksFor:idProject];
+        for(TTRunningTask *t in a) {
             date = [[NSCalendar currentCalendar] dateByAddingComponents:[t durationComponentsFromStartToNow] toDate:date options:0];
         }
         NSUInteger seconds = (NSUInteger)round([date timeIntervalSince1970]);
@@ -717,96 +717,6 @@ static TTDatabase* _sharedTTDatabase = nil;
     }
     else {
         return @"00:00";
-    }
-}
-
-- (NSArray *)getRunningTimes
-{
-    const char *dbpath = [_databasePath UTF8String];
-    sqlite3_stmt *statement;
-    NSMutableArray *a = [[NSMutableArray alloc] init];
-    
-    if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
-    {
-        NSString *querySQL = [NSString stringWithFormat:@"SELECT id, id_task, start FROM time WHERE end = '(null)'"];
-        const char *query_stmt = [querySQL UTF8String];
-        if (sqlite3_prepare_v2(_timetrackerDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
-        {
-            while (sqlite3_step(statement) == SQLITE_ROW)
-            {
-                TTTime *t = [self parseTime:statement withEnd:NO];
-                [a addObject:t];
-            }
-            sqlite3_finalize(statement);
-        }
-        sqlite3_close(_timetrackerDB);
-    }
-    
-    return a;
-}
-
-- (NSArray *)getRunningTimesFor:(int)project
-{
-    const char *dbpath = [_databasePath UTF8String];
-    sqlite3_stmt *statement;
-    NSMutableArray *a = [[NSMutableArray alloc] init];
-    
-    if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
-    {
-        NSString *querySQL = [NSString stringWithFormat:@"SELECT ti.id, ti.id_task, ti.start FROM time ti JOIN task ta ON ta.id = ti.id_task WHERE ta.id_project = %d AND ti.end = '(null)'", project];
-        const char *query_stmt = [querySQL UTF8String];
-        if (sqlite3_prepare_v2(_timetrackerDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
-        {
-            while (sqlite3_step(statement) == SQLITE_ROW)
-            {
-                TTTime *t = [self parseTime:statement withEnd:NO];
-                [a addObject:t];
-            }
-            sqlite3_finalize(statement);
-        }
-        sqlite3_close(_timetrackerDB);
-    }
-    
-    return a;
-}
-
-- (TTTime *)getRunningTimeFor:(int)task
-{
-    const char *dbpath = [_databasePath UTF8String];
-    sqlite3_stmt *statement;
-    TTTime *t = nil;
-    
-    if (sqlite3_open(dbpath, &_timetrackerDB) == SQLITE_OK)
-    {
-        NSString *querySQL = [NSString stringWithFormat:@"SELECT id, id_task, start FROM time WHERE id_task = %d AND end = '(null)' LIMIT 0, 1", task];
-        const char *query_stmt = [querySQL UTF8String];
-        if (sqlite3_prepare_v2(_timetrackerDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
-        {
-            if (sqlite3_step(statement) == SQLITE_ROW)
-            {
-                t = [self parseTime:statement withEnd:NO];
-            }
-            sqlite3_finalize(statement);
-        }
-        sqlite3_close(_timetrackerDB);
-    }
-    
-    return t;
-}
-
-- (bool)isTaskRunning:(int)task
-{
-    return [self getRunningTimeFor:task] != nil;
-}
-
-- (void)runTask:(int)task
-{
-    TTTime *t = [self getRunningTimeFor:task];
-    if(t) {
-        [t setEnd:[NSDate date]];
-        [self updateTime:t];
-    } else {
-        [self insertTime:[[TTTime alloc] initWithStart:[NSDate date] end:nil task:task]];
     }
 }
 

@@ -9,10 +9,13 @@
 #import "TTDataManager.h"
 #import "TTRunningTask.h"
 #import "TTTask.h"
+#import "TTDatabase.h"
 
 @interface TTDataManager ()
 
 @property (strong, nonatomic) NSMutableArray *lstRunningTasks;
+- (void)addRunningTask:(TTRunningTask *)runningTask;
+- (void)removeRunningTask:(TTRunningTask *)runningTask;
 
 @end
 
@@ -57,6 +60,16 @@ static TTDataManager* _instance = nil;
     _lstRunningTasks = [[NSMutableArray alloc] init];
 }
 
+- (void)addRunningTask:(TTRunningTask *)runningTask
+{
+    [_lstRunningTasks addObject:runningTask];
+}
+
+- (void)removeRunningTask:(TTRunningTask *)runningTask
+{
+    [_lstRunningTasks removeObject:runningTask];
+}
+
 - (NSMutableArray *)getRunningTasks
 {
     if (_lstRunningTasks == nil)
@@ -64,6 +77,17 @@ static TTDataManager* _instance = nil;
         _lstRunningTasks = [[NSMutableArray alloc] init];
     }
     return _lstRunningTasks;
+}
+
+- (NSArray *)getRunningTasksFor:(int)project
+{
+    NSMutableArray *a = [[NSMutableArray alloc] init];
+    for(TTRunningTask *t in _lstRunningTasks) {
+        if([[t task] idProject] == project) {
+            [a addObject:t];
+        }
+    }
+    return a;
 }
 
 - (TTRunningTask *)getRunningTaskFor:(int)task
@@ -79,6 +103,25 @@ static TTDataManager* _instance = nil;
 -(void)setRunningTasks:(NSMutableArray*)newRunningTasks
 {
     _lstRunningTasks = [NSMutableArray arrayWithArray:newRunningTasks];
+}
+
+- (bool)isRunningTask:(int)task
+{
+    return [self getRunningTaskFor:task] != nil;
+}
+
+- (void)runTask:(TTTask *)task
+{
+    TTRunningTask *t = [self getRunningTaskFor:[task identifier]];
+    if(t) {
+        // Stop the task.
+        [self removeRunningTask:t];
+        [t setEnd:[NSDate date]];
+        [[TTDatabase instance] insertTime:t];
+    } else {
+        // Start the task.
+        [self addRunningTask:[[TTRunningTask alloc] initWithTask:task start:[NSDate date]]];
+    }
 }
 
 -(NSInteger)getNumberOfQuickRunningTasks

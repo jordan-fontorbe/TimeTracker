@@ -14,6 +14,7 @@
 #import "TTTask.h"
 #import "TTImageManager.h"
 #import "TTHistoryController.h"
+#import "TTDataManager.h"
 
 @interface TTTasksListController ()
 
@@ -194,9 +195,10 @@
     
     TTTask *task = [self getTaskFor:[indexPath indexAtPosition:0] row:[indexPath indexAtPosition:1]];
     
-    [[cell label] setText:[task name]];    [[cell time] setText:[[TTDatabase instance] getTotalTaskTimeStringFormatted:[task identifier]]];
+    [[cell label] setText:[task name]];
+    [[cell time] setText:[[TTDatabase instance] getTotalTaskTimeStringFormatted:[task identifier]]];
     if (!tableView.editing) {
-        if([[TTDatabase instance] isTaskRunning:[task identifier]]) {
+        if([[TTDataManager instance] isRunningTask:[task identifier]]) {
             [[cell time] setTextColor:[UIColor redColor]];
             [[cell imageView] setImage:[TTImageManager getIcon:Pause]];
         } else {
@@ -248,7 +250,7 @@
     TTTask *task = [self getTaskFor:[indexPath indexAtPosition:0] row:[indexPath indexAtPosition:1]];
     if(!tableView.editing) {
         // Play/Pause the task.
-        [[TTDatabase instance] runTask:[task identifier]];
+        [[TTDataManager instance] runTask:task];
         [self reloadData];
     } else {
         // Edit the task.
