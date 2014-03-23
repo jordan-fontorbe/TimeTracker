@@ -21,6 +21,8 @@
 		CE16082618D5B6A400F07777 /* TTRunningTask.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16082518D5B6A400F07777 /* TTRunningTask.m */; };
 		CE3F81CF18D9DC9700508875 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3F81CE18D9DC9700508875 /* mail.png */; };
 		CE4E9E2718C91A4500441431 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4E9E2618C91A4500441431 /* libsqlite3.dylib */; };
+		CE7C307318DC192C0027E4A4 /* TTSelectTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7C307118DC192B0027E4A4 /* TTSelectTaskController.m */; };
+		CE7C307418DC192C0027E4A4 /* TTSelectTaskController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE7C307218DC192B0027E4A4 /* TTSelectTaskController.xib */; };
 		CE906D4518D0C3B000403C50 /* TTDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CE906D4418D0C3B000403C50 /* TTDataManager.m */; };
 		CE906D4718D0D4C700403C50 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE906D4618D0D4C700403C50 /* QuartzCore.framework */; };
 		D070166918D763E100A69D08 /* TTTaskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D070166818D763E100A69D08 /* TTTaskCell.xib */; };
@@ -78,6 +80,10 @@
 		CE16082518D5B6A400F07777 /* TTRunningTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRunningTask.m; sourceTree = "<group>"; };
 		CE3F81CE18D9DC9700508875 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mail.png; sourceTree = "<group>"; };
 		CE4E9E2618C91A4500441431 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		CE7C307018DC192B0027E4A4 /* TTSelectTaskController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTSelectTaskController.h; sourceTree = "<group>"; };
+		CE7C307118DC192B0027E4A4 /* TTSelectTaskController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTSelectTaskController.m; sourceTree = "<group>"; };
+		CE7C307218DC192B0027E4A4 /* TTSelectTaskController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTSelectTaskController.xib; sourceTree = "<group>"; };
+		CE7C307518DC19CD0027E4A4 /* TTSelectTaskDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTSelectTaskDelegate.h; sourceTree = "<group>"; };
 		CE906D4318D0C3B000403C50 /* TTDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTDataManager.h; sourceTree = "<group>"; };
 		CE906D4418D0C3B000403C50 /* TTDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTDataManager.m; sourceTree = "<group>"; };
 		CE906D4618D0D4C700403C50 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -253,6 +259,7 @@
 				D0BC908818D09F780081D7A1 /* TTSelectProjectDelegate.h */,
 				D0BC909818D0DA770081D7A1 /* TTEditProjectDelegate.h */,
 				D0CDB1BE18DB475900A0301C /* TTEditTimeDelegate.h */,
+				CE7C307518DC19CD0027E4A4 /* TTSelectTaskDelegate.h */,
 			);
 			name = Delegate;
 			sourceTree = "<group>";
@@ -314,6 +321,9 @@
 				D0CDB1BF18DB58DD00A0301C /* TTEditTimeController.h */,
 				D0CDB1C018DB58DD00A0301C /* TTEditTimeController.m */,
 				D0CDB1C118DB58DD00A0301C /* TTEditTimeController.xib */,
+				CE7C307018DC192B0027E4A4 /* TTSelectTaskController.h */,
+				CE7C307118DC192B0027E4A4 /* TTSelectTaskController.m */,
+				CE7C307218DC192B0027E4A4 /* TTSelectTaskController.xib */,
 			);
 			name = Dialog;
 			sourceTree = "<group>";
@@ -391,6 +401,7 @@
 				D0BC2BD418CA0EC300E46F7F /* quickstart.png in Resources */,
 				D0CDB1B818DB27EC00A0301C /* TTHistoryController.xib in Resources */,
 				CE3F81CF18D9DC9700508875 /* mail.png in Resources */,
+				CE7C307418DC192C0027E4A4 /* TTSelectTaskController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,6 +434,7 @@
 				CE03CDD318C8EAC3001B4C86 /* TimeTracker.xcdatamodeld in Sources */,
 				CE906D4518D0C3B000403C50 /* TTDataManager.m in Sources */,
 				CE16082618D5B6A400F07777 /* TTRunningTask.m in Sources */,
+				CE7C307318DC192C0027E4A4 /* TTSelectTaskController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

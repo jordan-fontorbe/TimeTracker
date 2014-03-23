@@ -44,7 +44,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[TTDatabase instance] getProjects];
 }
 
 - (void)didReceiveMemoryWarning

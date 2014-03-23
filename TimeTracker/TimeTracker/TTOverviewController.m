@@ -21,6 +21,7 @@
 #import "TTAllTasksController.h"
 #import "TTProjectTasksController.h"
 #import "TTEditProjectController.h"
+#import "TTSelectTaskController.h"
 
 @interface TTOverviewController ()
 
@@ -271,7 +272,10 @@ NSTimer	* _tableViewTimer;
         [[self navigationController] pushViewController:editTaskController animated:YES];
     }
     else if ([buttonTitle isEqualToString:@"Ajouter à une tâche"]) {
-        
+        TTRunningTask *runningTask = [[[TTDataManager instance] getRunningTasks] objectAtIndex:[actionSheet tag]];
+        TTSelectTaskController *selectTaskController = [[TTSelectTaskController alloc] initWithRunningTask:runningTask];
+        [selectTaskController setDelegate:self];
+        [[self navigationController] pushViewController:selectTaskController animated:YES];
     }
     else if ([buttonTitle isEqualToString:@"Ajouter à la tâche"]) {
         TTRunningTask *runningTask = [[[TTDataManager instance] getRunningTasks] objectAtIndex:[actionSheet tag]];
@@ -328,6 +332,13 @@ NSTimer	* _tableViewTimer;
 -(void)onCancel:(TTRunningTask *)runningTask
 {
     [runningTask setEnd:nil];
+}
+
+-(void)onTaskSelected:(int)taskId :(TTRunningTask *)runningTask
+{
+    [runningTask setTask:[[TTDatabase instance] getTask:taskId]];
+    [runningTask save];
+    [[[TTDataManager instance] getRunningTasks] removeObject:runningTask];
 }
 
 @end
