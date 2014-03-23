@@ -735,7 +735,7 @@ static TTDatabase* _sharedTTDatabase = nil;
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
                 res = [res stringByAppendingString:@"\n\r"];
-                char *projectName = sqlite3_column_text(statement, 0);
+                const unsigned char *projectName = sqlite3_column_text(statement, 0);
                 if (projectName == nil) {
                     res = [res stringByAppendingString:@"Single Tasks"];
                 }

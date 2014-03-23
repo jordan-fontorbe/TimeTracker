@@ -117,7 +117,7 @@ NSTimer	* _tableViewTimer;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return [[[TTDataManager instance] getRunningTasks] count];
+        return [[TTDataManager instance] getTotalNumberOfRunningTasks];
     }
     else if (section == 1){
         return 2;
@@ -153,27 +153,24 @@ NSTimer	* _tableViewTimer;
     [[cell viewWithTag:222] removeFromSuperview];
     
     if (indexPath.section == 0) {
-        NSMutableArray *lstRunningTasks = [[TTDataManager instance] getRunningTasks];
-        if (lstRunningTasks.count > indexPath.row)
-        {
-            TTRunningTask *myRunningTask = (TTRunningTask *)[lstRunningTasks objectAtIndex:indexPath.row];
-            if ([[myRunningTask task] identifier] > 0){
-                [[cell imageView] setImage:[TTImageManager getIcon:Pause]];
-                cell.label.text = [[myRunningTask task] name];
-                TTProject *myProject = [[TTDatabase instance] getProject:[[myRunningTask task] idProject]];
-                if (myProject != nil){
-                    cell.detailTextLabel.text = [myProject name];
-                }
+        TTRunningTask *t = nil;
+        if(indexPath.row < [[TTDataManager instance] getNumberOfQuickRunningTasks]) {
+            // Quick running task.
+            t = [[[TTDataManager instance] getQuickRunningTasks] objectAtIndex:indexPath.row];
+            [[cell imageView] setImage:[TTImageManager getIcon:QuickStart]];
+            cell.label.text = [[t task] name];
+        } else if(indexPath.row < [[TTDataManager instance] getTotalNumberOfRunningTasks]) {
+            // Running task.
+            t = [[[TTDataManager instance] getRunningTasks] objectAtIndex:indexPath.row - [[TTDataManager instance] getNumberOfQuickRunningTasks]];
+            [[cell imageView] setImage:[TTImageManager getIcon:Pause]];
+            cell.label.text = [[t task] name];
+            TTProject *myProject = [[TTDatabase instance] getProject:[[t task] idProject]];
+            if (myProject != nil){
+                cell.detailTextLabel.text = [myProject name];
             }
-            else {
-                [[cell imageView] setImage:[TTImageManager getIcon:QuickStart]];
-                cell.label.text = [[myRunningTask task] name];
-            }
-            
-            cell.time.text = [myRunningTask getRunningTaskTimeStringFormatted];
-            [[cell time] setTextColor:[UIColor redColor]];
         }
-        
+        cell.time.text = [t getRunningTaskTimeStringFormatted];
+        [[cell time] setTextColor:[UIColor redColor]];
     }
     else if (indexPath.section == 1){
         if (indexPath.row == 0) {
@@ -207,7 +204,15 @@ NSTimer	* _tableViewTimer;
     switch([indexPath indexAtPosition:0]) {
         case 0:
             if(!tableView.editing) {
-                [self showActionSheet:indexPath];
+                if(indexPath.row < [[TTDataManager instance] getNumberOfQuickRunningTasks]) {
+                    // Quick running task.
+                    [self showActionSheet:indexPath];
+                } else {
+                    // Running task.
+                    TTRunningTask *t = [[[TTDataManager instance] getRunningTasks] objectAtIndex:indexPath.row - [[TTDataManager instance] getNumberOfQuickRunningTasks]];
+                    [[TTDataManager instance] runTask:[t task]];
+                    [self reloadData];
+                }
             }
             break;
         case 1:
@@ -296,13 +301,11 @@ NSTimer	* _tableViewTimer;
 - (IBAction)btnQuickStart_TouchDown:(id)sender {
     TTTask *task = [[TTTask alloc]init];
     [task setName:[NSString stringWithFormat:@"Quick Task %d", [[TTDataManager instance] getNumberOfQuickRunningTasks] + 1]];
-    NSMutableArray *lstRunningTasks = [[TTDataManager instance] getRunningTasks];
     NSDate *now = [NSDate date];
     TTRunningTask *runningTask = [[TTRunningTask alloc] initWithTask:task start:now];
-    [lstRunningTasks addObject:runningTask];
-    [[TTDataManager instance] setRunningTasks:lstRunningTasks];
+    [[TTDataManager instance] addQuickRunningTask:runningTask];
     
-    [self.tblView reloadData];
+    [self reloadData];
 }
 
 - (void)reloadTableViewForTimer {
@@ -326,30 +329,30 @@ NSTimer	* _tableViewTimer;
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
     
     if  ([buttonTitle isEqualToString:@"Supprimer"]) {
-        [[[TTDataManager instance] getRunningTasks] removeObjectAtIndex:[actionSheet tag]];
+        [[TTDataManager instance] removeQuickRunningTaskAtIndex:[actionSheet tag]];
     }
     else if ([buttonTitle isEqualToString:@"Créer une nouvelle tâche"]) {
-        TTRunningTask *runningTask = [[[TTDataManager instance] getRunningTasks] objectAtIndex:[actionSheet tag]];
+        TTRunningTask *runningTask = [[[TTDataManager instance] getQuickRunningTasks] objectAtIndex:[actionSheet tag]];
         TTEditTaskController *editTaskController = [[TTEditTaskController alloc] initWithRunningTask:runningTask];
         [editTaskController setDelegate:self];
         [[self navigationController] pushViewController:editTaskController animated:YES];
     }
     else if ([buttonTitle isEqualToString:@"Ajouter à une tâche"]) {
-        TTRunningTask *runningTask = [[[TTDataManager instance] getRunningTasks] objectAtIndex:[actionSheet tag]];
+        TTRunningTask *runningTask = [[[TTDataManager instance] getQuickRunningTasks] objectAtIndex:[actionSheet tag]];
         TTSelectTaskController *selectTaskController = [[TTSelectTaskController alloc] initWithRunningTask:runningTask];
         [selectTaskController setDelegate:self];
         [[self navigationController] pushViewController:selectTaskController animated:YES];
     }
     else if ([buttonTitle isEqualToString:@"Ajouter à la tâche"]) {
-        TTRunningTask *runningTask = [[[TTDataManager instance] getRunningTasks] objectAtIndex:[actionSheet tag]];
+        TTRunningTask *runningTask = [[[TTDataManager instance] getQuickRunningTasks] objectAtIndex:[actionSheet tag]];
         [runningTask save];
-        [[[TTDataManager instance] getRunningTasks] removeObject:runningTask];
-        [self.tblView reloadData];
+        [[TTDataManager instance] removeQuickRunningTask:runningTask];
+        [self reloadData];
         [self setTooBar];
     }
     else if ([buttonTitle isEqualToString:@"Annuler"]) {
         // On remet le end à nil puiqu'on continue la tache
-        [[[[TTDataManager instance] getRunningTasks] objectAtIndex:[actionSheet tag]] setEnd:nil];
+        [[[[TTDataManager instance] getQuickRunningTasks] objectAtIndex:[actionSheet tag]] setEnd:nil];
     }
 }
 
@@ -358,7 +361,7 @@ NSTimer	* _tableViewTimer;
 {
     NSDate *now = [NSDate date];
     NSIndexPath *indexPath = (NSIndexPath *)sender;
-    TTRunningTask *runningTask = [[[TTDataManager instance] getRunningTasks] objectAtIndex:[indexPath row]];
+    TTRunningTask *runningTask = [[[TTDataManager instance] getQuickRunningTasks] objectAtIndex:[indexPath row]];
     [runningTask setEnd:now];
     
     UIActionSheet *actionSheet = nil;
@@ -389,7 +392,7 @@ NSTimer	* _tableViewTimer;
 {
     TTRunningTask *myRunningTask = (TTRunningTask *)runningTask;
     [myRunningTask save];
-    [[[TTDataManager instance] getRunningTasks] removeObject:runningTask];
+    [[TTDataManager instance] removeRunningTask:runningTask];
 }
 
 - (void)onCancel:(TTRunningTask *)runningTask
@@ -401,7 +404,7 @@ NSTimer	* _tableViewTimer;
 {
     [runningTask setTask:[[TTDatabase instance] getTask:taskId]];
     [runningTask save];
-    [[[TTDataManager instance] getRunningTasks] removeObject:runningTask];
+    [[TTDataManager instance] removeRunningTask:runningTask];
 }
 
 - (void)onSave:(TTProject *)original :(TTProject *)modified
@@ -416,7 +419,7 @@ NSTimer	* _tableViewTimer;
 
 - (void)onCancel
 {
-
+    
 }
 
 - (IBAction)showEmail:(UIBarButtonItem *)sender {

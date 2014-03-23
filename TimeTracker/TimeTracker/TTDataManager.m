@@ -13,9 +13,10 @@
 
 @interface TTDataManager ()
 
-@property (strong, nonatomic) NSMutableArray *lstRunningTasks;
-- (void)addRunningTask:(TTRunningTask *)runningTask;
-- (void)removeRunningTask:(TTRunningTask *)runningTask;
+@property (strong, nonatomic) NSMutableDictionary *projectRunningTasks;
+@property (strong, nonatomic) NSMutableDictionary *taskRunningTask;
+@property (strong, nonatomic) NSMutableArray *quickRunningTasks;
+- (NSMutableArray *)getRunningTasksArrayFor:(int)project;
 
 @end
 
@@ -57,52 +58,67 @@ static TTDataManager* _instance = nil;
 
 -(void)initRunningTasks
 {
-    _lstRunningTasks = [[NSMutableArray alloc] init];
+    _projectRunningTasks = [[NSMutableDictionary alloc] init];
+    _taskRunningTask = [[NSMutableDictionary alloc] init];
+    _quickRunningTasks = [[NSMutableArray alloc] init];
 }
 
-- (void)addRunningTask:(TTRunningTask *)runningTask
+- (NSMutableArray *)getRunningTasksArrayFor:(int)project
 {
-    [_lstRunningTasks addObject:runningTask];
-}
-
-- (void)removeRunningTask:(TTRunningTask *)runningTask
-{
-    [_lstRunningTasks removeObject:runningTask];
-}
-
-- (NSMutableArray *)getRunningTasks
-{
-    if (_lstRunningTasks == nil)
-    {
-        _lstRunningTasks = [[NSMutableArray alloc] init];
-    }
-    return _lstRunningTasks;
-}
-
-- (NSArray *)getRunningTasksFor:(int)project
-{
-    NSMutableArray *a = [[NSMutableArray alloc] init];
-    for(TTRunningTask *t in _lstRunningTasks) {
-        if([[t task] idProject] == project) {
-            [a addObject:t];
-        }
+    NSNumber *n = [NSNumber numberWithInt:project];
+    NSMutableArray *a = [_projectRunningTasks objectForKey:n];
+    if(a == nil) {
+        a = [[NSMutableArray alloc] init];
+        [_projectRunningTasks setObject:a forKey:n];
     }
     return a;
 }
 
-- (TTRunningTask *)getRunningTaskFor:(int)task
+- (void)addRunningTask:(TTRunningTask *)runningTask
 {
-    for(TTRunningTask *t in _lstRunningTasks) {
-        if([t idTask] == task) {
-            return t;
-        }
-    }
-    return nil;
+    [[self getRunningTasksArrayFor:[[runningTask task] idProject]] addObject:runningTask];
+    [_taskRunningTask setObject:runningTask forKey:[NSNumber numberWithInt:[[runningTask task] identifier]]];
 }
 
--(void)setRunningTasks:(NSMutableArray*)newRunningTasks
+- (void)removeRunningTask:(TTRunningTask *)runningTask
 {
-    _lstRunningTasks = [NSMutableArray arrayWithArray:newRunningTasks];
+    [[self getRunningTasksArrayFor:[[runningTask task] idProject]] removeObject:runningTask];
+    [_taskRunningTask removeObjectForKey:[NSNumber numberWithInt:[[runningTask task] identifier]]];
+}
+
+- (void)addQuickRunningTask:(TTRunningTask *)runningTask
+{
+    [_quickRunningTasks addObject:runningTask];
+}
+
+- (void)removeQuickRunningTask:(TTRunningTask *)runningTask
+{
+    [_quickRunningTasks removeObject:runningTask];
+}
+
+- (void)removeQuickRunningTaskAtIndex:(int)index
+{
+    [_quickRunningTasks removeObjectAtIndex:index];
+}
+
+- (NSArray *)getRunningTasks
+{
+    return [_taskRunningTask allValues];
+}
+
+- (NSArray *)getRunningTasksFor:(int)project
+{
+    return [self getRunningTasksArrayFor:project];
+}
+
+- (TTRunningTask *)getRunningTaskFor:(int)task
+{
+    return [_taskRunningTask objectForKey:[NSNumber numberWithInt:task]];
+}
+
+- (NSArray *)getQuickRunningTasks
+{
+    return _quickRunningTasks;
 }
 
 - (bool)isRunningTask:(int)task
@@ -124,20 +140,14 @@ static TTDataManager* _instance = nil;
     }
 }
 
--(NSInteger)getNumberOfQuickRunningTasks
+- (NSInteger)getTotalNumberOfRunningTasks
 {
-    NSInteger res = 0;
-    if (_lstRunningTasks != nil)
-    {
-        for (NSInteger i = 0; i < _lstRunningTasks.count; i++) {
-            TTRunningTask *runnningTask = (TTRunningTask *)[_lstRunningTasks objectAtIndex:i];
-            TTTask *task = [runnningTask task];
-            if ([task identifier] == 0){
-                ++res;
-            }
-        }
-    }
-    return res;
+    return [[self getRunningTasks] count] + [self getNumberOfQuickRunningTasks];
+}
+
+- (NSInteger)getNumberOfQuickRunningTasks
+{
+    return [_quickRunningTasks count];
 }
 
 @end

@@ -17,15 +17,21 @@
 
 -(void)initRunningTasks;
 
-- (NSMutableArray *)getRunningTasks;
+- (void)addRunningTask:(TTRunningTask *)runningTask;
+- (void)removeRunningTask:(TTRunningTask *)runningTask;
+- (void)addQuickRunningTask:(TTRunningTask *)runningTask;
+- (void)removeQuickRunningTask:(TTRunningTask *)runningTask;
+- (void)removeQuickRunningTaskAtIndex:(int)index;
+
+- (NSArray *)getRunningTasks;
 - (NSArray *)getRunningTasksFor:(int)project;
 - (TTRunningTask *)getRunningTaskFor:(int)task;
-
--(void)setRunningTasks:(NSMutableArray*)newRunningTasks;
+- (NSArray *)getQuickRunningTasks;
 
 - (bool)isRunningTask:(int)task;
 - (void)runTask:(TTTask *)task;
 
--(NSInteger)getNumberOfQuickRunningTasks;
+- (NSInteger)getTotalNumberOfRunningTasks;
+- (NSInteger)getNumberOfQuickRunningTasks;
 
 @end
