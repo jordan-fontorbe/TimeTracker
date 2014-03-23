@@ -12,7 +12,7 @@
  A task.
  
  It has an unique identifier and a name.
- It is linked to an existing project with the project's identifier.
+ It is linked to an existing project by its identifier.
  */
 @interface TTTask : NSObject
 
@@ -32,7 +32,7 @@
 @property (strong, nonatomic) NSString *name;
 
 /**
- Initialize a new Task.
+ Initialize a new task.
  @param identifier Task's identifier.
  @param name Task's name.
  @param idProject Project's identifier.
