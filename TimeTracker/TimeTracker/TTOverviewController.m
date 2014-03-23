@@ -392,7 +392,7 @@ NSTimer	* _tableViewTimer;
 {
     TTRunningTask *myRunningTask = (TTRunningTask *)runningTask;
     [myRunningTask save];
-    [[TTDataManager instance] removeRunningTask:runningTask];
+    [[TTDataManager instance] removeQuickRunningTask:runningTask];
 }
 
 - (void)onCancel:(TTRunningTask *)runningTask
@@ -404,7 +404,7 @@ NSTimer	* _tableViewTimer;
 {
     [runningTask setTask:[[TTDatabase instance] getTask:taskId]];
     [runningTask save];
-    [[TTDataManager instance] removeRunningTask:runningTask];
+    [[TTDataManager instance] removeQuickRunningTask:runningTask];
 }
 
 - (void)onSave:(TTProject *)original :(TTProject *)modified
