@@ -20,6 +20,7 @@
 - (id)initWithTime:(TTTime *)time;
 - (id)initWithIdentifier:(int)identifier start:(NSDate *)start end:(NSDate *)end task:(int)idTask;
 - (id)initWithStart:(NSDate *)start end:(NSDate *)end task:(int)idTask;
+- (NSDateComponents *)durationComponentsFromStartToNow;
 - (NSString *)formatDay;
 - (NSString *)formatInterval;
 - (NSString *)formatDuration;

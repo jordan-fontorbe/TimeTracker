@@ -17,6 +17,7 @@
 
 @property (nonatomic, assign) id<TTEditTaskDelegate> delegate;
 - (id)initWithTask:(TTTask *)task;
+- (id)initWithTask:(TTTask *)task forProject:(int)project;
 - (id)initWithRunningTask:(TTRunningTask *)runningTask;
 
 @end

@@ -15,6 +15,7 @@
 @interface TTEditProjectController ()
 
 @property (strong, nonatomic) TTProject *project;
+@property (strong, nonatomic) TTProject *projectTmp;
 @property (weak, nonatomic) TTTextFieldCell *name;
 - (void)onCancel:(UIBarButtonItem *)sender;
 - (void)onSave:(UIBarButtonItem *)sender;
@@ -31,9 +32,11 @@
     if(self) {
         if(project) {
             _project = project;
+            _projectTmp = [[TTProject alloc] initWithProject:project];
             [self setTitle:NSLocalizedString(@"Edit", @"EditProject navigation title")];
         } else {
-            _project = [[TTProject alloc] initWithName:@""];
+            _project = nil;
+            _projectTmp = [[TTProject alloc] initWithName:@""];
             [self setTitle:NSLocalizedString(@"New Project", @"EditProject navigation title")];
         }
     }
@@ -56,6 +59,11 @@
     [[self navigationItem] setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave:)]];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [[self navigationController] setToolbarHidden:YES];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -68,7 +76,8 @@
 }
 
 - (void)onSave:(UIBarButtonItem *)sender {
-    [delegate onSave:_project];
+    [_projectTmp setName:[[_name textField] text]];
+    [delegate onSave:_project :_projectTmp];
     [[self navigationController] popViewControllerAnimated:YES];
 }
 
@@ -76,7 +85,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    [_project setName:[textField text]];
+    [_projectTmp setName:[textField text]];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -103,7 +112,7 @@
         _name = [[[NSBundle mainBundle] loadNibNamed:@"TTTextFieldCell" owner:self options:nil] objectAtIndex:0];
         UITextField *text = [_name textField];
         [text setRightViewMode:UITextFieldViewModeAlways];
-        [text setText:[_project name]];
+        [text setText:[_projectTmp name]];
         [text setDelegate:self];
     }
     [_name setSelectionStyle:UITableViewCellSelectionStyleNone];

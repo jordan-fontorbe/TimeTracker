@@ -22,6 +22,7 @@
 - (void)onCancel:(UIBarButtonItem *)sender;
 - (void)onSave:(UIBarButtonItem *)sender;
 - (void)onSelected:(int)index;
+- (void)onDateChanged:(id)sender;
 
 @end
 
@@ -72,8 +73,10 @@
     // Navigation bar.
     [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(onCancel:)]];
     [[self navigationItem] setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(onSave:)]];
+    // Date picker.
     [[self datePicker] setEnabled:YES];
     [[self datePicker] setHidden:NO];
+    [[self datePicker] addTarget:self action:@selector(onDateChanged:) forControlEvents:UIControlEventValueChanged];
     [self onSelected:0];
 }
 
@@ -85,6 +88,11 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (void)dealloc
+{
+    [[self datePicker] removeTarget:self action:@selector(onDateChanged:) forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)onCancel:(UIBarButtonItem *)sender
@@ -113,9 +121,85 @@
             break;
         case 2:
             [[self datePicker] setDatePickerMode:UIDatePickerModeTime];
+            [[self datePicker] setDate:[[NSCalendar currentCalendar] dateFromComponents:[_timeTmp durationComponents]]];
             break;
         default:;
     }
+}
+
+- (void)onDateChanged:(id)sender
+{
+    NSDate *d = [[self datePicker] date];
+    switch(_selection) {
+        case 0:
+        {
+            [_timeTmp setStart:d];
+            // Change end day.
+            NSDateComponents *sC = [_timeTmp startComponents];
+            NSDateComponents *eC = [_timeTmp endComponents];
+            // Force same day.
+            [eC setYear:[sC year]];
+            [eC setMonth:[sC month]];
+            [eC setDay:[sC day]];
+            // Force end > start.
+            if([eC hour] < [sC hour]) {
+                [eC setHour:[sC hour]];
+            }
+            d = [[NSCalendar currentCalendar] dateFromComponents:eC];
+            if([eC hour] == [sC hour] && [eC minute] <= [sC minute]) {
+                [eC setMinute:[sC minute]];
+                d = [[NSCalendar currentCalendar] dateFromComponents:eC];
+                [eC setYear:0];
+                [eC setMonth:0];
+                [eC setDay:0];
+                [eC setHour:0];
+                [eC setMinute:1];
+                [eC setSecond:0];
+                d = [[NSCalendar currentCalendar] dateByAddingComponents:eC toDate:d options:0];
+            }
+            [_timeTmp setEnd:d];
+            break;
+        }
+        case 1:
+        {
+            bool reselect = NO;
+            NSDateComponents *dC = [[NSCalendar currentCalendar] components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:d];
+            NSDateComponents *sC = [_timeTmp startComponents];
+            // Force same day.
+            if([dC year] == [sC year] && [dC month] == [sC month] && [dC day] == [sC day]) {
+                // Force end > start.
+                if([dC hour] < [sC hour]) {
+                    [dC setHour:[sC hour]];
+                    d = [[NSCalendar currentCalendar] dateFromComponents:dC];
+                    reselect = YES;
+                }
+                if([dC hour] == [sC hour] && [dC minute] <= [sC minute]) {
+                    [dC setMinute:[sC minute]];
+                    d = [[NSCalendar currentCalendar] dateFromComponents:dC];
+                    [dC setYear:0];
+                    [dC setMonth:0];
+                    [dC setDay:0];
+                    [dC setHour:0];
+                    [dC setMinute:1];
+                    [dC setSecond:0];
+                    d = [[NSCalendar currentCalendar] dateByAddingComponents:dC toDate:d options:0];
+                    reselect = YES;
+                }
+                [_timeTmp setEnd:d];
+            } else {
+                reselect = YES;
+            }
+            if(reselect) {
+                [self onSelected:_selection];
+            }
+            break;
+        }
+        case 2:
+            [_timeTmp setDurationComponents: [[NSCalendar currentCalendar] components:NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:d]];
+            break;
+        default:;
+    }
+    [[self tableView] reloadData];
 }
 
 #pragma mark - Table view data source

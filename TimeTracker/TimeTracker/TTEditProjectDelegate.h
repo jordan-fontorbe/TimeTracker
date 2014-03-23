@@ -13,6 +13,6 @@
 @protocol TTEditProjectDelegate <NSObject>
 
 - (void)onCancel;
-- (void)onSave:(TTProject *)project;
+- (void)onSave:(TTProject *)original :(TTProject *)modified;
 
 @end

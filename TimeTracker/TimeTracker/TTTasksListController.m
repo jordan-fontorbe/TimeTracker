@@ -7,24 +7,27 @@
 //
 
 #import "TTTasksListController.h"
+#import "TTEditTaskController.h"
 #import "TTDatabase.h"
 #import "TTTaskCell.h"
 #import "TTProject.h"
 #import "TTTask.h"
 #import "TTImageManager.h"
-#import "TTEditTaskController.h"
 #import "TTHistoryController.h"
 
 @interface TTTasksListController ()
 
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (strong, nonatomic) NSTimer *timer;
+@property (strong, nonatomic) UIBarButtonItem *totalTimeButton;
+- (void)setToolbar;
+- (void)activateTimer;
+- (void)deactivateTimer;
+- (NSString *)getTotalTime;
 - (NSMutableArray *)getTasksFor:(int)section;
 - (TTTask *)getTaskFor:(int)section row:(int)row;
 - (int)getProjectIdFor:(int)section;
-- (void)removeTask:(TTTask *)task;
-- (void)addTask:(TTTask *)task;
-- (void)replaceTask:(TTTask *)original :(TTTask *)modified;
 - (void)onNewTask:(UIBarButtonItem *)sender;
+- (TTEditTaskController *)newTaskView:(TTTask *)task;
 
 @end
 
@@ -48,18 +51,20 @@
     [super viewDidLoad];
     [[self tableView] setAllowsSelectionDuringEditing:YES];
     [[self navigationItem] setRightBarButtonItem:[self editButtonItem]];
-    UIBarButtonItem *newTaskButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(onNewTask:)];
-    [self setToolbarItems:[NSArray arrayWithObjects:newTaskButton, nil]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [[self navigationController] setToolbarHidden:NO];
+    [self setToolbar];
+    [self activateTimer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [[self navigationController] setToolbarHidden:YES];
+    [super viewWillDisappear:animated];
+    [self deactivateTimer];
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,9 +72,47 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)setToolbar
+{
+    UIBarButtonItem *newTaskButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(onNewTask:)];
+    _totalTimeButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *flexibleSpace =  [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [self setToolbarItems:[NSArray arrayWithObjects:newTaskButton, flexibleSpace, _totalTimeButton, flexibleSpace, nil]];
+}
+
+- (void)activateTimer
+{
+    [self reloadData];
+    if(![self isEditing]) {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reloadData) userInfo:nil repeats:YES];
+    }
+}
+
+- (void)deactivateTimer
+{
+    [_timer invalidate];
+    _timer = nil;
+}
+
+- (void)reloadData
+{
+    [_totalTimeButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"Total : %@", @"Total time"), [self getTotalTime]]];
+    [[self tableView] reloadData];
+}
+
+- (NSString *)getTotalTime
+{
+    return nil;
+}
+
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     [super setEditing:editing animated:animated];
+    if(editing) {
+        [self deactivateTimer];
+    } else {
+        [self activateTimer];
+    }
     [[self tableView] reloadData];
 }
 
@@ -77,9 +120,14 @@
 
 - (void)onNewTask:(UIBarButtonItem *)sender
 {
-    TTEditTaskController *view = [[TTEditTaskController alloc] initWithTask:nil];
+    TTEditTaskController *view = [self newTaskView:nil];
     [view setDelegate:self];
     [[self navigationController] pushViewController:view animated:YES];
+}
+
+- (TTEditTaskController *)newTaskView:(TTTask *)task
+{
+    return nil;
 }
 
 #pragma mark - Edit task view delegate
@@ -89,32 +137,28 @@
     // Nothing modified.
 }
 
+- (void)onCancel:(TTRunningTask *)runningTask
+{
+    // Nothing modified.
+}
+
 - (void)onSave:(TTTask *)original :(TTTask *)modified
 {
     // Task changed, insert/update and reload the table.
     if(original) {
-        [self replaceTask:original :modified];
         [[TTDatabase instance] updateTask:modified];
     } else {
-        [self addTask:modified];
         [[TTDatabase instance] insertTask:modified];
     }
-    [[self tableView] reloadData];
+    [self reloadData];
+}
+
+- (void)onSave:(TTRunningTask *)runningTask
+{
+    // Nothing modified.
 }
 
 #pragma mark - Table view data source
-
-- (void)removeTask:(TTTask *)task
-{
-}
-
-- (void)addTask:(TTTask *)task
-{
-}
-
-- (void)replaceTask:(TTTask *)original :(TTTask *)modified
-{
-}
 
 - (NSMutableArray *)getTasksFor:(int)section
 {
@@ -139,17 +183,26 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"TTTaskCell";
+    static UIColor *defaultColor = nil;
     TTTaskCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"TTTaskCell" owner:self options:nil] objectAtIndex:0];
     }
+    if(defaultColor == nil) {
+        defaultColor = [[cell detailTextLabel] textColor];
+    }
     
     TTTask *task = [self getTaskFor:[indexPath indexAtPosition:0] row:[indexPath indexAtPosition:1]];
     
-    [[cell label] setText:[task name]];
-    [[cell time] setText:[[TTDatabase instance] getTotalTaskTimeStringFormatted:[task identifier]]];
+    [[cell label] setText:[task name]];    [[cell time] setText:[[TTDatabase instance] getTotalTaskTimeStringFormatted:[task identifier]]];
     if (!tableView.editing) {
-        [[cell imageView] setImage:[TTImageManager getIcon:Play]];
+        if([[TTDatabase instance] isTaskRunning:[task identifier]]) {
+            [[cell time] setTextColor:[UIColor redColor]];
+            [[cell imageView] setImage:[TTImageManager getIcon:Pause]];
+        } else {
+            [[cell time] setTextColor:defaultColor];
+            [[cell imageView] setImage:[TTImageManager getIcon:Play]];
+        }
     } else {
         [[cell imageView] setImage:nil];
     }
@@ -171,24 +224,15 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         TTTask *task = [self getTaskFor:[indexPath indexAtPosition:0] row:[indexPath indexAtPosition:1]];
-        [self removeTask:task];
         [[TTDatabase instance] deleteTask:task];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self reloadData];
     }
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {    }
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
-    // Remove the task from the project array.
     TTTask *task = [self getTaskFor:[fromIndexPath indexAtPosition:0] row:[fromIndexPath indexAtPosition:1]];
-    [self removeTask:task];
-    // Change the project identifier.
     [task setIdProject:[self getProjectIdFor:[toIndexPath indexAtPosition:0]]];
-    // Add the task to the project array.
-    NSMutableArray *a = [self getTasksFor:[toIndexPath indexAtPosition:0]];
-    [a insertObject:task atIndex:[toIndexPath indexAtPosition:1]];
-    // Update database.
     [[TTDatabase instance] updateTask:task];
 }
 
@@ -203,13 +247,23 @@
 {
     TTTask *task = [self getTaskFor:[indexPath indexAtPosition:0] row:[indexPath indexAtPosition:1]];
     if(!tableView.editing) {
-        // Show task informations.
-        TTHistoryController *view = [[TTHistoryController alloc] initWithTask:[task identifier]];
-        [[self navigationController] pushViewController:view animated:YES];
+        // Play/Pause the task.
+        [[TTDatabase instance] runTask:[task identifier]];
+        [self reloadData];
     } else {
         // Edit the task.
         TTEditTaskController *view = [[TTEditTaskController alloc] initWithTask:task];
         [view setDelegate:self];
+        [[self navigationController] pushViewController:view animated:YES];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    if(!tableView.editing) {
+        // Show task history.
+        TTTask *task = [self getTaskFor:[indexPath indexAtPosition:0] row:[indexPath indexAtPosition:1]];
+        TTHistoryController *view = [[TTHistoryController alloc] initWithTask:[task identifier]];
         [[self navigationController] pushViewController:view animated:YES];
     }
 }

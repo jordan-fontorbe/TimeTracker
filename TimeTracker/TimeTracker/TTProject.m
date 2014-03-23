@@ -28,4 +28,9 @@
     return [self initWithIdentifier:0 name:name];
 }
 
+- (id)initWithProject:(TTProject *)project
+{
+    return [self initWithIdentifier:[project identifier] name:[project name]];
+}
+
 @end

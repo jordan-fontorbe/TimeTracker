@@ -54,7 +54,7 @@ static NSDateFormatter *startFormat = nil;
 {
     _start = start;
     if(start != nil) {
-    _startComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:start];
+        _startComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:start];
     } else {
         _startComponents = nil;
     }
@@ -65,18 +65,28 @@ static NSDateFormatter *startFormat = nil;
 {
     _end = end;
     if(end != nil) {
-    _endComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:end];
+        _endComponents = [[NSCalendar currentCalendar] components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:end];
     } else {
         _endComponents = nil;
     }
     [self duration];
 }
 
+- (void)setDurationComponents:(NSDateComponents *)durationComponents
+{
+    [self setEnd:[[NSCalendar currentCalendar] dateByAddingComponents:durationComponents toDate:_start options:0]];
+}
+
+- (NSDateComponents *)durationComponentsFromStartToNow
+{
+    return [[NSCalendar currentCalendar] components:NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit fromDate:_start toDate:[NSDate date] options:0];
+}
+
 - (NSString *)formatDay
 {
     if(dayFormat == nil) {
-    dayFormat = [[NSDateFormatter alloc] init];
-    [dayFormat setDateFormat:NSLocalizedString(@"dd/MM/YY", @"Date format")];
+        dayFormat = [[NSDateFormatter alloc] init];
+        [dayFormat setDateFormat:NSLocalizedString(@"dd/MM/YY", @"Date format")];
     }
     return [dayFormat stringFromDate:_start];
 }
@@ -94,7 +104,11 @@ static NSDateFormatter *startFormat = nil;
 
 - (NSString *)formatDuration
 {
-    return [NSString stringWithFormat:NSLocalizedString(@"%02d:%02d:%02d", @"Duration"), [_durationComponents hour], [_durationComponents minute], [_durationComponents second]];
+    NSDateComponents *c = _durationComponents;
+    if(c == nil) {
+        c = [self durationComponentsFromStartToNow];
+    }
+    return [NSString stringWithFormat:NSLocalizedString(@"%02d:%02d:%02d", @"Duration"), [c hour], [c minute], [c second]];
 }
 
 - (NSString *)formatHourEnd
