@@ -316,6 +316,7 @@ NSTimer	* _tableViewTimer;
 
 - (void)reloadData
 {
+    [UIApplication sharedApplication].applicationIconBadgeNumber = [[TTDataManager instance] getTotalNumberOfRunningTasks];
     _projects = [[TTDatabase instance] getProjects];
     [[self tblView] reloadData];
     [_totalTimeButtonItem setTitle:[NSString stringWithFormat:NSLocalizedString(@"Total : %@", @"Total time"), [[TTDatabase instance] getTotalTimeStringFormatted]]];
