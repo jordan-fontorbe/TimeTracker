@@ -10,6 +10,8 @@
 #import "TTProject.h"
 #import "TTTask.h"
 #import "TTTime.h"
+#import "TTDataManager.h"
+#import "TTRunningTask.h"
 
 @interface TTDatabase ()
 
@@ -190,7 +192,11 @@ static TTDatabase* _sharedTTDatabase = nil;
         }
         sqlite3_close(_timetrackerDB);
     }
-    
+    // Add the running task.
+    TTRunningTask *t = [[TTDataManager instance] getRunningTaskFor:task];
+    if(t != nil) {
+        [res addObject:t];
+    }
     return res;
     
 }
@@ -700,8 +706,8 @@ static TTDatabase* _sharedTTDatabase = nil;
     }
     
     if (date != nil){
-        // Add the running time.
-        TTTime *t = [self getRunningTimeFor:idTask];
+        // Add the running task.
+        TTRunningTask *t = [[TTDataManager instance] getRunningTaskFor:idTask];
         if(t != nil) {
             date = [[NSCalendar currentCalendar] dateByAddingComponents:[t durationComponentsFromStartToNow] toDate:date options:0];
         }

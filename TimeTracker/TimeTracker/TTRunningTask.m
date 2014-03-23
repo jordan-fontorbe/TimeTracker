@@ -8,20 +8,17 @@
 
 #import "TTRunningTask.h"
 #import "TTDatabase.h"
-#import "TTTime.h"
+#import "TTTask.h"
 
 @implementation TTRunningTask
 
 @synthesize task = _task;
-@synthesize start = _start;
-@synthesize end = _end;
 
 - (id)initWithTask:(TTTask*)task start:(NSDate *)start
 {
-    self = [super init];
+    self = [super initWithStart:start end:nil task:[task identifier]];
     if(self) {
         _task = task;
-        _start = start;
     }
     return self;
 }
@@ -29,9 +26,9 @@
 - (NSString *)getRunningTaskTimeStringFormatted
 {
     NSDate *now = [NSDate date];
-    NSTimeInterval diff = [now timeIntervalSinceDate:_start];
-    if (_end != nil) {
-        diff = [_end timeIntervalSinceDate:_start];
+    NSTimeInterval diff = [now timeIntervalSinceDate:[self start]];
+    if ([self end] != nil) {
+        diff = [[self end] timeIntervalSinceDate:[self start]];
     }
     
     NSUInteger seconds = (NSUInteger)round(diff);
@@ -45,12 +42,12 @@
         [[TTDatabase instance] insertTask:_task];
     }
     if ([_task identifier] > 0) { // tache insérée
-        NSDate *startTmp = _start;
+        NSDate *startTmp = [self start];
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         NSUInteger componentFlags = NSYearCalendarUnit| NSMonthCalendarUnit | NSDayCalendarUnit;
         NSDateComponents *componentsStart = [[NSCalendar currentCalendar] components:componentFlags fromDate:startTmp];
-        NSDateComponents *componentsEnd = [[NSCalendar currentCalendar] components:componentFlags fromDate:_end];
+        NSDateComponents *componentsEnd = [[NSCalendar currentCalendar] components:componentFlags fromDate:[self end]];
         
         // on split par jour
         while ([componentsStart year] != [componentsEnd year] || [componentsStart month] != [componentsEnd month] || [componentsStart day] != [componentsEnd day]) {
@@ -66,7 +63,7 @@
         TTTime *time = [[TTTime alloc] init];
         [time setIdTask:[_task identifier]];
         [time setStart:startTmp];
-        [time setEnd:_end];
+        [time setEnd:[self end]];
         [[TTDatabase instance] insertTime:time];
     }
 }

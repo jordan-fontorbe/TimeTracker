@@ -57,13 +57,23 @@ static TTDataManager* _instance = nil;
     _lstRunningTasks = [[NSMutableArray alloc] init];
 }
 
--(NSMutableArray *)getRunningTasks
+- (NSMutableArray *)getRunningTasks
 {
     if (_lstRunningTasks == nil)
     {
         _lstRunningTasks = [[NSMutableArray alloc] init];
     }
     return _lstRunningTasks;
+}
+
+- (TTRunningTask *)getRunningTaskFor:(int)task
+{
+    for(TTRunningTask *t in _lstRunningTasks) {
+        if([t idTask] == task) {
+            return t;
+        }
+    }
+    return nil;
 }
 
 -(void)setRunningTasks:(NSMutableArray*)newRunningTasks

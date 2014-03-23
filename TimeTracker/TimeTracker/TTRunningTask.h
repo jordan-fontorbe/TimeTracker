@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TTTask.h"
+#import "TTTime.h"
 
-@interface TTRunningTask : NSObject
+@class TTTask;
+
+@interface TTRunningTask : TTTime
 
 @property TTTask *task;
-@property NSDate *start;
-@property NSDate *end;
 
 - (id)initWithTask:(TTTask*)task start:(NSDate *)start;
 

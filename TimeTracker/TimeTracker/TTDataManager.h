@@ -8,13 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@class TTRunningTask;
+
 @interface TTDataManager : NSObject
 
 +(TTDataManager*)instance;
 
 -(void)initRunningTasks;
 
--(NSMutableArray *)getRunningTasks;
+- (NSMutableArray *)getRunningTasks;
+- (TTRunningTask *)getRunningTaskFor:(int)task;
 
 -(void)setRunningTasks:(NSMutableArray*)newRunningTasks;
 

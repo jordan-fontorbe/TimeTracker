@@ -10,6 +10,7 @@
 #import "TTSelectTaskDelegate.h"
 #import "TTDatabase.h"
 #import "TTProject.h"
+#import "TTTask.h"
 
 @interface TTSelectTaskController ()
 
