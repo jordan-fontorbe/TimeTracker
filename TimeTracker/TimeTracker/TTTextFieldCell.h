@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ Custom table view cell with a text field for editing tasks or projects names.
+ */
 @interface TTTextFieldCell : UITableViewCell
 
+/**
+ Text field.
+ */
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 
 @end

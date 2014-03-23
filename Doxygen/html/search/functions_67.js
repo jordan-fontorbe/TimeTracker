@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['getalltimescsvformat',['getAllTimesCSVFormat',['../protocol_t_t_database_protocol-p.html#a6aba5fb33fb902a3113f6a1ed7f84409',1,'TTDatabaseProtocol-p']]],
+  ['geticon_3a',['getIcon:',['../interface_t_t_image_manager.html#a78569977b9a971f3cf84aff66cf68827',1,'TTImageManager']]],
+  ['geticonview_3a',['getIconView:',['../interface_t_t_image_manager.html#a749bc73df04ed3f7f656f86ffadbe9f2',1,'TTImageManager']]],
+  ['getnumberofquickrunningtasks',['getNumberOfQuickRunningTasks',['../interface_t_t_data_manager.html#a8d54504354538399dae327cdb5e5ce4c',1,'TTDataManager']]],
+  ['getproject_3a',['getProject:',['../protocol_t_t_database_protocol-p.html#a4fa03574fa5e730fb5083353a8b205ba',1,'TTDatabaseProtocol-p']]],
+  ['getprojectidfor_3a',['getProjectIdFor:',['../category_t_t_tasks_list_controller_07_08.html#ab8625e2fe911ee7e0829adf601274675',1,'TTTasksListController()']]],
+  ['getprojects',['getProjects',['../protocol_t_t_database_protocol-p.html#aad00e82c35a014c0d6e4bc9298d90189',1,'TTDatabaseProtocol-p']]],
+  ['getquickrunningtasks',['getQuickRunningTasks',['../interface_t_t_data_manager.html#ae994cd5e9fdf072a6a670d02d8c62201',1,'TTDataManager']]],
+  ['getrunningtaskfor_3a',['getRunningTaskFor:',['../interface_t_t_data_manager.html#a34d4e82ad614c19af8902175a2158929',1,'TTDataManager']]],
+  ['getrunningtasks',['getRunningTasks',['../interface_t_t_data_manager.html#a0754e8d7bb1bee5a4d12c278506bd32b',1,'TTDataManager']]],
+  ['getrunningtasksarrayfor_3a',['getRunningTasksArrayFor:',['../category_t_t_data_manager_07_08.html#a84933d9d4354ce0542b0e4125a57b449',1,'TTDataManager()']]],
+  ['getrunningtasksfor_3a',['getRunningTasksFor:',['../interface_t_t_data_manager.html#a021bbeab6a59dd44da4ab4e7a65bca3f',1,'TTDataManager']]],
+  ['getrunningtasktimestringformatted',['getRunningTaskTimeStringFormatted',['../interface_t_t_running_task.html#a79fa4c08ba41e149fdbf49633b6e70fd',1,'TTRunningTask']]],
+  ['gettask_3a',['getTask:',['../protocol_t_t_database_protocol-p.html#a26ab21975430e32d0dd1121ba913be11',1,'TTDatabaseProtocol-p']]],
+  ['gettaskfor_3arow_3a',['getTaskFor:row:',['../category_t_t_tasks_list_controller_07_08.html#a1ee2c827f44d82084bc09c47c160da04',1,'TTTasksListController()']]],
+  ['gettasks',['getTasks',['../protocol_t_t_database_protocol-p.html#a94f7f074168d05e5c5d1eb6b76b79346',1,'TTDatabaseProtocol-p']]],
+  ['gettasksfor_3a',['getTasksFor:',['../protocol_t_t_database_protocol-p.html#aa675c5749371eba23400c563d51679e3',1,'TTDatabaseProtocol-p::getTasksFor:()'],['../category_t_t_tasks_list_controller_07_08.html#a5891327edb1a1ef4f7774a5fd013d5af',1,'TTTasksListController()::getTasksFor:()']]],
+  ['gettasksfrom_3ato_3afor_3a',['getTasksFrom:To:For:',['../protocol_t_t_database_protocol-p.html#af2895d9fdd6b54bbdab60a4cd583e867',1,'TTDatabaseProtocol-p']]],
+  ['gettime_3a',['getTime:',['../protocol_t_t_database_protocol-p.html#a4fa86fd4a7907395030221152d4923b7',1,'TTDatabaseProtocol-p']]],
+  ['gettimesfor_3a',['getTimesFor:',['../protocol_t_t_database_protocol-p.html#a92f8b5a80b693513af1e077d5453ae48',1,'TTDatabaseProtocol-p']]],
+  ['gettotalnumberofrunningtasks',['getTotalNumberOfRunningTasks',['../interface_t_t_data_manager.html#a2ec0df06f0c7a6b379649b2ef74b58c5',1,'TTDataManager']]],
+  ['gettotalprojecttimestringformatted_3a',['getTotalProjectTimeStringFormatted:',['../protocol_t_t_database_protocol-p.html#a7271de35c1a12bfb46ca98ad69b9d001',1,'TTDatabaseProtocol-p']]],
+  ['gettotaltasktimestringformatted_3a',['getTotalTaskTimeStringFormatted:',['../protocol_t_t_database_protocol-p.html#ae8de459b28e3237ebf5f52a45c4b8965',1,'TTDatabaseProtocol-p']]],
+  ['gettotaltime',['getTotalTime',['../category_t_t_tasks_list_controller_07_08.html#ac476b76d4648a5f1cf70788a9bff2277',1,'TTTasksListController()']]],
+  ['gettotaltimestringformatted',['getTotalTimeStringFormatted',['../protocol_t_t_database_protocol-p.html#a657a2a26ed0c4d43bf18c894195bf532',1,'TTDatabaseProtocol-p']]]
+];
