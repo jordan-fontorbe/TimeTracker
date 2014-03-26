@@ -38,6 +38,7 @@
 		D0A5F24018CDF35A0074CE33 /* TTOverviewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A5F23E18CDF35A0074CE33 /* TTOverviewController.xib */; };
 		D0A5F24718CDF8F90074CE33 /* TTAboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0A5F24518CDF8F90074CE33 /* TTAboutController.m */; };
 		D0A5F24818CDF8F90074CE33 /* TTAboutController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0A5F24618CDF8F90074CE33 /* TTAboutController.xib */; };
+		D0B2E1C818E3266100743D88 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D0B2E1CA18E3266100743D88 /* Localizable.strings */; };
 		D0BC2BD118CA0EC300E46F7F /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BC2BCB18CA0EC300E46F7F /* pause.png */; };
 		D0BC2BD218CA0EC300E46F7F /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BC2BCC18CA0EC300E46F7F /* play.png */; };
 		D0BC2BD318CA0EC300E46F7F /* project.png in Resources */ = {isa = PBXBuildFile; fileRef = D0BC2BCD18CA0EC300E46F7F /* project.png */; };
@@ -108,6 +109,8 @@
 		D0A5F24418CDF8F80074CE33 /* TTAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAboutController.h; sourceTree = "<group>"; };
 		D0A5F24518CDF8F90074CE33 /* TTAboutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAboutController.m; sourceTree = "<group>"; };
 		D0A5F24618CDF8F90074CE33 /* TTAboutController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTAboutController.xib; sourceTree = "<group>"; };
+		D0B2E1C918E3266100743D88 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D0B2E1CB18E3271700743D88 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D0B7EFBA18CE063E00524870 /* TTEditTaskDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTEditTaskDelegate.h; sourceTree = "<group>"; };
 		D0BC2BCB18CA0EC300E46F7F /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
 		D0BC2BCC18CA0EC300E46F7F /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
@@ -198,6 +201,7 @@
 		CE03CDBF18C8EAC3001B4C86 /* TimeTracker */ = {
 			isa = PBXGroup;
 			children = (
+				D0B2E1CA18E3266100743D88 /* Localizable.strings */,
 				D070166518D7567300A69D08 /* UI */,
 				D0F1F02A18CA01FE00F07C28 /* Dialog */,
 				D0C5DB6A18C8EED3009E0BF7 /* Model */,
@@ -368,6 +372,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				fr,
 			);
 			mainGroup = CE03CDAB18C8EAC3001B4C86;
 			productRefGroup = CE03CDB518C8EAC3001B4C86 /* Products */;
@@ -386,6 +391,7 @@
 			files = (
 				D070167118D7811300A69D08 /* TTTasksListController.xib in Resources */,
 				D070167F18D7B01900A69D08 /* TTTextFieldCell.xib in Resources */,
+				D0B2E1C818E3266100743D88 /* Localizable.strings in Resources */,
 				D0BC2BD218CA0EC300E46F7F /* play.png in Resources */,
 				CE03CDC418C8EAC3001B4C86 /* InfoPlist.strings in Resources */,
 				D0BC2BD618CA0EC300E46F7F /* tasks.png in Resources */,
@@ -451,6 +457,15 @@
 				CE03CDC318C8EAC3001B4C86 /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D0B2E1CA18E3266100743D88 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D0B2E1C918E3266100743D88 /* en */,
+				D0B2E1CB18E3271700743D88 /* fr */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
