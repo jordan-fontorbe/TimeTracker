@@ -204,15 +204,7 @@ NSTimer	* _tableViewTimer;
     switch([indexPath indexAtPosition:0]) {
         case 0:
             if(!tableView.editing) {
-                if(indexPath.row < [[TTDataManager instance] getNumberOfQuickRunningTasks]) {
-                    // Quick running task.
-                    [self showActionSheet:indexPath];
-                } else {
-                    // Running task.
-                    TTRunningTask *t = [[[TTDataManager instance] getRunningTasks] objectAtIndex:indexPath.row - [[TTDataManager instance] getNumberOfQuickRunningTasks]];
-                    [[TTDataManager instance] runTask:[t task]];
-                    [self reloadData];
-                }
+                [self showActionSheet:indexPath];
             }
             break;
         case 1:
@@ -330,7 +322,14 @@ NSTimer	* _tableViewTimer;
     NSString *buttonTitle = [actionSheet buttonTitleAtIndex:buttonIndex];
     
     if  ([buttonTitle isEqualToString:@"Supprimer"]) {
-        [[TTDataManager instance] removeQuickRunningTaskAtIndex:[actionSheet tag]];
+        TTRunningTask *runningTask = nil;
+        if([actionSheet tag] < [[TTDataManager instance] getNumberOfQuickRunningTasks]) {
+            [[TTDataManager instance] removeQuickRunningTaskAtIndex:[actionSheet tag]];
+        } else {
+            TTRunningTask *runningTask = [[[TTDataManager instance] getRunningTasks] objectAtIndex:[actionSheet tag] - [[TTDataManager instance] getNumberOfQuickRunningTasks]];
+            [[TTDataManager instance] removeRunningTask:runningTask];
+        }
+        
     }
     else if ([buttonTitle isEqualToString:@"Créer une nouvelle tâche"]) {
         TTRunningTask *runningTask = [[[TTDataManager instance] getQuickRunningTasks] objectAtIndex:[actionSheet tag]];
@@ -344,16 +343,21 @@ NSTimer	* _tableViewTimer;
         [selectTaskController setDelegate:self];
         [[self navigationController] pushViewController:selectTaskController animated:YES];
     }
-    else if ([buttonTitle isEqualToString:@"Ajouter à la tâche"]) {
-        TTRunningTask *runningTask = [[[TTDataManager instance] getQuickRunningTasks] objectAtIndex:[actionSheet tag]];
+    else if ([buttonTitle isEqualToString:@"Valider"]) {
+        TTRunningTask *runningTask = [[[TTDataManager instance] getRunningTasks] objectAtIndex:[actionSheet tag] - [[TTDataManager instance] getNumberOfQuickRunningTasks]];
         [runningTask save];
-        [[TTDataManager instance] removeQuickRunningTask:runningTask];
+        [[TTDataManager instance] removeRunningTask:runningTask];
         [self reloadData];
         [self setTooBar];
     }
     else if ([buttonTitle isEqualToString:@"Annuler"]) {
         // On remet le end à nil puiqu'on continue la tache
-        [[[[TTDataManager instance] getQuickRunningTasks] objectAtIndex:[actionSheet tag]] setEnd:nil];
+        if([actionSheet tag] < [[TTDataManager instance] getNumberOfQuickRunningTasks]) {
+            [[[[TTDataManager instance] getQuickRunningTasks] objectAtIndex:[actionSheet tag]] setEnd:nil];
+        }
+        else {
+            [[[[TTDataManager instance] getRunningTasks] objectAtIndex:[actionSheet tag] - [[TTDataManager instance] getNumberOfQuickRunningTasks]] setEnd:nil];
+        }
     }
 }
 
@@ -362,7 +366,12 @@ NSTimer	* _tableViewTimer;
 {
     NSDate *now = [NSDate date];
     NSIndexPath *indexPath = (NSIndexPath *)sender;
-    TTRunningTask *runningTask = [[[TTDataManager instance] getQuickRunningTasks] objectAtIndex:[indexPath row]];
+    TTRunningTask *runningTask = nil;
+    if([indexPath row] < [[TTDataManager instance] getNumberOfQuickRunningTasks]) {
+        runningTask = [[[TTDataManager instance] getQuickRunningTasks] objectAtIndex:[indexPath row]];
+    } else {
+        runningTask = [[[TTDataManager instance] getRunningTasks] objectAtIndex:[indexPath row] - [[TTDataManager instance] getNumberOfQuickRunningTasks]];
+    }
     [runningTask setEnd:now];
     
     UIActionSheet *actionSheet = nil;
@@ -371,7 +380,7 @@ NSTimer	* _tableViewTimer;
                        initWithTitle:nil
                        delegate:self
                        cancelButtonTitle:@"Annuler"
-                       destructiveButtonTitle:@"Ajouter à la tâche"
+                       destructiveButtonTitle:@"Valider"
                        otherButtonTitles:@"Supprimer",nil];
         [actionSheet setDestructiveButtonIndex:1];
     }

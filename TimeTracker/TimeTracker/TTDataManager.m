@@ -132,8 +132,7 @@ static TTDataManager* _instance = nil;
     if(t) {
         // Stop the task.
         [self removeRunningTask:t];
-        [t setEnd:[NSDate date]];
-        [[TTDatabase instance] insertTime:t];
+        [t save];
     } else {
         // Start the task.
         [self addRunningTask:[[TTRunningTask alloc] initWithTask:task start:[NSDate date]]];
