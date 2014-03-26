@@ -10,9 +10,14 @@
 #import "TTDatabaseProtocol.h"
 #import <sqlite3.h>
 
-
+/**
+ Database.
+ */
 @interface TTDatabase : NSObject <TTDatabaseProtocol>
 
+/**
+ Get the unique instance of the database.
+ */
 +(TTDatabase*)instance;
 
 @end

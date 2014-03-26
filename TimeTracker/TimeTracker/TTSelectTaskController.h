@@ -11,10 +11,21 @@
 
 @protocol TTSelectTaskDelegate;
 
+/**
+ Controller for the select task view.
+ */
 @interface TTSelectTaskController : UITableViewController
 
+/**
+ Delegate.
+ */
 @property (nonatomic, assign) id<TTSelectTaskDelegate> delegate;
 
+/**
+ Initialize a new view.
+ @param runningTask Running task.
+ @return The initialized view.
+ */
 - (id)initWithRunningTask:(TTRunningTask *)runningTask;
 
 @end

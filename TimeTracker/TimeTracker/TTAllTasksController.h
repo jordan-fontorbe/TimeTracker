@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "TTTasksListController.h"
 
+/**
+ Controller for the view displaying a list of all the tasks.
+ */
 @interface TTAllTasksController : TTTasksListController
 
 @end

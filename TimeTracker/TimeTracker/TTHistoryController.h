@@ -9,8 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "TTEditTimeDelegate.h"
 
+/**
+ Controller for the history view.
+ */
 @interface TTHistoryController : UITableViewController <TTEditTimeDelegate>
 
+/**
+ Initialize a new view.
+ @param task Identifier of the task.
+ @return The initialized view.
+ */
 - (id)initWithTask:(int)task;
 
 @end

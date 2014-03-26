@@ -10,9 +10,22 @@
 
 @class TTSelectTaskController;
 
+/**
+ Delegate for the select task view.
+ */
 @protocol TTSelectTaskDelegate <NSObject>
 
+/**
+ Called when a task has been selected.
+ @param taskId Selected task identifier.
+ @param runningTask Running task.
+ */
 - (void)onTaskSelected:(int)taskId :(TTRunningTask *)runningTask;
+
+/**
+ Called when selection has been canceled.
+ @param runningTask Running task.
+ */
 - (void)onCancel:(TTRunningTask *)runningTask;
 
 @end

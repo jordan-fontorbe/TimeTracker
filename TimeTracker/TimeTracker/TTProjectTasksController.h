@@ -9,8 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "TTTasksListController.h"
 
+/**
+ Controller for the view displaying the list of tasks of a project.
+ */
 @interface TTProjectTasksController : TTTasksListController
 
+/**
+ Initialize a new view.
+ @param project Identifier of the project.
+ @return The initialized view.
+ */
 - (id)initWithProject:(int)project;
 
 @end

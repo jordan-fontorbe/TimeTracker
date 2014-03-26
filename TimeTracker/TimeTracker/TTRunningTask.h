@@ -11,13 +11,33 @@
 
 @class TTTask;
 
+/**
+ Running task.
+ */
 @interface TTRunningTask : TTTime
 
+/**
+ Related task.
+ */
 @property TTTask *task;
 
+/**
+ Initialize a new running task.
+ @param task Related task.
+ @param start Starting date.
+ @return The initialized running task.
+ */
 - (id)initWithTask:(TTTask*)task start:(NSDate *)start;
 
+/**
+ Get the time formatted.
+ @return The time formatted.
+ */
 - (NSString *)getRunningTaskTimeStringFormatted;
+
+/**
+ Save the current time.
+ */
 - (void)save;
 
 @end

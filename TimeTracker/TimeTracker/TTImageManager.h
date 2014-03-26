@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ Enum for icons.
+ */
 typedef enum {
     Pause,
     Play,
@@ -18,10 +21,29 @@ typedef enum {
     Mail
 } Icon;
 
+/**
+ Manager for the icons.
+ */
 @interface TTImageManager : NSObject
 
+/**
+ Initialize a new manager.
+ @return The initialized manager.
+ */
 + (void)init;
+
+/**
+ Get the image for the given icon.
+ @param icon Icon to get.
+ @return The image.
+ */
 + (UIImage *)getIcon:(Icon)icon;
+
+/**
+ Get the image view for the given icon.
+ @param icon Icon to get.
+ @return The image view.
+ */
 + (UIImageView *)getIconView:(Icon)icon;
 
 @end

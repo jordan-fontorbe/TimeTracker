@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ Controller for the about view.
+ */
 @interface TTAboutController : UIViewController
 
 @end

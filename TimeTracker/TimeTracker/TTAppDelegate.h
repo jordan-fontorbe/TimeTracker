@@ -10,10 +10,24 @@
 
 @class TTOverviewController;
 
+/**
+ Delegate for the application.
+ */
 @interface TTAppDelegate : UIResponder <UIApplicationDelegate>
 
+/**
+ Window.
+ */
 @property (strong, nonatomic) UIWindow *window;
+
+/**
+ Controller for the navigation.
+ */
 @property (strong, nonatomic) UINavigationController * navigationController;
+
+/**
+ Controller for the overview.
+ */
 @property (strong, nonatomic) TTOverviewController * overviewController;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
