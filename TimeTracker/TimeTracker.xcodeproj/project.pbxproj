@@ -80,6 +80,8 @@
 		CE03CDD218C8EAC3001B4C86 /* TimeTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TimeTracker.xcdatamodel; sourceTree = "<group>"; };
 		CE16082418D5B6A400F07777 /* TTRunningTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTRunningTask.h; sourceTree = "<group>"; };
 		CE16082518D5B6A400F07777 /* TTRunningTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTRunningTask.m; sourceTree = "<group>"; };
+		CE278BD118E3269900613ABF /* Apps-preferences-system-time-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Apps-preferences-system-time-icon.png"; sourceTree = "<group>"; };
+		CE278BD318E3271300613ABF /* Apps-preferences-system-time-icon-retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Apps-preferences-system-time-icon-retina.png"; sourceTree = "<group>"; };
 		CE3F81CE18D9DC9700508875 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mail.png; sourceTree = "<group>"; };
 		CE4E9E2618C91A4500441431 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		CE7C307018DC192B0027E4A4 /* TTSelectTaskController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTSelectTaskController.h; sourceTree = "<group>"; };
@@ -109,8 +111,8 @@
 		D0A5F24418CDF8F80074CE33 /* TTAboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTAboutController.h; sourceTree = "<group>"; };
 		D0A5F24518CDF8F90074CE33 /* TTAboutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTAboutController.m; sourceTree = "<group>"; };
 		D0A5F24618CDF8F90074CE33 /* TTAboutController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TTAboutController.xib; sourceTree = "<group>"; };
-		D0B2E1C918E3266100743D88 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		D0B2E1CB18E3271700743D88 /* fr */ = {isa = PBXFileReference; lastKnownFileType = file; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D0B2E1C918E3266100743D88 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D0B2E1CB18E3271700743D88 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D0B7EFBA18CE063E00524870 /* TTEditTaskDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTEditTaskDelegate.h; sourceTree = "<group>"; };
 		D0BC2BCB18CA0EC300E46F7F /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
 		D0BC2BCC18CA0EC300E46F7F /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
@@ -170,6 +172,8 @@
 		CE03CDAB18C8EAC3001B4C86 = {
 			isa = PBXGroup;
 			children = (
+				CE278BD318E3271300613ABF /* Apps-preferences-system-time-icon-retina.png */,
+				CE278BD118E3269900613ABF /* Apps-preferences-system-time-icon.png */,
 				CEBE560318DEE2D9007946E9 /* MessageUI.framework */,
 				CE906D4618D0D4C700403C50 /* QuartzCore.framework */,
 				CE4E9E2618C91A4500441431 /* libsqlite3.dylib */,

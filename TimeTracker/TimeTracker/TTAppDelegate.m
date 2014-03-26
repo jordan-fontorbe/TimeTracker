@@ -28,48 +28,9 @@
     // Initialize the ImageManager.
     [TTImageManager init];
     
-    // Clear the database. (a retirer ensuite)
-    [[TTDatabase instance] clear];
-    
     // Initialize singleton
     [[TTDatabase instance] createDatabase];
     [[TTDataManager instance] initRunningTasks];
-    
-    //**** A RETIRER (SEULEMENT POUR TEST) ****//
-    
-    TTProject *prj1 = [[TTProject alloc] init];
-    [prj1 setName:@"Développement iOS"];
-    [[TTDatabase instance] insertProject:prj1];
-    
-    TTProject *prj2 = [[TTProject alloc] init];
-    [prj2 setName:@"Analyse statique"];
-    [[TTDatabase instance] insertProject:prj2];
-    
-    TTProject *prj3 = [[TTProject alloc] init];
-    [prj3 setName:@"Sécurité réseau"];
-    [[TTDatabase instance] insertProject:prj3];
-    
-    TTTask *task = [[TTTask alloc] initWithName:@"Projet" project:1];
-    [[TTDatabase instance] insertTask:task];
-    
-    task = [[TTTask alloc] initWithName:@"single task 1" project:0];
-    [[TTDatabase instance] insertTask:task];
-    
-    TTTime *time = [[TTTime alloc] init];
-    [time setIdTask:0];
-    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    [dateFormat setDateFormat:@"dd/MM/yyyy HH:mm:ss"];
-    [time setStart:[dateFormat dateFromString:@"16/03/2014 14:00:30"]];
-    [time setEnd:[dateFormat dateFromString:@"16/03/2014 15:23:10"]];
-    [time setIdTask:2];
-    [[TTDatabase instance] insertTime:time];
-    time = [[TTTime alloc] init];
-    [time setIdTask:1];
-    [time setStart:[dateFormat dateFromString:@"16/03/2014 15:00:00"]];
-    [time setEnd:[dateFormat dateFromString:@"16/03/2014 17:00:00"]];
-    [[TTDatabase instance] insertTime:time];
-    TTRunningTask *runningTask = [[TTRunningTask alloc] initWithTask:task start:[dateFormat dateFromString:@"20/03/2014 10:00:30"]];
-    [[TTDataManager instance] addRunningTask:runningTask];
     
     //****************************************//
     
